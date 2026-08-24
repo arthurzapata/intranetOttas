@@ -37,3 +37,6 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Reportes generados localmente
+/tmp_spreadsheet/outputs/inventario_migracion_20260823/Inventario_migracion_modulos.xlsx

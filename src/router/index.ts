@@ -7,6 +7,10 @@ import NotFoundView from '@/views/NotFoundView.vue'
 import { appModules } from '@/config/modules'
 
 const optionPages = {
+  'aura-comites-comites': () => import('@/modules/aura/comites/pages/ComitesPage.vue'),
+  'aura-comites-reuniones': () => import('@/modules/aura/comites/pages/ReunionesPage.vue'),
+  'aura-comites-acuerdos': () => import('@/modules/aura/comites/pages/AcuerdosPage.vue'),
+  'aura-comites-tipos': () => import('@/modules/aura/comites/pages/TiposComitePage.vue'),
   'aura-bgc-estructura': () => import('@/modules/aura/bgc/pages/EstructuraBgcPage.vue'),
   'aura-bgc-procesos': () => import('@/modules/aura/bgc/pages/ProcesosEvidenciasPage.vue'),
   'aura-bgc-control-avance': () => import('@/modules/aura/bgc/pages/ControlAvancePage.vue'),

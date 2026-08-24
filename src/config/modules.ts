@@ -42,7 +42,12 @@ export const appModules: AppModule[] = [
       {slug:'procesos-evidencias',name:'Procesos y evidencias',description:'Carga, revisión y evaluación de evidencias por período.',controller:'Aura/BuenGobiernoCorporativo/ProcesoController',page:'aura-bgc-procesos'},
       {slug:'control-avance',name:'Control de avance',description:'Indicadores comparativos de cumplimiento por empresa y período.',controller:'Aura/BuenGobiernoCorporativo/ControlAvanceController',page:'aura-bgc-control-avance'}
     ]},
-    {slug:'comites',name:'Gestión de Comités',description:'Comités, reuniones y acuerdos.',controller:'Aura/GestionComite'},
+    {slug:'comites',name:'Gestión de Comités',description:'Comités, reuniones y acuerdos.',controller:'Aura/GestionComite',options:[
+      {slug:'comites',name:'Comités',description:'Registro de comités, miembros y documentos de sustento.',controller:'Aura/GestionComite/ComiteController',page:'aura-comites-comites'},
+      {slug:'reuniones',name:'Reuniones',description:'Programación, asistencia y archivos de reuniones.',controller:'Aura/GestionComite/ComiteController',page:'aura-comites-reuniones'},
+      {slug:'acuerdos',name:'Acuerdos',description:'Registro, atención y cierre de acuerdos de comité.',controller:'Aura/GestionComite/ComiteController',page:'aura-comites-acuerdos'},
+      {slug:'tipos',name:'Tipos de comité',description:'Catálogo de tipos utilizados para clasificar los comités.',controller:'Aura/GestionComite/ComiteController',page:'aura-comites-tipos'}
+    ]},
     {slug:'comunicaciones',name:'Comunicaciones',description:'Noticias, publicaciones y stakeholders.',controller:'Aura/Comunicaciones'},
     {slug:'integridad',name:'Integridad',description:'Denuncias e incidencias.',controller:'Aura/Integridad'} ]},
   { slug:'administracion', name:'Administración', code:'MI', color:'#d64f83', controller:'Mia', description:'Logística, presupuesto y recursos administrativos.', sections:[
