@@ -1,0 +1,9 @@
+import { apiRequest } from '@/services/auth'
+export interface TareaInterrupcion { id:number; tipo:string; estado:string; atendida:boolean }
+export interface InterrupcionOperacional { id:number; fecha_inicio:string; hora_inicio:string; tipo:string; servicio:string; motivo:string; detalle_motivo:string; conexiones_afectadas:number; uu_afectadas:number; areas_afectadas:string[]; restablecido:boolean; fecha_restablecimiento?:string; observacion_restablecimiento?:string; con_programacion:boolean; con_difusion:boolean; tareas:TareaInterrupcion[]; archivos_count:number }
+export interface InterrupcionesResponse { data:InterrupcionOperacional[]; current_page:number; last_page:number; total:number; totales:{activas:number;restablecidas:number;programadas:number;difundidas:number} }
+export interface FiltrosInterrupcion { criterio:string; fecha_inicio:string; fecha_fin:string; estado:string; page:number }
+const base='/lecturita/dana/interrupciones'
+export function listarInterrupciones(filters:FiltrosInterrupcion){const q=new URLSearchParams({...filters,page:String(filters.page)});return apiRequest<InterrupcionesResponse>(`${base}?${q}`)}
+export function obtenerInterrupcion(id:number){return apiRequest<InterrupcionOperacional>(`${base}/${id}`)}
+export function restablecerInterrupcion(id:number,data:{fecha_restablecimiento:string;observacion:string}){return apiRequest<InterrupcionOperacional>(`${base}/${id}/restablecer`,{method:'POST',body:JSON.stringify(data)})}

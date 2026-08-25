@@ -1,0 +1,9 @@
+import { apiRequest } from '@/services/auth'
+export interface UnidadEvidencia { id_cisterna:number; id_programacion:number; id_programacion_cisterna:number; placa:string; conductor:string; numero_vueltas_confirmadas:number; evidencias:number; ultima_evidencia:string|null }
+export interface EvidenciasResponse { data:UnidadEvidencia[]; total:number; total_evidencias:number; sin_evidencias:number }
+export interface Evidencia { id:number; imagen:string; fecha:string; hora:string; hace:string; gps:boolean; latitud:number|null; longitud:number|null; vuelta:number; comentario?:string; archivo_original?:string; descarga?:string }
+export interface GaleriaResponse { data:Evidencia[]; pagination:{current_page:number;last_page:number;per_page:number;total:number;has_more_pages:boolean} }
+const base='/lecturita/dana/gestion-cisternas/evidencias'
+export function listarUnidadesEvidencia(criterio=''){const q=new URLSearchParams({criterio});return apiRequest<EvidenciasResponse>(`${base}?${q}`)}
+export function registrarEvidencia(unit:UnidadEvidencia,file:File,comentario:string,latitud:number|null,longitud:number|null){const data=new FormData();data.append('programacion_cisterna_id',String(unit.id_programacion_cisterna));data.append('programacion_id',String(unit.id_programacion));data.append('transporte_id',String(unit.id_cisterna));data.append('vuelta',String(unit.numero_vueltas_confirmadas));data.append('imagen',file,file.name);data.append('comentario',comentario);if(latitud!==null)data.append('latitud',String(latitud));if(longitud!==null)data.append('longitud',String(longitud));return apiRequest<{success:boolean;message:string}>(`${base}`,{method:'POST',body:data})}
+export function listarGaleria(programacionId:number,cisternaId:number,page=1){return apiRequest<GaleriaResponse>(`${base}/programaciones/${programacionId}/cisternas/${cisternaId}?page=${page}`)}

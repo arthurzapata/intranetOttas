@@ -1,0 +1,14 @@
+import { apiRequest } from '@/services/auth'
+export interface OpcionProgramacion { id:number; nombre:string; placa?:string; capacidad?:number }
+export interface DetalleProgramacion { id?:number; cisterna_id:number|null; placa:string; conductor_id:number|null; conductor:string; distrito_id:number|null; distrito:string; punto_abastecimiento_id:number|null; punto_abastecimiento:string; ruta:string; numero_vueltas:number }
+export interface Programacion { id:number; fecha:string; motivo_id:number; motivo:string; observacion:string; r1_desde:string; r1_hasta:string; r2_desde:string; r2_hasta:string; detalles:DetalleProgramacion[]; incidencias_count:number; evidencias_count:number; vencida:boolean; vinculada_interrupcion:boolean }
+export interface ProgramacionPayload { fecha:string; motivo_id:number|null; observacion:string; r1_desde:string; r1_hasta:string; r2_desde:string; r2_hasta:string; cisternas:DetalleProgramacion[] }
+export interface ProgramacionesResponse { data:Programacion[]; cisternas:OpcionProgramacion[]; conductores:OpcionProgramacion[]; distritos:OpcionProgramacion[]; puntos_abastecimiento:OpcionProgramacion[]; motivos:Record<number,string>; current_page:number; last_page:number; total:number; resumen:{unidades:number;con_incidencias:number;con_evidencias:number} }
+export interface IncidenciaProgramacion { id:number; placa:string; conductor:string; comentario:string; latitud:string; longitud:string; fecha:string; anonima:boolean; nombre_apellido?:string; dni?:string; imagenes:{id:number;nombre:string;url:string}[] }
+export interface EvidenciaProgramacion { id:number; placa:string; fecha:string; archivo:string; url:string }
+const base='/lecturita/dana/gestion-cisternas/programaciones'
+export function listarProgramaciones(filters:{criterio:string;fecha_desde:string;fecha_hasta:string;motivo:string;incidencias:string},page=1){const q=new URLSearchParams({...filters,page:String(page)});return apiRequest<ProgramacionesResponse>(`${base}?${q}`)}
+export function guardarProgramacion(data:ProgramacionPayload,id?:number){return apiRequest<Programacion>(id?`${base}/${id}`:base,{method:id?'PUT':'POST',body:JSON.stringify(data)})}
+export function eliminarProgramacion(id:number){return apiRequest<void>(`${base}/${id}`,{method:'DELETE'})}
+export function listarIncidencias(id:number){return apiRequest<IncidenciaProgramacion[]>(`${base}/${id}/incidencias`)}
+export function listarEvidencias(id:number){return apiRequest<EvidenciaProgramacion[]>(`${base}/${id}/evidencias`)}

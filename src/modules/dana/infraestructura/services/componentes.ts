@@ -1,0 +1,12 @@
+import { apiRequest } from '@/services/auth'
+export interface CatalogoComponente { id:number; nombre:string }
+export interface TipoComponenteCatalogo extends CatalogoComponente { puntos:number }
+export interface SistemaComponente extends CatalogoComponente { distrito:string; tipo:string }
+export interface PuntoComponente { latitud:number|null; longitud:number|null }
+export interface ComponenteOperacional { id:number; nombre:string; observacion:string; tipo_componente_id:number; tipo_nombre:string; sistemas:SistemaComponente[]; puntos:PuntoComponente[]; control_calidad:boolean; variable_sunass:string; cod_sunass:string; caudal:number; capacidad_nominal:number; volumen:number; fecha_instalacion:string; ultimo_mantenimiento:string; frecuencia_mant_meses:number; condicion:string; condicion_nombre:string }
+export interface ComponentePayload { nombre:string; observacion:string; tipo_componente_id:number|null; sistema_id:number[]; puntos:PuntoComponente[]; control_calidad:boolean; variable_sunass:string; cod_sunass:string; caudal:number|null; capacidad_nominal:number|null; volumen:number|null; fecha_instalacion:string; ultimo_mantenimiento:string; frecuencia_mant_meses:number|null; condicion:string }
+export interface ComponentesResponse { data:ComponenteOperacional[]; tipos:TipoComponenteCatalogo[]; sistemas:SistemaComponente[]; variables_sunass:CatalogoComponente[]; condiciones:Record<string,string>; current_page:number; last_page:number; total:number }
+const base='/lecturita/dana/componentes'
+export function listarComponentes(criterio:string,sistemaId:string,page=1){const q=new URLSearchParams({criterio,sistema_id:sistemaId,page:String(page)});return apiRequest<ComponentesResponse>(`${base}?${q}`)}
+export function guardarComponente(data:ComponentePayload,id?:number){return apiRequest<ComponenteOperacional>(id?`${base}/${id}`:base,{method:id?'PUT':'POST',body:JSON.stringify(data)})}
+export function eliminarComponente(id:number){return apiRequest<void>(`${base}/${id}`,{method:'DELETE'})}
