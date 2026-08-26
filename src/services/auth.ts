@@ -6,6 +6,9 @@ export interface AuthUser {
   username: string
   name?: string
   nombre?: string
+  empresa_id?: number
+  empresa?: { id: number; nombre?: string; nombre_formal?: string; nombre_comercial?: string; imagen?: string }
+  empresas?: Array<{ id: number; nombre?: string; nombre_formal?: string; nombre_comercial?: string; imagen?: string }>
   [key: string]: unknown
 }
 
@@ -82,6 +85,7 @@ export const authService = {
   },
 
   me: () => apiRequest<AuthUser>('/lecturita/auth/me'),
+  cambiarEmpresa: (empresa_id: number) => apiRequest<AuthUser>('/lecturita/auth/cambiar-empresa', { method:'POST', body:JSON.stringify({ empresa_id }) }),
 
   async logout() {
     try {

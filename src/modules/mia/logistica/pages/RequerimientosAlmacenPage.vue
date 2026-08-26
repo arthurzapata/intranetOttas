@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { detalleRequerimiento, guardarRequerimiento, imprimirRequerimiento, listarRequerimientos, opcionesRequerimiento, type MaterialAlmacen, type RequerimientoAlmacen, type RequerimientoLinea, type RequerimientoOptions } from '../services/requerimientosAlmacen'
-const rows=ref<RequerimientoAlmacen[]>([]),options=ref<RequerimientoOptions>({materiales:[],centros_costos:[],actividades:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),materialModal=ref(false),detail=ref<RequerimientoAlmacen|null>(null),editing=ref<number|null>(null),materialSearch=ref('')
+const route=useRoute(),rows=ref<RequerimientoAlmacen[]>([]),options=ref<RequerimientoOptions>({materiales:[],centros_costos:[],actividades:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),materialModal=ref(false),detail=ref<RequerimientoAlmacen|null>(null),editing=ref<number|null>(null),materialSearch=ref('')
 const filters=reactive({criterio:'',fecha_desde:'',fecha_hasta:'',estado:'',page:1}),form=reactive({prioridad:'n' as 'n'|'u'|'m',inversion_id:0,informacion:'',enviar_copia:false,items:[] as RequerimientoLinea[]})
 const filteredMaterials=computed(()=>{const q=materialSearch.value.toLowerCase();return options.value.materiales.filter(x=>!q||x.nombre.toLowerCase().includes(q)||x.grupo?.toLowerCase().includes(q))})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const response=await listarRequerimientos(filters);rows.value=response.data;total.value=response.total;lastPage.value=response.last_page}catch(cause){error.value=message(cause)}finally{loading.value=false}}
-async function init(){try{options.value=await opcionesRequerimiento()}catch{}await load()}
+async function init(){try{options.value=await opcionesRequerimiento()}catch{}await load();if(route.query.nuevo==='1')await open()}
 async function open(item?:RequerimientoAlmacen){editing.value=item?.id||null;let current=item;if(item)try{current=await detalleRequerimiento(item.id)}catch{}Object.assign(form,{prioridad:current?.prioridad||'n',inversion_id:current?.inversion_id||0,informacion:current?.informacion||'',enviar_copia:false,items:current?.detalles?.map(x=>({...x}))||[]});modal.value=true}
 function add(material:MaterialAlmacen){if(form.items.some(x=>x.item_id===material.id)){error.value='El material ya fue agregado.';return}form.items.push({item_id:material.id,item:material.nombre,unidad:material.unidad,saldo:material.saldo,cantidad:1,glosa:'',centro_costos_id:0,actividad_presupuestal_id:0});materialModal.value=false}
 function available(line:RequerimientoLinea){return line.saldo==null||line.cantidad<=line.saldo}

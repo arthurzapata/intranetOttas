@@ -58,6 +58,7 @@ async function logout() {
     isLoading.value = false
   }
 }
+async function refreshUser() { user.value = await authService.me() }
 </script>
 
 <template>
@@ -66,7 +67,7 @@ async function logout() {
     <span>Verificando sesión...</span>
   </main>
 
-  <RouterView v-else-if="user" :user="user" @logout="logout" />
+  <RouterView v-else-if="user" :user="user" @logout="logout" @refresh-user="refreshUser" />
 
   <main v-else class="login-layout">
     <section class="hero-panel" aria-label="Presentación de la Intranet">
