@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { descargarDocumento, detalleEvaluacion, listarEvaluaciones, notificarProveedores, resolverProceso, validarProveedor, type ProcesoEvaluacion, type ProveedorOferta, type ResultadoTecnico } from '../services/evaluacionTecnica'
+import { descargarDocumento, detalleEvaluacion, listarEvaluaciones, notificarProveedores, resolverProceso, validarProveedor } from '../services/evaluacionTecnica'
+import type { ProcesoEvaluacion, ProveedorOferta, ResultadoTecnico } from '../interfaces/evaluacionTecnica.interface'
 const rows=ref<ProcesoEvaluacion[]>([]),detail=ref<ProcesoEvaluacion|null>(null),total=ref(0),lastPage=ref(1),estados=ref<Array<{id:number;nombre:string}>>([]),etapas=ref<Array<{id:number;nombre:string}>>([]),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),providerModal=ref(false),selectedProvider=ref<ProveedorOferta|null>(null)
 const filters=reactive({q:'',inicio_desde:'',fin_hasta:'',estado:'',etapa_vigente:'',page:1}),review=reactive<{resultado:ResultadoTecnico;comentario:string}>({resultado:'aprobado',comentario:''})
 const evaluated=computed(()=>detail.value?.proveedores?.filter(x=>x.validacion).length||0),rejected=computed(()=>detail.value?.proveedores?.filter(x=>x.validacion?.resultado==='rechazado').length||0),allEvaluated=computed(()=>Boolean(detail.value?.proveedores?.length&&evaluated.value===detail.value.proveedores.length))

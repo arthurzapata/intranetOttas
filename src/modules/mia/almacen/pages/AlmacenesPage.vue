@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { buscarEncargados, eliminarAlmacen, guardarAlmacen, listarAlmacenes, type Almacen, type PersonaAlmacen } from '../services/almacenes'
+import { buscarEncargados, eliminarAlmacen, guardarAlmacen, listarAlmacenes } from '../services/almacenes'
+import type { Almacen, PersonaAlmacen } from '../interfaces/almacenes.interface'
 const rows=ref<Almacen[]>([]),criterio=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),personSearch=ref(''),people=ref<PersonaAlmacen[]>([]),selectedPerson=ref<PersonaAlmacen|null>(null)
 const form=reactive({nombre:'',codigo_avalon:'',encargado_id:0,telefono:'',direccion:'',por_defecto:false,estado:true})
 async function load(next=1){page.value=next;loading.value=true;error.value='';try{const r=await listarAlmacenes(criterio.value,next);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page}catch(e){error.value=message(e)}finally{loading.value=false}}

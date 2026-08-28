@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{onMounted,reactive,ref}from'vue'
-import{crearContrato,descargarContrato,listarCentros,listarContratos,listarProvincias,type Contrato,type Option}from'../services/contratos'
+import{crearContrato,descargarContrato,listarCentros,listarContratos,listarProvincias}from'../services/contratos'
+import type { Contrato, Option } from '../interfaces/contratos.interface'
 const rows=ref<Contrato[]>([]),companies=ref<Option[]>([]),departments=ref<Option[]>([]),provinces=ref<Option[]>([]),towns=ref<Option[]>([]),criterion=ref(''),companyFilter=ref(0),page=ref(1),last=ref(1),total=ref(0),loading=ref(false),saving=ref(false),modal=ref(false),error=ref(''),success=ref(''),file=ref<File|null>(null),department=ref(0),province=ref(0),selectedTowns=ref<number[]>([]),territories=ref<{province:Option;towns:Option[]}[]>([])
 const form=reactive({empresa_id:0,titulo:'',fecha:new Date().toISOString().slice(0,10)})
 async function load(target=1){page.value=target;loading.value=true;error.value='';try{const result=await listarContratos(criterion.value,companyFilter.value,target);rows.value=result.data;total.value=result.total;last.value=result.last_page;companies.value=result.options.empresas;departments.value=result.options.departamentos}catch(e){error.value=message(e)}finally{loading.value=false}}

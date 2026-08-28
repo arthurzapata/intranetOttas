@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { crearMedidor, listarMedidores, obtenerMedidor, type Medidor, type MedidorPayload, type Option } from '../services/medidores'
+import { crearMedidor, listarMedidores, obtenerMedidor } from '../services/medidores'
+import type { Medidor, MedidorPayload, Option } from '../interfaces/medidores.interface'
 
 const filters = reactive({ criterio: '', procedencia_id: 0, diametro_id: 0, marca_id: 0, tipo: '', page: 1 })
 const catalogs = reactive({ procedencias: [] as Option[], diametros: [] as Option[], marcas: [] as Option[], tipos: [] as Option[] })

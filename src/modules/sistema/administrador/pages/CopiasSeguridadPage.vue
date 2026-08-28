@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{computed,onMounted,ref}from'vue'
-import{descargarCopia,listarCopias,type ArchivoBackup}from'../services/copiasSeguridad'
+import { descargarCopia, listarCopias } from '../services/copiasSeguridad'
+import type { ArchivoBackup } from '../interfaces/copiasSeguridad.interface'
 
 const principal=ref<ArchivoBackup[]>([]),company=ref<ArchivoBackup[]>([]),companyName=ref('Empresa activa'),database=ref(''),updated=ref(''),query=ref(''),loading=ref(false),downloading=ref(''),error=ref(''),success=ref('')
 const principalRows=computed(()=>filter(principal.value)),companyRows=computed(()=>filter(company.value)),total=computed(()=>principal.value.length+company.value.length)

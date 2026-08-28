@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { anularIngreso, guardarIngreso, listarIngresos, obtenerIngreso, urlNotaIngreso, type DetalleIngreso, type IngresoAlmacen, type PeriodoAlmacen, type TipoIngreso } from '../services/ingresos'
+import { anularIngreso, guardarIngreso, listarIngresos, obtenerIngreso, urlNotaIngreso } from '../services/ingresos'
+import type { DetalleIngreso, IngresoAlmacen, PeriodoAlmacen, TipoIngreso } from '../interfaces/ingresos.interface'
 
 const rows=ref<IngresoAlmacen[]>([]),tipos=ref<TipoIngreso[]>([]),periodo=ref<PeriodoAlmacen|null>(null),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),detail=ref<IngresoAlmacen|null>(null),modal=ref(false)
 const filters=reactive({criterio:'',tipo_id:'',desde:'',hasta:''})

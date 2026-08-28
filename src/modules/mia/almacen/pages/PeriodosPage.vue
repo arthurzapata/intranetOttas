@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { cambiarDia, cambiarPeriodo, inicializarPeriodos, listarPeriodos, obtenerPeriodo, type Periodo } from '../services/periodos'
+import { cambiarDia, cambiarPeriodo, inicializarPeriodos, listarPeriodos, obtenerPeriodo } from '../services/periodos'
+import type { Periodo } from '../interfaces/periodos.interface'
 const rows=ref<Periodo[]>([]),criterio=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),initialized=ref(true),loading=ref(false),working=ref(false),error=ref(''),success=ref(''),detail=ref<Periodo|null>(null)
 async function load(next=1){page.value=next;loading.value=true;error.value='';try{const r=await listarPeriodos(criterio.value,next);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page;initialized.value=r.inicializado}catch(e){error.value=message(e)}finally{loading.value=false}}
 async function initialize(){if(!confirm('Se creará el periodo y día operativo correspondiente a la fecha actual. ¿Continuar?'))return;await act(()=>inicializarPeriodos(),'Periodo inicial creado correctamente.');initialized.value=true}

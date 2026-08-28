@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { ejecutarAccion, listarBandeja, type BandejaFilters } from '../services/bandejas'
+import { ejecutarAccion, listarBandeja } from '../services/bandejas'
+import type { BandejaFilters } from '../interfaces/bandejas.interface'
 import type { BandejaTipo, CatalogOption, HistorialDocumento } from '../../interfaces/documento'
 
 const props = defineProps<{ tipo: BandejaTipo; title: string; description: string; accent?: string }>()

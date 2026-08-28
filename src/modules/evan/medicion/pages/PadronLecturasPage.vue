@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { anularLectura, generarPadron, listarPadron, urlImpresionRuta, type LecturaPadron, type NodoAvance, type Option } from '../services/padronLecturas'
+import { anularLectura, generarPadron, listarPadron, urlImpresionRuta } from '../services/padronLecturas'
+import type { LecturaPadron, NodoAvance, Option } from '../interfaces/padronLecturas.interface'
 
 const distritos=ref<NodoAvance[]>([]),sectores=ref<NodoAvance[]>([]),rutas=ref<NodoAvance[]>([]),rows=ref<LecturaPadron[]>([]),calles=ref<Option[]>([]),loading=ref(false),generating=ref(false),error=ref(''),success=ref(''),total=ref(0),lastPage=ref(1)
 const filters=reactive({distrito_id:'',sector_id:'',ruta_id:'',calle_id:'',criterio:'',estado:'',page:1})

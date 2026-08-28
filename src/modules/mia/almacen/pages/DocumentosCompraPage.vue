@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarDocumentoCompra, guardarDocumentoCompra, listarDocumentosCompra, type DocumentoCompra } from '../services/documentosCompra'
+import { eliminarDocumentoCompra, guardarDocumentoCompra, listarDocumentosCompra } from '../services/documentosCompra'
+import type { DocumentoCompra } from '../interfaces/documentosCompra.interface'
 const rows=ref<DocumentoCompra[]>([]),criterio=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null)
 const form=reactive({codigo:'',denominacion:'',tipo_operacion:0 as 0|1|2,afectacion:'S' as 'S'|'N',cta_prov_moneda_nacional:'',cta_prov_moneda_extranjera:'',detraccion:false,activo:true})
 const operationNames:Record<number,string>={0:'Compras en general',1:'Ingreso de almacén',2:'Salida de almacén'}

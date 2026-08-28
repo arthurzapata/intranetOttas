@@ -1,9 +1,10 @@
 import { apiRequest } from '@/services/auth'
-export interface OpcionCisterna { id:number; nombre:string }
-export interface MantenimientoCisterna { id:number; motivo_id:number; motivo:string; detalle:string; fecha_desde:string; fecha_hasta:string; usuario:string }
-export interface Cisterna { id:number; placa:string; vin:string; marca:string; modelo:string; capacidad:number; fabricacion:number; combustible:string; tipo_vehiculo:string; imei:string; celular:string; gps:boolean; estado_id:number; estado:string; propiedad_id:number; propiedad:string; oficina_id:number; oficina:string; ubicacion:string; observacion:string; conductor_id:number|null; conductor:string; ayudante_id:number|null; ayudante:string; programada_hoy:boolean; mantenimientos_count:number }
-export interface CisternaPayload { placa:string; vin:string; marca:string; modelo:string; capacidad:number|null; fabricacion:number|null; combustible_id:number|null; tipo_vehiculo_id:number|null; imei:string; celular:string; estado_id:number|null; propiedad_id:number|null; oficina_id:number|null; ubicacion:string; observacion:string; conductor_id:number|null; ayudante_id:number|null }
-export interface CisternasResponse { data:Cisterna[]; oficinas:OpcionCisterna[]; personas:OpcionCisterna[]; estados:Record<number,string>; propiedades:Record<number,string>; combustibles:Record<number,string>; tipos_vehiculo:Record<number,string>; motivos_mantenimiento:Record<number,string>; current_page:number; last_page:number; total:number; totales:{libres:number;programadas:number;mantenimiento:number} }
+import type { MantenimientoCisterna, Cisterna, CisternaPayload, CisternasResponse } from '../interfaces/cisternas.interface'
+
+
+
+
+
 const base='/lecturita/dana/gestion-cisternas/cisternas'
 export function listarCisternas(criterio:string,fecha:string,page=1){const q=new URLSearchParams({criterio,fecha,page:String(page)});return apiRequest<CisternasResponse>(`${base}?${q}`)}
 export function guardarCisterna(data:CisternaPayload,id?:number){return apiRequest<Cisterna>(id?`${base}/${id}`:base,{method:id?'PUT':'POST',body:JSON.stringify(data)})}

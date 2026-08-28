@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarProveedor, guardarProveedor, listarProveedores, type Proveedor } from '../services/proveedores'
+import { eliminarProveedor, guardarProveedor, listarProveedores } from '../services/proveedores'
+import type { Proveedor } from '../interfaces/proveedores.interface'
 const rows=ref<Proveedor[]>([]),criterio=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null)
 const form=reactive({ruc:'',razon_social:'',celular:'',telefono_fijo:'',email:'',direccion:'',estado:true})
 async function load(next=1){page.value=next;loading.value=true;error.value='';try{const response=await listarProveedores(criterio.value,next);rows.value=response.data;total.value=response.total;lastPage.value=response.last_page}catch(cause){error.value=message(cause)}finally{loading.value=false}}

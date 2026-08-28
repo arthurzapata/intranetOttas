@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { alternarTipo, guardarTipo, listarTipos, type TipoDocumentoConfig } from '../services/configuracion'
+import { alternarTipo, guardarTipo, listarTipos } from '../services/configuracion'
+import type { TipoDocumentoConfig } from '../interfaces/configuracion.interface'
 const criterio=ref(''),items=ref<TipoDocumentoConfig[]>([]),pagination=reactive({current:1,last:1,total:0}),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null)
 const form=reactive({nombre:'',descripcion:'',tamanio_maximo_mb:10,activo:true,es_convenio:false,es_documento_normativo:false,es_proveido:false})
 async function load(page=1){loading.value=true;error.value='';try{const r=await listarTipos(criterio.value,page);items.value=r.data;Object.assign(pagination,{current:r.current_page,last:r.last_page,total:r.total})}catch(cause){error.value=cause instanceof Error?cause.message:'No se pudo cargar la configuración.'}finally{loading.value=false}}

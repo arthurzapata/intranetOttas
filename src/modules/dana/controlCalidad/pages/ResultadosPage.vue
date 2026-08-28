@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { eliminarResultado, guardarResultado, listarResultados, type MuestraResultado, type ParametroResultado, type ResultadoCalidad, type ResultadoPayload } from '../services/resultados'
+import { eliminarResultado, guardarResultado, listarResultados } from '../services/resultados'
+import type { MuestraResultado, ParametroResultado, ResultadoCalidad, ResultadoPayload } from '../interfaces/resultados.interface'
 const records=ref<ResultadoCalidad[]>([]),samples=ref<MuestraResultado[]>([]),parameters=ref<ParametroResultado[]>([]),selected=ref<ResultadoCalidad|null>(null),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),page=ref(1),lastPage=ref(1),total=ref(0),filters=reactive({fecha_desde:'',fecha_hasta:'',parametros:[] as number[],muestra_id:''}),form=reactive<ResultadoPayload>({muestra_id:null,parametro_id:null,valor:null})
 const selectedParameter=computed(()=>parameters.value.find(x=>x.id===form.parametro_id))
 async function load(target=1){loading.value=true;error.value='';try{const r=await listarResultados({...filters,page:target});records.value=r.data;samples.value=r.muestras;parameters.value=r.parametros;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total}catch(e){error.value=message(e)}finally{loading.value=false}}

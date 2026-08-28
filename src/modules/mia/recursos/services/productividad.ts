@@ -1,8 +1,5 @@
 import { apiRequest } from '@/services/auth'
-export interface Colaborador { id:number; username:string; nombre_completo:string; dni:string; fecha_nacimiento?:string; sexo?:string; imagen_url?:string; total_tareas:number; total_culminadas:number }
-export interface Actividad { id:number; descripcion:string; seccion:string; fecha_registro:string; registrado_por:string; atendido:boolean; fecha_atencion?:string }
-export interface ColaboradoresResponse { data:Colaborador[]; current_page:number; last_page:number; total:number }
-export interface ProductividadResponse { colaborador:Colaborador; actividades:Actividad[] }
+import type { Actividad, ColaboradoresResponse, ProductividadResponse } from '../interfaces/productividad.interface'
 const base='/lecturita/mia/recursos/productividad'
 export function listarColaboradores(criterio:string,page=1){const q=new URLSearchParams({criterio,page:String(page)});return apiRequest<ColaboradoresResponse>(`${base}?${q}`)}
 export function obtenerProductividad(usuarioId:number){return apiRequest<ProductividadResponse>(`${base}/${usuarioId}`)}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { buscarRemitentesReporte, exportarReporte, listarReporte, type ReportDoc, type ReportFilters } from '../services/reportes'
+import { buscarRemitentesReporte, exportarReporte, listarReporte } from '../services/reportes'
+import type { ReportDoc, ReportFilters } from '../interfaces/reportes.interface'
 import type { CatalogOption } from '../../interfaces/documento'
 const filters=reactive<ReportFilters>({criterio:'',tipo_documento_id:0,remitente_id:0,fecha_inicio:'',fecha_fin:'',page:1}),items=ref<ReportDoc[]>([]),tipos=ref<CatalogOption[]>([]),pagination=reactive({current:1,last:1,total:0}),loading=ref(false),exporting=ref(''),error=ref(''),searched=ref(false),remitenteText=ref(''),remitentes=ref<Array<{id:number;text:string}>>([]),selectedRemitente=ref('')
 async function load(page=1){filters.page=page;loading.value=true;searched.value=true;error.value='';try{const r=await listarReporte(filters);items.value=r.data;tipos.value=r.tipos_documento;Object.assign(pagination,{current:r.current_page,last:r.last_page,total:r.total})}catch(cause){error.value=cause instanceof Error?cause.message:'No se pudo generar el reporte.'}finally{loading.value=false}}

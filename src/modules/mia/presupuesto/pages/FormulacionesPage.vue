@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { avanzarFase, crearFormulacion, listarFormulaciones, obtenerFormulacion, type FaseFormulacion, type FormulacionPresupuestal } from '../services/formulaciones'
+import { avanzarFase, crearFormulacion, listarFormulaciones, obtenerFormulacion } from '../services/formulaciones'
+import type { FaseFormulacion, FormulacionPresupuestal } from '../interfaces/formulaciones.interface'
 const records=ref<FormulacionPresupuestal[]>([]),selected=ref<FormulacionPresupuestal|null>(null),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),modal=ref(false),year=ref(new Date().getFullYear()+1)
 const phases:Array<{key:FaseFormulacion;number:number;title:string;text:string}>= [
   {key:'proyeccion',number:1,title:'Proyecciones',text:'Registro de ingresos, restricciones y cálculo del saldo operativo.'},

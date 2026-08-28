@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,ref } from 'vue'
-import { buscarDeuda,registrarPago,type Conexion } from '../services/pagos'
+import { buscarDeuda, registrarPago } from '../services/pagos'
+import type { Conexion } from '../interfaces/pagos.interface'
 const query=ref(''),connection=ref<Conexion|null>(null),selected=ref<number[]>([]),loading=ref(false),saving=ref(false),error=ref(''),success=ref('')
 const total=computed(()=>connection.value?.comprobantes.filter(x=>selected.value.includes(x.id)).reduce((n,x)=>n+Number(x.total),0)||0),all=computed(()=>!!connection.value?.comprobantes.length&&selected.value.length===connection.value.comprobantes.length)
 const money=(n:number)=>Number(n).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})

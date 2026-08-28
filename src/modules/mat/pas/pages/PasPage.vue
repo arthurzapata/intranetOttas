@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { detalleFiscalizacion,detallePas,listarExpedientesPas,listarFiscalizaciones,registrarFiscalizacion,type ExpedientePas,type Fiscalizacion,type Options } from '../services/pas'
+import { detalleFiscalizacion, detallePas, listarExpedientesPas, listarFiscalizaciones, registrarFiscalizacion } from '../services/pas'
+import type { ExpedientePas, Fiscalizacion, Options } from '../interfaces/pas.interface'
 const tab=ref<'fiscalizaciones'|'expedientes'>('fiscalizaciones'),fiscalizaciones=ref<Fiscalizacion[]>([]),expedientes=ref<ExpedientePas[]>([]),options=ref<Options>({tipos_accion:[],resultados:[],estados_pas:[],anios:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Fiscalizacion|ExpedientePas|null>(null),pdf=ref<File|null>(null)
 const filters=reactive({criterio:'',tipo_accion:'',resultado:'',estado_pas:'',anio:new Date().getFullYear(),page:1}),form=reactive({numero_fiscalizacion:'',tipo_accion:'',fecha_accion:new Date().toISOString().slice(0,10),descripcion_hechos:'',tiene_plazo_subsanacion:false,fecha_limite_subsanacion:''})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=tab.value==='fiscalizaciones'?await listarFiscalizaciones(filters):await listarExpedientesPas(filters);total.value=r.total;lastPage.value=r.last_page;options.value=r.options;if(tab.value==='fiscalizaciones')fiscalizaciones.value=r.data as Fiscalizacion[];else expedientes.value=r.data as ExpedientePas[]}catch(e){error.value=message(e)}finally{loading.value=false}}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarSistema, guardarSistema, listarSistemas, type DistritoSistema, type EstadoSistema, type SistemaOperacional, type SistemaPayload, type TipoSistema } from '../services/sistemas'
+import { eliminarSistema, guardarSistema, listarSistemas } from '../services/sistemas'
+import type { DistritoSistema, EstadoSistema, SistemaOperacional, SistemaPayload, TipoSistema } from '../interfaces/sistemas.interface'
 const records=ref<SistemaOperacional[]>([]),districts=ref<DistritoSistema[]>([]),query=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),page=ref(1),lastPage=ref(1),total=ref(0)
 const form=reactive<SistemaPayload>({distrito_id:null,tipo:'a',nombre:'',descripcion:'',capacidad_diseno_lps:null,capacidad_actual_lps:null,fecha_puesta_servicio:'',estado_operativo:'O'})
 const types:Record<TipoSistema,string>={a:'Agua potable',d:'Alcantarillado'},states:Record<EstadoSistema,string>={O:'Operativo',P:'Operación parcial',C:'Cerrado',D:'Fuera de servicio'}

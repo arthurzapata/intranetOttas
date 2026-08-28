@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,onMounted,reactive,ref } from 'vue'
-import { anularSolicitud,conexionesCliente,detalleSolicitud,listarSolicitudes,registrarSolicitud,type Option,type Options,type Solicitud } from '../services/solicitudes'
+import { anularSolicitud, conexionesCliente, detalleSolicitud, listarSolicitudes, registrarSolicitud } from '../services/solicitudes'
+import type { Option, Options, Solicitud } from '../interfaces/solicitudes.interface'
 const rows=ref<Solicitud[]>([]),options=ref<Options>({conceptos:[],distritos:[],clientes:[],conexiones:[],estados:[]}),connections=ref<Option[]>([]),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Solicitud|null>(null),clientSearch=ref('')
 const filters=reactive({criterio:'',concepto_id:'',estado:'',desde:'',hasta:'',page:1}),form=reactive({cliente_id:'',concepto_id:'',conexion_id:'',distrito_id:'',direccion:'',referencia:'',observacion:''})
 const clients=computed(()=>options.value.clientes.filter(x=>!clientSearch.value||x.nombre.toLowerCase().includes(clientSearch.value.toLowerCase())).slice(0,30)),concept=computed(()=>options.value.conceptos.find(x=>String(x.id)===String(form.concepto_id)))

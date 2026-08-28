@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { buscarSeguimiento, detallarSeguimiento, obtenerOpcionesFlujo, type SeguimientoFilters } from '../services/flujo'
+import { buscarSeguimiento, detallarSeguimiento, obtenerOpcionesFlujo } from '../services/flujo'
+import type { SeguimientoFilters } from '../interfaces/flujo.interface'
 import type { CatalogOption, DocumentoSeguimiento, SeguimientoDetalle } from '../../interfaces/documento'
 const filters=reactive<SeguimientoFilters>({filtro_documento:'',filtro_remitente:'',tipo_documento_id:0,page:1})
 const items=ref<DocumentoSeguimiento[]>([]),tipos=ref<CatalogOption[]>([]),context=reactive<{instancia?:CatalogOption|null;cargo?:CatalogOption|null}>({})

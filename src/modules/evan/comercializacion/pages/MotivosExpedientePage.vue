@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { actualizarMotivo,crearMotivo,listarMotivos,type Motivo,type Option } from '../services/motivosExpediente'
+import { actualizarMotivo, crearMotivo, listarMotivos } from '../services/motivosExpediente'
+import type { Motivo, Option } from '../interfaces/motivosExpediente.interface'
 const rows=ref<Motivo[]>([]),tipos=ref<Option[]>([]),conceptos=ref<Option[]>([]),editing=ref<Motivo|null>(null),detail=ref<Motivo|null>(null),modal=ref(false),criterio=ref(''),tipo=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref('')
 const defaults={motivo:'',descripcion:'',tipo_expediente_id:'',concepto_id:'',referido_a:'',estado_suministro:'',requiere_suministro:false,crea_contrato:false,requiere_contraste:false,verifica_deuda:false,quiebre_total:false,afecta_interes:false,crea_suministro:false,requiere_monto_reclamo:false,activo:true},form=reactive({...defaults})
 const flags:[keyof Motivo,string][]=[['requiere_suministro','Requiere suministro'],['crea_contrato','Crea contrato'],['requiere_contraste','Requiere contraste'],['verifica_deuda','Verifica deuda'],['quiebre_total','Quiebre total'],['afecta_interes','Afecta interés'],['crea_suministro','Crea suministro'],['requiere_monto_reclamo','Requiere monto reclamado']]

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,onMounted,reactive,ref } from 'vue'
-import { generarPadron,listarPadron,registrarVerificacion,type Option,type Suministro } from '../services/verificarCortados'
+import { generarPadron, listarPadron, registrarVerificacion } from '../services/verificarCortados'
+import type { Option, Suministro } from '../interfaces/verificarCortados.interface'
 const rows=ref<Suministro[]>([]),distritos=ref<Option[]>([]),sectores=ref<Option[]>([]),calles=ref<Option[]>([]),observaciones=ref<Option[]>([]),dinamicas=ref<Option[]>([]),detail=ref<Suministro|null>(null),modal=ref(false),files=ref<File[]>([]),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),progress=reactive({revisados:0,total:0})
 const filters=reactive({distrito_id:'',sector_id:'',calle_id:'',criterio:'',estado:'pendientes',page:1}),form=reactive({resultado:'cortado',observacion_id:'',detalle:'',latitud:'',longitud:'',dinamicas:[] as number[]})
 const percent=computed(()=>progress.total?Math.round(progress.revisados/progress.total*100):0)

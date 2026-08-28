@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { agregarPaso,crearTipo,detalleTipo,eliminarPaso,listarTipos,type Accion,type TipoAtencion } from '../services/tiposAtencion'
+import { agregarPaso, crearTipo, detalleTipo, eliminarPaso, listarTipos } from '../services/tiposAtencion'
+import type { Accion, TipoAtencion } from '../interfaces/tiposAtencion.interface'
 const rows=ref<TipoAtencion[]>([]),acciones=ref<Accion[]>([]),detail=ref<TipoAtencion|null>(null),modal=ref<'nuevo'|'paso'|null>(null),criterio=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref('')
 const form=reactive({tipo:'',nombre:''}),paso=reactive({accion_id:'',condicion:'',tipo_accion:'',secuencia:''})
 const message=(e:unknown)=>e instanceof Error?e.message:'No se pudo completar la operación.'

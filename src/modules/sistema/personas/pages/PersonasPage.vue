@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{onMounted,reactive,ref}from'vue'
-import{actualizarPersona,detallePersona,listarPersonas,type CambioPersona,type Persona,type PersonaPayload}from'../services/personas'
+import { actualizarPersona, detallePersona, listarPersonas } from '../services/personas'
+import type { CambioPersona, Persona, PersonaPayload } from '../interfaces/personas.interface'
 
 const rows=ref<Persona[]>([]),criterion=ref(''),page=ref(1),last=ref(1),total=ref(0),loading=ref(false),saving=ref(false),selected=ref<Persona|null>(null),logs=ref<CambioPersona[]>([]),logPage=ref(1),logLast=ref(1),error=ref(''),success=ref('')
 const form=reactive<PersonaPayload>({apellido_paterno:'',apellido_materno:'',nombre:'',dni:'',telefono_fijo:'',celular:'',email:''})

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { guardarTipoTransaccion, listarTiposTransaccion, type TipoTransaccion } from '../services/tiposTransaccion'
+import { guardarTipoTransaccion, listarTiposTransaccion } from '../services/tiposTransaccion'
+import type { TipoTransaccion } from '../interfaces/tiposTransaccion.interface'
 const rows=ref<TipoTransaccion[]>([]),criterio=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null)
 const form=reactive({nombre:'',grupo:'' as ''|'i'|'s',orden_compra:false,pedido:false,documento:false,requiere_asiento_contable:false,requiere_almacen_destino:false,estado:true})
 async function load(next=1){page.value=next;loading.value=true;error.value='';try{const r=await listarTiposTransaccion(criterio.value,next);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page}catch(e){error.value=message(e)}finally{loading.value=false}}

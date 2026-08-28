@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{onMounted,reactive,ref}from'vue'
-import{actualizarConfiguracion,crearConfiguracion,eliminarConfiguracion,listarConfiguraciones,type Configuracion,type ConfiguracionFilters,type ConfiguracionPayload,type TipoDato}from'../services/configuracionSistema'
+import { actualizarConfiguracion, crearConfiguracion, eliminarConfiguracion, listarConfiguraciones } from '../services/configuracionSistema'
+import type { Configuracion, ConfiguracionFilters, ConfiguracionPayload, TipoDato } from '../interfaces/configuracionSistema.interface'
 
 const rows=ref<Configuracion[]>([]),categories=ref<string[]>([]),total=ref(0),last=ref(1),loading=ref(false),saving=ref(false),modal=ref(false),editing=ref<Configuracion|null>(null),error=ref(''),success=ref('')
 const filters=reactive<ConfiguracionFilters>({criterio:'',categoria:'',page:1})

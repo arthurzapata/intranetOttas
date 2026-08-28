@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { actualizarFlujo,crearFlujo,listarFlujos,type FlujoAtencion } from '../services/flujosAtencion'
+import { actualizarFlujo, crearFlujo, listarFlujos } from '../services/flujosAtencion'
+import type { FlujoAtencion } from '../interfaces/flujosAtencion.interface'
 const rows=ref<FlujoAtencion[]>([]),editing=ref<FlujoAtencion|null>(null),modal=ref(false),criterio=ref(''),tipo=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref('')
 const form=reactive({tipo:'',descripcion:'',activo:true})
 const labels:Record<string,string>={R:'Reclamo',S:'Solicitud',SF:'Solicitud de factibilidad',SM:'Contrastación de medidor',SC:'Cambio de nombre'}

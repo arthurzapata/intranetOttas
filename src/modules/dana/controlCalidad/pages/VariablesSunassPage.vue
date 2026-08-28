@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { eliminarVariableSunass, guardarVariableSunass, listarVariablesSunass, type VariableSunass, type VariableSunassPayload } from '../services/variablesSunass'
+import { eliminarVariableSunass, guardarVariableSunass, listarVariablesSunass } from '../services/variablesSunass'
+import type { VariableSunass, VariableSunassPayload } from '../interfaces/variablesSunass.interface'
 const records=ref<VariableSunass[]>([]),periodicities=ref<Record<string,string>>({}),query=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),page=ref(1),lastPage=ref(1),total=ref(0),form=reactive<VariableSunassPayload>({nombre:'',descripcion:'',periodicidad:'',grupo_informacion:null})
 const groups=computed(()=>new Set(records.value.map(x=>x.grupo_informacion)).size)
 async function load(target=1){loading.value=true;error.value='';try{const r=await listarVariablesSunass(query.value,target);records.value=r.data;periodicities.value=r.periodicidades;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total}catch(e){error.value=message(e)}finally{loading.value=false}}

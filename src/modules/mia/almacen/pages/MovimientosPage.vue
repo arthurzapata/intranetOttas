@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { buscarItems, listarMovimientos, obtenerDetalle, urlReporteMovimientos, type ItemOption, type Movimiento, type MovimientoDocumento, type MovimientoItem } from '../services/movimientos'
-import type { CatalogoSaldo } from '../services/saldos'
+import { buscarItems, listarMovimientos, obtenerDetalle, urlReporteMovimientos } from '../services/movimientos'
+import type { ItemOption, Movimiento, MovimientoDocumento, MovimientoItem } from '../interfaces/movimientos.interface'
+import type { CatalogoSaldo } from '../interfaces/saldos.interface'
 const rows=ref<Movimiento[]>([]),almacenes=ref<CatalogoSaldo[]>([]),options=ref<ItemOption[]>([]),selected=ref<ItemOption[]>([]),itemSearch=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),modo=ref<'documento'|'item'>('documento'),loading=ref(false),error=ref(''),detail=ref<MovimientoItem[]|null>(null),summary=reactive({ingresos:0,salidas:0,documentos:0,anulados:0}),filters=reactive({almacen:'',desde:'',hasta:''})
 async function load(next=1){page.value=next;loading.value=true;error.value='';try{const r=await listarMovimientos({...filters,items:selected.value.map(x=>x.id),page:next});rows.value=r.data;almacenes.value=r.almacenes;lastPage.value=r.last_page;total.value=r.total;modo.value=r.modo;Object.assign(summary,r.resumen);if(!filters.almacen&&r.almacen_default_id)filters.almacen=String(r.almacen_default_id);if(!filters.desde&&r.periodo){filters.desde=r.periodo.fecha_inicio;filters.hasta=r.periodo.fecha_fin}}catch(e){error.value=message(e)}finally{loading.value=false}}
 async function search(){if(!itemSearch.value.trim())return;try{options.value=await buscarItems(itemSearch.value)}catch(e){error.value=message(e)}}

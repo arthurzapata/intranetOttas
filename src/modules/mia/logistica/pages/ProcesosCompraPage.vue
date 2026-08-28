@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { accionProceso, detalleProceso, guardarProceso, listarProcesos, type EtapaProceso, type ProcesoCompra, type ProcesoOptions } from '../services/procesosCompra'
+import { accionProceso, detalleProceso, guardarProceso, listarProcesos } from '../services/procesosCompra'
+import type { EtapaProceso, ProcesoCompra, ProcesoOptions } from '../interfaces/procesosCompra.interface'
 const rows=ref<ProcesoCompra[]>([]),options=ref<ProcesoOptions>({estados:[],etapas:[],pedidos:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<ProcesoCompra|null>(null),editing=ref<number|null>(null),pedidoSearch=ref('')
 const filters=reactive({q:'',inicio_desde:'',fin_hasta:'',estado:'',etapa_vigente:'',page:1}),form=reactive({titulo:'',descripcion:'',tipo:'m' as 'a'|'m'|'s',registro:new Date().toISOString().slice(0,16),pedidos_relacionados:[] as number[],etapas:[] as EtapaProceso[]})
 const availableOrders=computed(()=>options.value.pedidos.filter(x=>(!x.tipo||x.tipo===form.tipo)&&(!pedidoSearch.value||String(x.id).includes(pedidoSearch.value)||x.informacion?.toLowerCase().includes(pedidoSearch.value.toLowerCase()))))

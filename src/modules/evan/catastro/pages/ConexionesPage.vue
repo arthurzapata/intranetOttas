@@ -2,10 +2,8 @@
 import { onMounted, reactive, ref } from 'vue'
 import {
   listarConexiones,
-  type CatalogOption,
-  type Conexion,
-  type ConexionFilters,
 } from '../services/conexiones'
+import type { CatalogOption, Conexion, ConexionFilters } from '../interfaces/conexiones.interface'
 
 const filters = reactive<ConexionFilters>({
   criterio: '',

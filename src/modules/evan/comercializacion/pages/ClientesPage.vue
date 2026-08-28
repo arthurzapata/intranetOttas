@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { detalleCliente,listarClientes,registrarCliente,type Cliente } from '../services/clientes'
+import { detalleCliente, listarClientes, registrarCliente } from '../services/clientes'
+import type { Cliente } from '../interfaces/clientes.interface'
 const rows=ref<Cliente[]>([]),total=ref(0),page=ref(1),lastPage=ref(1),criterion=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Cliente|null>(null)
 const form=reactive({tipo:1 as 1|2,nombre:'',apellido_paterno:'',apellido_materno:'',dni:'',razon_social:'',ruc:'',celular:'',telefono_fijo:'',email:''})
 async function load(next=1){page.value=next;loading.value=true;error.value='';try{const r=await listarClientes(criterion.value,next);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page}catch(e){error.value=message(e)}finally{loading.value=false}}

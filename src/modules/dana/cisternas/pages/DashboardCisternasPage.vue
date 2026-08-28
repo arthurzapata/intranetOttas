@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { exportarProgramaciones, obtenerDashboardCisternas, type DashboardCisternasResponse } from '../services/dashboard'
+import { exportarProgramaciones, obtenerDashboardCisternas } from '../services/dashboard'
+import type { DashboardCisternasResponse } from '../interfaces/dashboard.interface'
 const today=new Date(),first=new Date(today.getFullYear(),today.getMonth(),1),last=new Date(today.getFullYear(),today.getMonth()+1,0);const iso=(d:Date)=>{const offset=d.getTimezoneOffset();return new Date(d.getTime()-offset*60000).toISOString().slice(0,10)}
 const filters=reactive({desde:iso(first),hasta:iso(last)}),data=ref<DashboardCisternasResponse|null>(null),loading=ref(false),exporting=ref(false),error=ref('')
 async function load(){if(!filters.desde||!filters.hasta||filters.hasta<filters.desde){error.value='Seleccione un periodo válido.';return}loading.value=true;error.value='';try{data.value=await obtenerDashboardCisternas(filters.desde,filters.hasta)}catch(e){error.value=message(e)}finally{loading.value=false}}

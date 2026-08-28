@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{onMounted,reactive,ref}from'vue'
-import{listarAccesos,type Acceso,type AccesosFilters}from'../services/logAccesos'
+import { listarAccesos } from '../services/logAccesos'
+import type { Acceso, AccesosFilters } from '../interfaces/logAccesos.interface'
 
 const rows=ref<Acceso[]>([]),total=ref(0),last=ref(1),loading=ref(false),error=ref('')
 const filters=reactive<AccesosFilters>({criterio:'',ip:'',desde:'',hasta:'',page:1})

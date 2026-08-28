@@ -1,9 +1,8 @@
 import { apiRequest } from '@/services/auth'
 import type { CatalogDistrict, CatalogFilters, CatalogItem, CatalogPayload, CatalogResponse } from '@/interfaces/catalog'
+import type { CentroPoblado } from '../interfaces/centrosPoblados.interface'
 
-export interface CentroPoblado extends CatalogItem {
-  distrito: CatalogDistrict
-}
+
 
 const basePath = '/lecturita/evan/catastro/centros-poblados'
 

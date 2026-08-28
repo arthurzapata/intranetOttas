@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { actualizarTipoTrabajo,crearTipoTrabajo,listarTiposTrabajo,type TipoTrabajo } from '../services/tiposTrabajo'
+import { actualizarTipoTrabajo, crearTipoTrabajo, listarTiposTrabajo } from '../services/tiposTrabajo'
+import type { TipoTrabajo } from '../interfaces/tiposTrabajo.interface'
 const rows=ref<TipoTrabajo[]>([]),editing=ref<TipoTrabajo|null>(null),detail=ref<TipoTrabajo|null>(null),modal=ref(false),criterio=ref(''),estado=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref('')
 const form=reactive({tipo:'',descripcion:'',duracion:'',proceso:'',se_informa:'',movimiento_genera:'',activo:true})
 async function load(p=1){page.value=p;loading.value=true;error.value='';try{const r=await listarTiposTrabajo(criterio.value,estado.value,p);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page}catch(e){error.value=msg(e)}finally{loading.value=false}}

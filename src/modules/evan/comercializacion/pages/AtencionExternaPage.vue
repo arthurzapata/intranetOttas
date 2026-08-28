@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,onMounted,reactive,ref } from 'vue'
-import { detallePreTicket,eliminarPreTicket,listarPreTickets,validarPreTicket,type Options,type PreTicket } from '../services/atencionExterna'
+import { detallePreTicket, eliminarPreTicket, listarPreTickets, validarPreTicket } from '../services/atencionExterna'
+import type { Options, PreTicket } from '../interfaces/atencionExterna.interface'
 const rows=ref<PreTicket[]>([]),options=ref<Options>({conceptos:[],distritos:[],parentescos:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),detail=ref<PreTicket|null>(null),modal=ref(false)
 const filters=reactive({criterio:'',distrito_id:'',desde:'',hasta:'',page:1}),form=reactive({apellido_paterno:'',apellido_materno:'',nombre:'',dni:'',celular:'',telefono_fijo:'',email:'',parentesco:'',distrito_id:'',suministro:'',descripcion:'',tipo_atencion_id:''})
 const concept=computed(()=>options.value.conceptos.find(x=>String(x.id)===String(form.tipo_atencion_id)))

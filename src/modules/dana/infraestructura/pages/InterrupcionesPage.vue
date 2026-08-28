@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { listarInterrupciones, obtenerInterrupcion, restablecerInterrupcion, type InterrupcionOperacional } from '../services/interrupciones'
+import { listarInterrupciones, obtenerInterrupcion, restablecerInterrupcion } from '../services/interrupciones'
+import type { InterrupcionOperacional } from '../interfaces/interrupciones.interface'
 const records=ref<InterrupcionOperacional[]>([]),selected=ref<InterrupcionOperacional|null>(null),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),modal=ref(false),restoreId=ref<number|null>(null),totals=reactive({activas:0,restablecidas:0,programadas:0,difundidas:0}),filters=reactive({criterio:'',fecha_inicio:'',fecha_fin:'',estado:''}),restore=reactive({fecha_restablecimiento:'',observacion:''})
 async function load(target=1){loading.value=true;error.value='';try{const r=await listarInterrupciones({...filters,page:target});records.value=r.data;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total;Object.assign(totals,r.totales)}catch(e){error.value=message(e)}finally{loading.value=false}}
 function clear(){Object.assign(filters,{criterio:'',fecha_inicio:'',fecha_fin:'',estado:''});load(1)}

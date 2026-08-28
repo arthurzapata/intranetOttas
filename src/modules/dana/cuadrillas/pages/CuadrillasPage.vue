@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { eliminarCuadrilla, guardarCuadrilla, listarCuadrillas, type Cuadrilla, type CuadrillaPayload, type PersonalOperativo } from '../services/cuadrillas'
+import { eliminarCuadrilla, guardarCuadrilla, listarCuadrillas } from '../services/cuadrillas'
+import type { Cuadrilla, CuadrillaPayload, PersonalOperativo } from '../interfaces/cuadrillas.interface'
 const records=ref<Cuadrilla[]>([]),staff=ref<PersonalOperativo[]>([]),serviceTypes=ref<Record<number,string>>({}),query=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),memberId=ref<number|null>(null),total=ref(0),summary=reactive({activas:0,personal_asignado:0,trabajos_pendientes:0}),form=reactive<CuadrillaPayload>({nombre:'',tipo_servicio_id:null,lider_id:null,miembros_ids:[],activa:true})
 const selectedMembers=computed(()=>form.miembros_ids.map(id=>staff.value.find(x=>x.id===id)).filter((x):x is PersonalOperativo=>Boolean(x))),availableStaff=computed(()=>staff.value.filter(x=>!form.miembros_ids.includes(x.id)))
 async function load(){loading.value=true;error.value='';try{const r=await listarCuadrillas(query.value);records.value=r.data;staff.value=r.personal;serviceTypes.value=r.tipos_servicio;total.value=r.total;Object.assign(summary,r.resumen)}catch(e){error.value=message(e)}finally{loading.value=false}}

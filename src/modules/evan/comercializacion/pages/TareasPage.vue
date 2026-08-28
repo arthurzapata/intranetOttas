@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { derivarTarea,detalleTarea,finalizarTarea,liberarTarea,listarTareas,recibirTarea,type Options,type Tarea } from '../services/tareas'
+import { derivarTarea, detalleTarea, finalizarTarea, liberarTarea, listarTareas, recibirTarea } from '../services/tareas'
+import type { Options, Tarea } from '../interfaces/tareas.interface'
 const route=useRoute(),rows=ref<Tarea[]>([]),options=ref<Options>({secciones:[],tipos_tarea:[],personal:[],estados:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),detail=ref<Tarea|null>(null),actionModal=ref<'finalizar'|'derivar'|null>(null),files=ref<File[]>([])
 const filters=reactive({bandeja:route.query.bandeja==='mis-pendientes'?'mis-pendientes':'disponibles',criterio:'',seccion_id:'',tipo_tarea_id:'',estado:'',desde:'',hasta:'',page:1}),finish=reactive({detalle:'',personal:[] as number[],fecha_atencion:'',latitud:'',longitud:'',ok:true}),derive=reactive({seccion_id:'',detalle:''})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=await listarTareas(filters);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page;options.value=r.options}catch(e){error.value=message(e)}finally{loading.value=false}}

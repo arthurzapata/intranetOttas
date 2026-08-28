@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { listarStock, obtenerCompromiso, urlExportarStock, type CatalogoStock, type StockComprometido } from '../services/stock'
+import { listarStock, obtenerCompromiso, urlExportarStock } from '../services/stock'
+import type { CatalogoStock, StockComprometido } from '../interfaces/stock.interface'
 const rows=ref<StockComprometido[]>([]),almacenes=ref<CatalogoStock[]>([]),estados=ref<Record<string,string>>({}),summary=reactive({fisico:0,comprometido:0,disponible:0,alertas:0}),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),error=ref(''),detail=ref<StockComprometido|null>(null)
 const filters=reactive({almacen:'',estado:'',pedido:'',fecha_desde:'',fecha_hasta:''})
 async function load(next=1){page.value=next;loading.value=true;error.value='';try{const r=await listarStock({...filters,page:next});rows.value=r.data;almacenes.value=r.almacenes;estados.value=r.estados;Object.assign(summary,r.resumen);total.value=r.total;lastPage.value=r.last_page}catch(e){error.value=message(e)}finally{loading.value=false}}

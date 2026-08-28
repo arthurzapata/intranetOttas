@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { abrirCiclo,avanzarFase,detalleCiclo,finalizarCiclo,listarCiclos,type Ciclo,type Distrito,type Sector } from '../services/ciclos'
+import { abrirCiclo, avanzarFase, detalleCiclo, finalizarCiclo, listarCiclos } from '../services/ciclos'
+import type { Ciclo, Distrito, Sector } from '../interfaces/ciclos.interface'
 const phases:[string,string][]=[['lecturas','Toma de lectura'],['critica','Crítica de lecturas'],['avisos','Avisos de alto consumo'],['pre_facturacion','Pre-facturación'],['impresion','Impresión de recibos'],['reparto','Reparto de recibos'],['revision_cortados','Revisión de cortados'],['corte_deudores','Corte deudores'],['corte_convenios','Corte convenios']]
 const districts=ref<Distrito[]>([]),detail=ref<Ciclo|null>(null),sector=ref<Sector|null>(null),modal=ref<'crear'|null>(null),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),schedule=reactive<Record<string,string>>({})
 async function load(){loading.value=true;error.value='';try{districts.value=(await listarCiclos()).distritos}catch(e){error.value=msg(e)}finally{loading.value=false}}async function show(id:number){try{detail.value=await detalleCiclo(id)}catch(e){error.value=msg(e)}}

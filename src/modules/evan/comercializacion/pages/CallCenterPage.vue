@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { agregarInteraccion,cerrarTicket,crearTareaTicket,crearTicket,detalleTicket,eliminarTicket,liberarTicket,listarTickets,recibirTicket,type Options,type Ticket } from '../services/callCenter'
+import { agregarInteraccion, cerrarTicket, crearTareaTicket, crearTicket, detalleTicket, eliminarTicket, liberarTicket, listarTickets, recibirTicket } from '../services/callCenter'
+import type { Options, Ticket } from '../interfaces/callCenter.interface'
 const emptyOptions:Options={tipos_atencion:[],medios:[],distritos:[],secciones:[],tipos_interaccion:[]}
 const rows=ref<Ticket[]>([]),options=ref<Options>(emptyOptions),detail=ref<Ticket|null>(null),modal=ref<'nuevo'|'interaccion'|'tarea'|'cerrar'|null>(null),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),total=ref(0),lastPage=ref(1),file=ref<File|null>(null)
 const filters=reactive({bandeja:'todos',criterio:'',tipo_atencion_id:'',desde:'',hasta:'',page:1})

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { buscarProveedorRuc, guardarProforma, listarProformas, seleccionarPrecio, type EvaluacionProforma, type ItemProforma, type Proforma, type ProveedorCotizacion } from '../services/proformas'
+import { buscarProveedorRuc, guardarProforma, listarProformas, seleccionarPrecio } from '../services/proformas'
+import type { EvaluacionProforma, ItemProforma, Proforma, ProveedorCotizacion } from '../interfaces/proformas.interface'
 const evaluations=ref<EvaluacionProforma[]>([]),selectedEvaluation=ref<number|null>(null),items=ref<ItemProforma[]>([]),quotes=ref<Proforma[]>([]),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),ruc=ref(''),provider=ref<ProveedorCotizacion|null>(null),prices=ref<Record<number,number>>({}),form=reactive({fecha_vencimiento:''})
 const current=computed(()=>evaluations.value.find(x=>x.id===selectedEvaluation.value)),total=computed(()=>items.value.reduce((sum,x)=>sum+x.cantidad*(prices.value[x.item_id]||0),0))
 async function load(id=selectedEvaluation.value){loading.value=true;error.value='';try{const r=await listarProformas(id);evaluations.value=r.evaluaciones;items.value=r.items;quotes.value=r.proformas;if(!selectedEvaluation.value&&r.evaluaciones[0]){selectedEvaluation.value=r.evaluaciones[0].id;await load(selectedEvaluation.value)}}catch(e){error.value=message(e)}finally{loading.value=false}}

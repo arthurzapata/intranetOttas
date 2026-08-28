@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { actualizarAccionFlujo,crearAccionFlujo,eliminarAccionFlujo,listarAccionesFlujo,type AccionFlujo,type Option } from '../services/accionesFlujo'
+import { actualizarAccionFlujo, crearAccionFlujo, eliminarAccionFlujo, listarAccionesFlujo } from '../services/accionesFlujo'
+import type { AccionFlujo, Option } from '../interfaces/accionesFlujo.interface'
 const route=useRoute(),rows=ref<AccionFlujo[]>([]),flujos=ref<Option[]>([]),trabajos=ref<Option[]>([]),acciones=ref<Option[]>([]),editing=ref<AccionFlujo|null>(null),modal=ref(false),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref('')
 const filters=reactive({flujo_id:String(route.query.flujo||''),criterio:'',page:1}),form=reactive({flujo_id:'',tipo_trabajo_id:'',condicion:'',accion_si_id:'',accion_no_id:'',secuencia:1,activo:true})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=await listarAccionesFlujo(filters);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page;flujos.value=r.flujos;trabajos.value=r.tipos_trabajo;acciones.value=r.acciones}catch(e){error.value=msg(e)}finally{loading.value=false}}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { cambiarEvaluacion, crearEvaluacion, definirGanador, guardarCondiciones, guardarPrecios, listarEvaluaciones, obtenerEvaluacion, urlCuadroComparativo, type EvaluacionEconomica, type ProcesoOption, type ProveedorEvaluacion } from '../services/evaluacionesEconomicas'
+import { cambiarEvaluacion, crearEvaluacion, definirGanador, guardarCondiciones, guardarPrecios, listarEvaluaciones, obtenerEvaluacion, urlCuadroComparativo } from '../services/evaluacionesEconomicas'
+import type { EvaluacionEconomica, ProcesoOption, ProveedorEvaluacion } from '../interfaces/evaluacionesEconomicas.interface'
 const rows=ref<EvaluacionEconomica[]>([]),states=ref<Record<string,string>>({}),processes=ref<ProcesoOption[]>([]),criterio=ref(''),state=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),createModal=ref(false),detail=ref<EvaluacionEconomica|null>(null),provider=ref<ProveedorEvaluacion|null>(null),tab=ref<'conditions'|'prices'>('conditions')
 const createForm=reactive({nombre:'',proceso_id:0,observacion:''}),conditions=reactive({fecha_oferta:'',moneda_id:1,validez_oferta:'',forma_pago:'',forma_entrega:'',garantia_calidad:'',plazo_entrega:'',detalle_servicio:''}),prices=ref<Record<number,number|null>>({})
 const providerTotal=computed(()=>detail.value?.items?.reduce((sum,x)=>sum+x.cantidad*(prices.value[x.detalle_id]||0),0)||0)

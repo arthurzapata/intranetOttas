@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { detalleRequerimiento, guardarRequerimiento, imprimirRequerimiento, listarRequerimientos, opcionesRequerimiento, type MaterialAlmacen, type RequerimientoAlmacen, type RequerimientoLinea, type RequerimientoOptions } from '../services/requerimientosAlmacen'
+import { detalleRequerimiento, guardarRequerimiento, imprimirRequerimiento, listarRequerimientos, opcionesRequerimiento } from '../services/requerimientosAlmacen'
+import type { MaterialAlmacen, RequerimientoAlmacen, RequerimientoLinea, RequerimientoOptions } from '../interfaces/requerimientosAlmacen.interface'
 const route=useRoute(),rows=ref<RequerimientoAlmacen[]>([]),options=ref<RequerimientoOptions>({materiales:[],centros_costos:[],actividades:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),materialModal=ref(false),detail=ref<RequerimientoAlmacen|null>(null),editing=ref<number|null>(null),materialSearch=ref('')
 const filters=reactive({criterio:'',fecha_desde:'',fecha_hasta:'',estado:'',page:1}),form=reactive({prioridad:'n' as 'n'|'u'|'m',inversion_id:0,informacion:'',enviar_copia:false,items:[] as RequerimientoLinea[]})
 const filteredMaterials=computed(()=>{const q=materialSearch.value.toLowerCase();return options.value.materiales.filter(x=>!q||x.nombre.toLowerCase().includes(q)||x.grupo?.toLowerCase().includes(q))})

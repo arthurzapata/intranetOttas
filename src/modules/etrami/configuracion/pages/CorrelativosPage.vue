@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { cargosCorrelativo, eliminarCorrelativo, guardarCorrelativo, listarCorrelativos, opcionesCorrelativos, resetearCorrelativo, type Correlativo } from '../services/configuracion'
+import { cargosCorrelativo, eliminarCorrelativo, guardarCorrelativo, listarCorrelativos, opcionesCorrelativos, resetearCorrelativo } from '../services/configuracion'
+import type { Correlativo } from '../interfaces/configuracion.interface'
 import type { CatalogOption, CargoOption } from '../../interfaces/documento'
 const tipos=ref<CatalogOption[]>([]),instancias=ref<CatalogOption[]>([]),cargosFiltro=ref<CargoOption[]>([]),items=ref<Correlativo[]>([]),pagination=reactive({current:1,last:1,total:0})
 const filters=reactive({tipo_documento_id:0,instancia_id:0,cargo_id:0,page:1}),form=reactive({tipo_documento_id:0,instancia_id:0,cargo_id:0,numero:0}),formCargos=ref<CargoOption[]>([])

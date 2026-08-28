@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{computed,onMounted,reactive,ref}from'vue'
-import{listarErrores,type ArchivoLog,type ErrorFilters,type ErrorSistema,type NivelLog}from'../services/erroresSistema'
+import { listarErrores } from '../services/erroresSistema'
+import type { ArchivoLog, ErrorFilters, ErrorSistema, NivelLog } from '../interfaces/erroresSistema.interface'
 
 const rows=ref<ErrorSistema[]>([]),files=ref<ArchivoLog[]>([]),summary=ref<Partial<Record<NivelLog,number>>>({}),total=ref(0),last=ref(1),loading=ref(false),error=ref(''),selected=ref<ErrorSistema|null>(null)
 const filters=reactive<ErrorFilters>({archivo:'',nivel:'',criterio:'',desde:'',hasta:'',page:1})

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarLecturaProduccion, listarLecturasProduccion, type LecturaProduccion } from '../services/lecturas'
+import { eliminarLecturaProduccion, listarLecturasProduccion } from '../services/lecturas'
+import type { LecturaProduccion } from '../interfaces/lecturas.interface'
 const records=ref<LecturaProduccion[]>([]),meters=ref<{id:number;nombre:string}[]>([]),selected=ref<LecturaProduccion|null>(null),loading=ref(false),error=ref(''),success=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),summary=reactive({registros:0,fisicas:0,virtuales:0,volumen_total:0}),filters=reactive({criterio:'',desde:'',hasta:'',tipo:'',componente_id:''})
 async function load(target=1){loading.value=true;error.value='';try{const r=await listarLecturasProduccion(filters,target);records.value=r.data;meters.value=r.macromedidores;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total;Object.assign(summary,r.resumen)}catch(e){error.value=message(e)}finally{loading.value=false}}
 async function remove(item:LecturaProduccion){if(!confirm(`¿Eliminar la lectura #${item.id} de ${item.macromedidor}? Esta acción no se puede revertir.`))return;try{await eliminarLecturaProduccion(item.id);selected.value=null;success.value='Lectura eliminada correctamente.';await load(page.value)}catch(e){error.value=message(e)}}

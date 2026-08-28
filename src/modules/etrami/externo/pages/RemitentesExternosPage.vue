@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarRemitente, guardarRemitente, listarRemitentes, opcionesDocumentoExterno, registrarDocumentoExterno, type RemitenteExterno } from '../services/externo'
+import { eliminarRemitente, guardarRemitente, listarRemitentes, opcionesDocumentoExterno, registrarDocumentoExterno } from '../services/externo'
+import type { RemitenteExterno } from '../interfaces/externo.interface'
 import type { CatalogOption } from '../../interfaces/documento'
 const items=ref<RemitenteExterno[]>([]),tipos=ref<CatalogOption[]>([]),criterio=ref(''),pagination=reactive({current:1,last:1,total:0}),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),docModal=ref(false),editing=ref<number|null>(null),selected=ref<RemitenteExterno|null>(null)
 const form=reactive({tipo:1 as 1|2,nombre:'',apellido_paterno:'',apellido_materno:'',dni:'',razon_social:'',ruc:'',celular:'',telefono_fijo:'',email:''}),doc=reactive({tipo_documento_id:0,numero:'',asunto:'',archivo:null as File|null})

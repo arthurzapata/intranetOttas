@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { asignarActividad, eliminarActividad, listarColaboradores, obtenerProductividad, type Actividad, type Colaborador } from '../services/productividad'
+import { asignarActividad, eliminarActividad, listarColaboradores, obtenerProductividad } from '../services/productividad'
+import type { Actividad, Colaborador } from '../interfaces/productividad.interface'
 const users=ref<Colaborador[]>([]),selected=ref<Colaborador|null>(null),activities=ref<Actividad[]>([]),search=ref(''),description=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),page=ref(1),lastPage=ref(1),total=ref(0)
 const completed=computed(()=>activities.value.filter(x=>x.atendido).length),progress=computed(()=>activities.value.length?Math.round(completed.value/activities.value.length*100):0),initials=(name:string)=>name.split(' ').filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()
 async function load(target=1){loading.value=true;error.value='';try{const r=await listarColaboradores(search.value,target);users.value=r.data;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total}catch(e){error.value=message(e)}finally{loading.value=false}}

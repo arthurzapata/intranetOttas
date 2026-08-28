@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { listarSaldos, obtenerFicha, urlExportarSaldos, urlKardex, type CatalogoSaldo, type FichaItem, type SaldoItem } from '../services/saldos'
+import { listarSaldos, obtenerFicha, urlExportarSaldos, urlKardex } from '../services/saldos'
+import type { CatalogoSaldo, FichaItem, SaldoItem } from '../interfaces/saldos.interface'
 const rows=ref<SaldoItem[]>([]),almacenes=ref<CatalogoSaldo[]>([]),periodos=ref<CatalogoSaldo[]>([]),tipos=ref<Record<string,string>>({}),summary=reactive({items:0,unidades:0,valor_total:0,sin_stock:0}),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),error=ref(''),detail=ref<FichaItem|null>(null)
 const filters=reactive({almacen:'',tipo:'',periodo:'',item:''})
 async function load(next=1){page.value=next;loading.value=true;error.value='';try{const r=await listarSaldos({...filters,page:next});rows.value=r.data;almacenes.value=r.almacenes;periodos.value=r.periodos;tipos.value=r.tipos;total.value=r.total;lastPage.value=r.last_page;Object.assign(summary,r.resumen);if(!filters.almacen&&r.almacen_default_id)filters.almacen=String(r.almacen_default_id);if(!filters.periodo&&r.periodos[0])filters.periodo=String(r.periodos[0].id)}catch(e){error.value=message(e)}finally{loading.value=false}}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{computed,onMounted,reactive,ref}from'vue'
-import{cerrarFase,descargarAsistencia,descargarDocumento,eliminarAsistencia,eliminarDocumento,obtenerSeguimiento,registrarAsistencia,subirDocumento,type AsistenciaFase,type DocumentoFase,type SeguimientoProceso}from'../services/territorial'
+import{cerrarFase,descargarAsistencia,descargarDocumento,eliminarAsistencia,eliminarDocumento,obtenerSeguimiento,registrarAsistencia,subirDocumento}from'../services/territorial'
+import type { AsistenciaFase, DocumentoFase, SeguimientoProceso } from '../interfaces/territorial.interface'
 const props=defineProps<{id:string}>(),data=ref<SeguimientoProceso|null>(null),loading=ref(false),processing=ref(false),error=ref(''),success=ref(''),tab=ref<'documentos'|'asistencias'>('documentos'),documentOpen=ref(false),assistanceOpen=ref(false),closeOpen=ref(false),noCorrespond=ref(false)
 const doc=reactive({fecha:new Date().toISOString().slice(0,10),nombre_archivo:'',archivo:null as File|null}),assistance=reactive({tipo_asistencia_id:0,fecha:new Date().toISOString().slice(0,10),detalle:'',archivo:null as File|null}),closing=ref('')
 const processId=computed(()=>Number(props.id)),current=computed(()=>data.value?.fases.find(x=>x.estado==='actual')),progress=computed(()=>data.value?Math.round(data.value.fases.filter(x=>x.estado==='completada').length/data.value.fases.length*100):0)

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { descargarFirmado, listarFirma, prepararFirma, type DocumentoFirma } from '../services/firma'
+import { descargarFirmado, listarFirma, prepararFirma } from '../services/firma'
+import type { DocumentoFirma } from '../interfaces/firma.interface'
 import type { CatalogOption } from '../../interfaces/documento'
 const criterio=ref(''),estado=ref(''),items=ref<DocumentoFirma[]>([]),instancia=ref<CatalogOption|null>(null),habilitada=ref(false),pagination=reactive({current:1,last:1,total:0}),loading=ref(false),processing=ref(0),error=ref(''),success=ref(''),selected=ref<DocumentoFirma|null>(null),options=reactive({signatureReason:1,signatureStyle:1,stampTextSize:12})
 async function load(page=1){loading.value=true;error.value='';try{const r=await listarFirma(criterio.value,estado.value,page);items.value=r.data;habilitada.value=r.firma_habilitada;instancia.value=r.instancia||null;Object.assign(pagination,{current:r.current_page,last:r.last_page,total:r.total})}catch(cause){error.value=cause instanceof Error?cause.message:'No se pudo cargar la bandeja de firma.'}finally{loading.value=false}}

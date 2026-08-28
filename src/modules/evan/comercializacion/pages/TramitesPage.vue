@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { anularTramite,detalleTramite,listarTramites,type Options,type Tramite } from '../services/tramites'
+import { anularTramite, detalleTramite, listarTramites } from '../services/tramites'
+import type { Options, Tramite } from '../interfaces/tramites.interface'
 const rows=ref<Tramite[]>([]),options=ref<Options>({tipos:[],categorias:[],estados:[],distritos:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),error=ref(''),success=ref(''),detail=ref<Tramite|null>(null)
 const filters=reactive({criterio:'',tipo:'',categoria:'',estado:'',distrito_id:'',desde:'',hasta:'',page:1})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=await listarTramites(filters);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page;options.value=r.options}catch(e){error.value=message(e)}finally{loading.value=false}}

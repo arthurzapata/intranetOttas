@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { detalleRequerimiento,finalizarRequerimiento,liberarRequerimiento,listarRequerimientos,recibirRequerimiento,registrarRequerimiento,type Options,type Requerimiento } from '../services/requerimientos'
+import { detalleRequerimiento,finalizarRequerimiento,liberarRequerimiento,listarRequerimientos,recibirRequerimiento,registrarRequerimiento } from '../services/requerimientos'
+import type { Options, Requerimiento } from '../interfaces/requerimientos.interface'
 const rows=ref<Requerimiento[]>([]),options=ref<Options>({estados:[],origenes:[],categorias:[],usuarios:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),createModal=ref(false),finishModal=ref(false),detail=ref<Requerimiento|null>(null),attachment=ref<File|null>(null),solutionFile=ref<File|null>(null)
 const filters=reactive({criterio:'',estado:'',periodo:new Date().toISOString().slice(0,7),bandeja:'todos',page:1}),form=reactive({observacion:'',origen:'WEB',fecha_iniciado:'',user_id:''}),finish=reactive({categoria_id:'',solucion:'',fecha_atencion:'',usuarios_atendidos:[] as number[],usuarios_colaboran:[] as number[]})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=await listarRequerimientos(filters);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page;options.value=r.options}catch(e){error.value=message(e)}finally{loading.value=false}}

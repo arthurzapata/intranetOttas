@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { eliminarGrupo, eliminarSubgrupo, guardarCaracteristica, guardarGrupo, guardarSubgrupo, listarGrupos, obtenerGrupo, type GrupoItem, type Subgrupo } from '../services/gruposItems'
+import { eliminarGrupo, eliminarSubgrupo, guardarCaracteristica, guardarGrupo, guardarSubgrupo, listarGrupos, obtenerGrupo } from '../services/gruposItems'
+import type { GrupoItem, Subgrupo } from '../interfaces/gruposItems.interface'
 const rows=ref<GrupoItem[]>([]),criterio=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),detail=ref<GrupoItem|null>(null),subName=ref(''),subEditing=ref<number|null>(null),featureName=ref('')
 const form=reactive({nombre:'',familia:'m' as 'm'|'a'|'s',vida_util:undefined as number|undefined,etiqueta:false,debe_deprec:undefined as number|undefined,haber_deprec:undefined as number|undefined,debe_revaluac:undefined as number|undefined,haber_revaluac:undefined as number|undefined})
 const depreciation=computed(()=>form.vida_util?100/form.vida_util:0)

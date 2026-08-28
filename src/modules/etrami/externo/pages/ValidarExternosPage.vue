@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { listarPendientesExternos, validarExterno, type DocumentoExterno } from '../services/externo'
+import { listarPendientesExternos, validarExterno } from '../services/externo'
+import type { DocumentoExterno } from '../interfaces/externo.interface'
 import type { CatalogOption } from '../../interfaces/documento'
 const items=ref<DocumentoExterno[]>([]),tipos=ref<CatalogOption[]>([]),context=ref<CatalogOption|null>(null),pagination=reactive({current:1,last:1,total:0}),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),selected=ref<DocumentoExterno|null>(null)
 const form=reactive({tipo_documento_id:0,numero:'',asunto:'',observacion:'',ruc:'',razon_social:'',apellido_paterno:'',apellido_materno:'',nombre:'',dni:'',celular:'',email:''})

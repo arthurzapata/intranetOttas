@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarProgramacion, guardarProgramacion, listarEvidencias, listarIncidencias, listarProgramaciones, type DetalleProgramacion, type EvidenciaProgramacion, type IncidenciaProgramacion, type OpcionProgramacion, type Programacion, type ProgramacionPayload } from '../services/programaciones'
+import { eliminarProgramacion, guardarProgramacion, listarEvidencias, listarIncidencias, listarProgramaciones } from '../services/programaciones'
+import type { DetalleProgramacion, EvidenciaProgramacion, IncidenciaProgramacion, OpcionProgramacion, Programacion, ProgramacionPayload } from '../interfaces/programaciones.interface'
 const records=ref<Programacion[]>([]),units=ref<OpcionProgramacion[]>([]),drivers=ref<OpcionProgramacion[]>([]),districts=ref<OpcionProgramacion[]>([]),points=ref<OpcionProgramacion[]>([]),reasons=ref<Record<number,string>>({}),incidents=ref<IncidenciaProgramacion[]>([]),evidence=ref<EvidenciaProgramacion[]>([]),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detailModal=ref<'incidencias'|'evidencias'|null>(null),editing=ref<number|null>(null),current=ref<Programacion|null>(null),page=ref(1),lastPage=ref(1),total=ref(0),summary=reactive({unidades:0,con_incidencias:0,con_evidencias:0})
 const filters=reactive({criterio:'',fecha_desde:'',fecha_hasta:'',motivo:'',incidencias:''})
 const form=reactive<ProgramacionPayload>({fecha:'',motivo_id:null,observacion:'',r1_desde:'08:00',r1_hasta:'12:00',r2_desde:'14:00',r2_hasta:'17:00',cisternas:[]})

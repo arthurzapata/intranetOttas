@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { actualizarEstado, guardarMaestro, listarEstados, type EstadoLogistico } from '../services/estados'
+import { actualizarEstado, guardarMaestro, listarEstados } from '../services/estados'
+import type { EstadoLogistico } from '../interfaces/estados.interface'
 const rows=ref<EstadoLogistico[]>([]),catalogs=ref<Record<string,Record<string,string>>>({}),concepts=ref<Record<string,string>>({}),summary=ref<Record<string,number>>({}),concept=ref(''),value=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null)
 const form=reactive({concepto:0,codigo:'',descripcion:'',serie:'',cta_33_34:undefined as number|undefined,cta_39:undefined as number|undefined,cta_68:undefined as number|undefined,cta_39_rev:undefined as number|undefined,cta_68_rev:undefined as number|undefined,activo:true})
 const isMaster=computed(()=>concept.value==='5'),regulatory=computed(()=>form.concepto===5)

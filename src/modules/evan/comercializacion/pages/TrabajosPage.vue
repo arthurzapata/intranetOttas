@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,onMounted,reactive,ref } from 'vue'
-import { detalleTrabajo,eliminarTrabajo,guardarTrabajo,listarTrabajos,type Options,type Trabajo } from '../services/trabajos'
+import { detalleTrabajo, eliminarTrabajo, guardarTrabajo, listarTrabajos } from '../services/trabajos'
+import type { Options, Trabajo } from '../interfaces/trabajos.interface'
 const rows=ref<Trabajo[]>([]),options=ref<Options>({expedientes:[],tipos_trabajo:[],resultados:[],acciones_flujo:[],estados:[],responsables:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Trabajo|null>(null),editing=ref<number|null>(null)
 const filters=reactive({criterio:'',tipotrabajo_id:'',estado_trabajo:'',resultado_id:'',desde:'',hasta:'',page:1}),form=reactive({numero_trabajo:'',expediente_id:'',tipotrabajo_id:'',tiporesultado_id:'',accionflujo_id:'',estado_trabajo:'PENDIENTE',responsable_id:'',fecha_programada:'',observaciones:''})
 const actions=computed(()=>options.value.acciones_flujo.filter(x=>!x.tipo_trabajo_id||String(x.tipo_trabajo_id)===String(form.tipotrabajo_id)))

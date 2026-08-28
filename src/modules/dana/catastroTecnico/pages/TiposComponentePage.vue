@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
-import { eliminarTipoComponente, guardarTipoComponente, listarTiposComponente, type TipoComponente, type TipoComponentePayload } from '../services/tiposComponente'
+import { eliminarTipoComponente, guardarTipoComponente, listarTiposComponente } from '../services/tiposComponente'
+import type { TipoComponente, TipoComponentePayload } from '../interfaces/tiposComponente.interface'
 const records=ref<TipoComponente[]>([]),query=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),preview=ref(''),fileInput=ref<HTMLInputElement>()
 const categories=['Captación','Tratamiento','Almacenamiento','Distribución','Medición'],form=reactive<TipoComponentePayload>({nombre:'',categoria:'',puntos:1,color:'#e38b2f',grosor:3,descripcion:'',icono:null})
 async function load(){loading.value=true;error.value='';try{records.value=await listarTiposComponente(query.value)}catch(e){error.value=message(e)}finally{loading.value=false}}

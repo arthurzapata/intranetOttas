@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarMuestra, guardarMuestra, listarMuestras, type MuestraAgua, type MuestraPayload, type OpcionMuestra } from '../services/muestras'
+import { eliminarMuestra, guardarMuestra, listarMuestras } from '../services/muestras'
+import type { MuestraAgua, MuestraPayload, OpcionMuestra } from '../interfaces/muestras.interface'
 const records=ref<MuestraAgua[]>([]),components=ref<OpcionMuestra[]>([]),responsibles=ref<OpcionMuestra[]>([]),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),page=ref(1),lastPage=ref(1),total=ref(0),filters=reactive({criterio:'',fecha_desde:'',fecha_hasta:''}),totals=reactive({mes:0,con_resultados:0,pendientes:0}),form=reactive<MuestraPayload>({componente_id:null,fecha:'',hora:'',direccion:'',latitud:null,longitud:null,observacion:'',responsable_id:null})
 async function load(target=1){loading.value=true;error.value='';try{const r=await listarMuestras({...filters,page:target});records.value=r.data;components.value=r.componentes;responsibles.value=r.responsables;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total;Object.assign(totals,r.totales)}catch(e){error.value=message(e)}finally{loading.value=false}}
 function clear(){Object.assign(filters,{criterio:'',fecha_desde:'',fecha_hasta:''});load(1)}

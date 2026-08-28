@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { detalleDenuncia,detalleExpedientePad,listarDenuncias,listarExpedientesPad,registrarDenuncia,type Denuncia,type ExpedientePad,type PadOptions } from '../services/pad'
+import { detalleDenuncia, detalleExpedientePad, listarDenuncias, listarExpedientesPad, registrarDenuncia } from '../services/pad'
+import type { Denuncia, ExpedientePad, PadOptions } from '../interfaces/pad.interface'
 const tab=ref<'denuncias'|'expedientes'>('denuncias'),denuncias=ref<Denuncia[]>([]),expedientes=ref<ExpedientePad[]>([]),options=ref<PadOptions>({tipos_denuncia:[],estados_denuncia:[],estados_pad:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Denuncia|ExpedientePad|null>(null),pdf=ref<File|null>(null)
 const filters=reactive({criterio:'',estado:'',page:1}),form=reactive({tipo_denuncia:'',denunciante_id:'',denunciante_externo_id:'',fecha_hecho:'',fecha_toma_conocimiento:new Date().toISOString().slice(0,10),descripcion_hechos:'',investigados_personas:''})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=tab.value==='denuncias'?await listarDenuncias(filters):await listarExpedientesPad(filters);total.value=r.total;lastPage.value=r.last_page;options.value=r.options;if(tab.value==='denuncias')denuncias.value=r.data as Denuncia[];else expedientes.value=r.data as ExpedientePad[]}catch(e){error.value=message(e)}finally{loading.value=false}}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue'
-import { accionOrden, detalleOrden, guardarOrden, imprimirOrden, listarOrdenes, prepararOrden, type Orden, type OrdenLinea, type OrdenOptions, type TipoOrden } from '../services/ordenes'
+import { accionOrden, detalleOrden, guardarOrden, imprimirOrden, listarOrdenes, prepararOrden } from '../services/ordenes'
+import type { Orden, OrdenLinea, OrdenOptions, TipoOrden } from '../interfaces/ordenes.interface'
 const type=ref<TipoOrden>('compra'),rows=ref<Orden[]>([]),options=ref<OrdenOptions>({proveedores:[],estados:[],procesos:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Orden|null>(null),editing=ref<number|null>(null),processId=ref(0)
 const filters=reactive({date_from:'',date_to:'',proveedor_id:'',estado:'',id:'',page:1}),form=reactive({proceso_id:0,proveedor:'',ruc:'',moneda_id:0,observacion_orden:'',otros_conceptos:0,forma_pago:'',forma_entrega:'',plazo_entrega:'',validez_oferta:'',items:[] as OrdenLinea[]})
 const itemsTotal=computed(()=>form.items.reduce((sum,x)=>sum+(Number(x.cantidad)||0)*(Number(x.precio)||0),0)),subtotal=computed(()=>itemsTotal.value/1.18),igv=computed(()=>itemsTotal.value-subtotal.value),grandTotal=computed(()=>itemsTotal.value+(Number(form.otros_conceptos)||0)),currency=computed(()=>form.moneda_id===0?'S/':'$')

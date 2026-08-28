@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,onMounted,ref } from 'vue'
-import { obtenerResumen,urlExportacion,urlReporte,type Indicador } from '../services/estadisticas'
+import { obtenerResumen, urlExportacion, urlReporte } from '../services/estadisticas'
+import type { Indicador } from '../interfaces/estadisticas.interface'
 const now=new Date(),anio=ref(now.getFullYear()),mes=ref(now.getMonth()+1),rows=ref<Indicador[]>([]),periodo=ref(''),loading=ref(false),error=ref('')
 const years=Array.from({length:10},(_,i)=>now.getFullYear()-5+i),months=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
 const totals=computed(()=>rows.value.reduce((a,x)=>({recibidos:a.recibidos+Number(x.total||0),atendidos:a.atendidos+Number(x.atendidos||0),pendientes:a.pendientes+Number(x.pendientes||0)}),{recibidos:0,atendidos:0,pendientes:0})),avance=computed(()=>totals.value.recibidos?Math.round(totals.value.atendidos/totals.value.recibidos*100):0)

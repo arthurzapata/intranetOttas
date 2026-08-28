@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { accionPedido, detallePedido, guardarPedido, imprimirPedido, listarPedidos, opcionesPedido, type Pedido, type PedidoOptions } from '../services/pedidos'
+import { accionPedido, detallePedido, guardarPedido, imprimirPedido, listarPedidos, opcionesPedido } from '../services/pedidos'
+import type { Pedido, PedidoOptions } from '../interfaces/pedidos.interface'
 const route=useRoute(),items=ref<Pedido[]>([]),options=ref<PedidoOptions>({estados:[],items:[],inversiones:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Pedido|null>(null),file=ref<File|null>(null),editing=ref<number|null>(null)
 const filters=reactive({criterio:'',fecha_desde:'',fecha_hasta:'',tipo:'',estado:'',page:1}),form=reactive({tipo:'m' as 'm'|'s'|'a',prioridad:'normal',inversion_id:0,informacion:'',es_requerimiento_almacen:false,enviar_copia:false,detalles:[{item_id:0,cantidad:1,glosa:''}]})
 const availableItems=computed(()=>options.value.items.filter(item=>item.tipo===form.tipo))

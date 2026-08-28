@@ -1,7 +1,8 @@
 import { apiRequest } from '@/services/auth'
-export interface Option{id:number;nombre:string;descripcion?:string}
-export interface AccionFlujo{id:number;flujo_id:number;flujo:string;tipo_trabajo_id:number;tipo_trabajo:string;condicion:string;accion_si_id:number;accion_si:string;accion_no_id:number;accion_no:string;secuencia:number;activo:boolean}
-export interface Page{data:AccionFlujo[];total:number;page:number;last_page:number;flujos:Option[];tipos_trabajo:Option[];acciones:Option[]}
+import type { AccionFlujo, Page } from '../interfaces/accionesFlujo.interface'
+
+
+
 const base='/lecturita/evan/comercializacion/acciones-flujo'
 const qs=(x:Record<string,string|number>)=>{const q=new URLSearchParams();Object.entries(x).forEach(([k,v])=>{if(v!=='')q.set(k,String(v))});return q}
 export const listarAccionesFlujo=(f:Record<string,string|number>)=>apiRequest<Page>(`${base}?${qs(f)}`)

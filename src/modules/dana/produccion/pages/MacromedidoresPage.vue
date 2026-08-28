@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
-import { guardarLecturaMacro, historialMacromedidor, listarMacromedidores, type LecturaMacro, type Macromedidor } from '../services/macromedidores'
+import { guardarLecturaMacro, historialMacromedidor, listarMacromedidores } from '../services/macromedidores'
+import type { LecturaMacro, Macromedidor } from '../interfaces/macromedidores.interface'
 const records=ref<Macromedidor[]>([]),history=ref<LecturaMacro[]>([]),type=ref<'fisico'|'virtual'>('fisico'),query=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),current=ref<Macromedidor|null>(null),reading=ref<number|null>(null),file=ref<File|null>(null),preview=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),summary=reactive({fisicos:0,virtuales:0,con_lectura_hoy:0})
 async function load(target=1){loading.value=true;error.value='';try{const r=await listarMacromedidores(type.value,query.value,target);records.value=r.data;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total;Object.assign(summary,r.resumen)}catch(e){error.value=message(e)}finally{loading.value=false}}
 async function switchType(value:'fisico'|'virtual'){type.value=value;query.value='';page.value=1;await load()}

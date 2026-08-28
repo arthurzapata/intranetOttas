@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { consultarRecorrido, listarUnidadesGps, type PuntoRecorrido, type RecorridoResponse, type UnidadGps } from '../services/recorridos'
+import { consultarRecorrido, listarUnidadesGps } from '../services/recorridos'
+import type { PuntoRecorrido, RecorridoResponse, UnidadGps } from '../interfaces/recorridos.interface'
 const units=ref<UnidadGps[]>([]),selectedUnit=ref<number|null>(null),result=ref<RecorridoResponse|null>(null),selectedPoint=ref<PuntoRecorrido|null>(null),loading=ref(false),error=ref(''),summary=reactive({actualizadas:0,sin_ubicacion:0})
 const filters=reactive({fecha:new Date().toISOString().slice(0,10),desde:'08:00',hasta:'18:00',modoVisualizacion:'ruta' as 'puntos'|'ruta'})
 const coordinates=computed(()=>result.value?.segmentos.flat().length?result.value.segmentos.flat():result.value?.puntos??[])

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,onMounted,reactive,ref } from 'vue'
-import { detalleExpediente,listarExpedientes,registrarExpediente,type Expediente,type OpcionesExpediente } from '../services/expedientes'
+import { detalleExpediente, listarExpedientes, registrarExpediente } from '../services/expedientes'
+import type { Expediente, OpcionesExpediente } from '../interfaces/expedientes.interface'
 const empty:OpcionesExpediente={tipos:[],subtipos:[],estados:[],juzgados:[],oficinas:[]}
 const rows=ref<Expediente[]>([]),options=ref(empty),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Expediente|null>(null),file=ref<File|null>(null)
 const filters=reactive({criterio:'',tipo:'',estado:'',desde:'',hasta:'',page:1})

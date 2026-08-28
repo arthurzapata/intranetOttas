@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { obtenerReporteAlmacen, urlPdfReporteAlmacen, type ItemReporteAlmacen } from '../services/reporteAlmacen'
+import { obtenerReporteAlmacen, urlPdfReporteAlmacen } from '../services/reporteAlmacen'
+import type { ItemReporteAlmacen } from '../interfaces/reporteAlmacen.interface'
 const currentYear=new Date().getFullYear(),year=ref(currentYear),query=ref(''),items=ref<ItemReporteAlmacen[]>([]),loading=ref(false),error=ref(''),totalItems=ref(0),totalQuantity=ref(0),totalValue=ref(0)
 const years=Array.from({length:12},(_,i)=>currentYear-i),filtered=computed(()=>{const q=query.value.trim().toLocaleLowerCase('es');return q?items.value.filter(x=>[x.almacen,x.codigo_avalon,x.descripcion,x.unidad_medida].some(v=>v.toLocaleLowerCase('es').includes(q))):items.value}),filteredValue=computed(()=>filtered.value.reduce((sum,x)=>sum+x.valor_total,0)),filteredQuantity=computed(()=>filtered.value.reduce((sum,x)=>sum+x.saldo,0))
 async function load(){loading.value=true;error.value='';try{const r=await obtenerReporteAlmacen(year.value);items.value=r.items;totalItems.value=r.total_items;totalQuantity.value=r.total_cantidad;totalValue.value=r.total_valorizado}catch(e){error.value=e instanceof Error?e.message:'No se pudo cargar el reporte.'}finally{loading.value=false}}

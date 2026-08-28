@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarParametro, guardarParametro, listarParametros, type ParametroCalidad, type ParametroPayload, type UnidadParametro } from '../services/parametros'
+import { eliminarParametro, guardarParametro, listarParametros } from '../services/parametros'
+import type { ParametroCalidad, ParametroPayload, UnidadParametro } from '../interfaces/parametros.interface'
 const records=ref<ParametroCalidad[]>([]),units=ref<UnidadParametro[]>([]),query=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),page=ref(1),lastPage=ref(1),total=ref(0),form=reactive<ParametroPayload>({nombre:'',codigo:'',unidad_id:null})
 async function load(target=1){loading.value=true;error.value='';try{const r=await listarParametros(query.value,target);records.value=r.data;units.value=r.unidades;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total}catch(e){error.value=message(e)}finally{loading.value=false}}
 function open(item?:ParametroCalidad){editing.value=item?.id??null;Object.assign(form,item?{nombre:item.nombre,codigo:item.codigo,unidad_id:item.unidad_id}:{nombre:'',codigo:'',unidad_id:null});modal.value=true}

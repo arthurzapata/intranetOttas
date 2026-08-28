@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { detalleDocumento,listarDocumentos,obtenerCorrelativo,registrarDocumento,type DocumentoNormativo,type Options } from '../services/documentosNormativos'
+import { detalleDocumento, listarDocumentos, obtenerCorrelativo, registrarDocumento } from '../services/documentosNormativos'
+import type { DocumentoNormativo, Options } from '../interfaces/documentosNormativos.interface'
 const rows=ref<DocumentoNormativo[]>([]),options=ref<Options>({tipos:[],estados:[],oficinas:[],tipos_relacion:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<DocumentoNormativo|null>(null),file=ref<File|null>(null)
 const filters=reactive({criterio:'',tipo_documento_id:'',estado_id:'',organo_emisor_id:'',page:1}),form=reactive({tipo_documento_id:'',oficina_id:'',numero_documento:'',titulo:'',fecha_aprobacion:new Date().toISOString().slice(0,10),fecha_vigencia:'',contenido:'',version_de:''})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=await listarDocumentos(filters);rows.value=r.data;total.value=r.total;lastPage.value=r.last_page;options.value=r.options}catch(e){error.value=message(e)}finally{loading.value=false}}

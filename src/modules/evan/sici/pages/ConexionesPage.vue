@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { buscarTitular, listarConexiones, registrarConexion, type ConexionPayload, type ConexionSici, type Option } from '../services/conexiones'
+import { buscarTitular, listarConexiones, registrarConexion } from '../services/conexiones'
+import type { ConexionPayload, ConexionSici, Option } from '../interfaces/conexiones.interface'
 
 const rows=ref<ConexionSici[]>([]),distritos=ref<Option[]>([]),modalidades=ref<Option[]>([]),loading=ref(false),saving=ref(false),searching=ref(false),modal=ref(false),error=ref(''),success=ref(''),total=ref(0),lastPage=ref(1),titularFound=ref(false)
 const filters=reactive({criterio:'',distrito_id:'',servicio:'',page:1})

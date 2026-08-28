@@ -1,8 +1,5 @@
 import{apiDownload,apiRequest}from'@/services/auth'
-export interface Option{id:number;nombre:string}
-export interface Contrato{id:number;titulo:string;fecha:string;archivo:string;empresa:string;provincias:Option[];centros_poblados:Option[]}
-export interface ContratosPage{data:Contrato[];total:number;current_page:number;last_page:number;options:{empresas:Option[];departamentos:Option[]}}
-export interface ContratoPayload{empresa_id:number;titulo:string;fecha:string;archivo:File;provincias:number[];centros_poblados:number[]}
+import type { Contrato, ContratoPayload, ContratosPage, Option } from '../interfaces/contratos.interface'
 const base='/lecturita/enki/contratos-explotacion'
 export const listarContratos=(criterio:string,empresaId:number,page:number)=>apiRequest<ContratosPage>(`${base}?criterio=${encodeURIComponent(criterio)}&empresa_id=${empresaId||''}&page=${page}`)
 export const listarProvincias=(departamentoId:number)=>apiRequest<Option[]>(`${base}/opciones/provincias?departamento_id=${departamentoId}`)

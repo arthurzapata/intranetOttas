@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { eliminarComponente, guardarComponente, listarComponentes, type CatalogoComponente, type ComponenteOperacional, type ComponentePayload, type SistemaComponente, type TipoComponenteCatalogo } from '../services/componentes'
+import { eliminarComponente, guardarComponente, listarComponentes } from '../services/componentes'
+import type { CatalogoComponente, ComponenteOperacional, ComponentePayload, SistemaComponente, TipoComponenteCatalogo } from '../interfaces/componentes.interface'
 const records=ref<ComponenteOperacional[]>([]),types=ref<TipoComponenteCatalogo[]>([]),systems=ref<SistemaComponente[]>([]),variables=ref<CatalogoComponente[]>([]),conditions=ref<Record<string,string>>({}),query=ref(''),systemFilter=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),page=ref(1),lastPage=ref(1),total=ref(0)
 const form=reactive<ComponentePayload>({nombre:'',observacion:'',tipo_componente_id:null,sistema_id:[],puntos:[{latitud:null,longitud:null}],control_calidad:false,variable_sunass:'',cod_sunass:'',caudal:null,capacidad_nominal:null,volumen:null,fecha_instalacion:'',ultimo_mantenimiento:'',frecuencia_mant_meses:null,condicion:''})
 const selectedType=computed(()=>types.value.find(x=>x.id===form.tipo_componente_id))

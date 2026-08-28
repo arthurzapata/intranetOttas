@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{onMounted,reactive,ref}from'vue'
-import{listarHitosRegularizables,regularizarHito,type HitoRegularizable,type Option}from'../services/territorial'
+import{listarHitosRegularizables,regularizarHito}from'../services/territorial'
+import type { HitoRegularizable, Option } from '../interfaces/territorial.interface'
 const rows=ref<HitoRegularizable[]>([]),companies=ref<Option[]>([]),phases=ref<Option[]>([]),total=ref(0),last=ref(1),loading=ref(false),saving=ref(false),selected=ref<HitoRegularizable|null>(null),detail=ref(''),file=ref<File|null>(null),error=ref(''),success=ref('')
 const filters=reactive({criterio:'',empresa_id:0,fase_id:0,page:1})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const result=await listarHitosRegularizables(filters);rows.value=result.data;total.value=result.total;last.value=result.last_page;companies.value=result.options.empresas;phases.value=result.options.fases}catch(e){error.value=message(e)}finally{loading.value=false}}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import{onMounted,reactive,ref}from'vue'
-import{crearProceso,exportarProcesos,listarProcesos,opcionesGeograficas,type Option,type ProcesoIntegracion,type ProcesoPayload,type TerritorialFilters}from'../services/territorial'
+import{crearProceso,exportarProcesos,listarProcesos,opcionesGeograficas}from'../services/territorial'
+import type { Option, ProcesoIntegracion, ProcesoPayload, TerritorialFilters } from '../interfaces/territorial.interface'
 
 const rows=ref<ProcesoIntegracion[]>([]),departments=ref<Option[]>([]),provinces=ref<Option[]>([]),districts=ref<Option[]>([]),towns=ref<Option[]>([]),phases=ref<Option[]>([]),companies=ref<Option[]>([]),total=ref(0),last=ref(1),loading=ref(false),saving=ref(false),exporting=ref(false),modal=ref(false),error=ref(''),success=ref('')
 const filters=reactive<TerritorialFilters>({departamento:0,provincia:0,distrito:0,centro_poblado:0,fase:0,empresa:0,page:1}),form=reactive<ProcesoPayload>({empresa_id:0,fecha:new Date().toISOString().slice(0,10),centro_poblado_id:0,observaciones:''}),location=reactive({departamento:0,provincia:0,distrito:0})

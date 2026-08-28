@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { listarAbastecimientos, registrarAccion, type AbastecimientoProgramado } from '../services/abastecimientos'
+import { listarAbastecimientos, registrarAccion } from '../services/abastecimientos'
+import type { AbastecimientoProgramado } from '../interfaces/abastecimientos.interface'
 const records=ref<AbastecimientoProgramado[]>([]),query=ref(''),loading=ref(false),processing=ref<number|null>(null),error=ref(''),success=ref(''),summary=reactive({total:0,dentro:0,vueltas:0,pendientes:0})
 async function load(){loading.value=true;error.value='';try{const r=await listarAbastecimientos(query.value);records.value=r.data;Object.assign(summary,{total:r.total,dentro:r.dentro,vueltas:r.vueltas,pendientes:r.pendientes})}catch(e){error.value=message(e)}finally{loading.value=false}}
 function limaParts(){const now=new Date();const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(now);const value=(type:string)=>parts.find(p=>p.type===type)?.value??'';return{fecha:`${value('year')}-${value('month')}-${value('day')}`,hora:`${value('hour')}:${value('minute')}:${value('second')}`}}

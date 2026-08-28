@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
-import { listarGaleria, listarUnidadesEvidencia, registrarEvidencia, type Evidencia, type UnidadEvidencia } from '../services/evidencias'
+import { listarGaleria, listarUnidadesEvidencia, registrarEvidencia } from '../services/evidencias'
+import type { Evidencia, UnidadEvidencia } from '../interfaces/evidencias.interface'
 const records=ref<UnidadEvidencia[]>([]),query=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),galleryModal=ref(false),current=ref<UnidadEvidencia|null>(null),file=ref<File|null>(null),preview=ref(''),comment=ref(''),location=reactive<{latitud:number|null;longitud:number|null;status:string}>({latitud:null,longitud:null,status:'Sin solicitar'}),gallery=ref<Evidencia[]>([]),galleryPage=ref(1),galleryLast=ref(1),summary=reactive({total:0,total_evidencias:0,sin_evidencias:0})
 async function load(){loading.value=true;error.value='';try{const r=await listarUnidadesEvidencia(query.value);records.value=r.data;Object.assign(summary,{total:r.total,total_evidencias:r.total_evidencias,sin_evidencias:r.sin_evidencias})}catch(e){error.value=message(e)}finally{loading.value=false}}
 function open(unit:UnidadEvidencia){current.value=unit;file.value=null;clearPreview();comment.value='';Object.assign(location,{latitud:null,longitud:null,status:'Solicitando ubicación…'});modal.value=true;if(!navigator.geolocation){location.status='GPS no disponible';return}navigator.geolocation.getCurrentPosition(p=>Object.assign(location,{latitud:p.coords.latitude,longitud:p.coords.longitude,status:'Ubicación capturada'}),()=>{location.status='Continuará sin ubicación GPS'},{enableHighAccuracy:true,timeout:8000})}

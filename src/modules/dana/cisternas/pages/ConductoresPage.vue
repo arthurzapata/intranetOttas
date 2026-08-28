@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { guardarConductor, listarConductores, type Conductor, type ConductorPayload } from '../services/conductores'
+import { guardarConductor, listarConductores } from '../services/conductores'
+import type { Conductor, ConductorPayload } from '../interfaces/conductores.interface'
 
 const records = ref<Conductor[]>([])
 const query = ref('')

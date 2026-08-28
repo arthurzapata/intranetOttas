@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { obtenerPlano, type ComponentePlano, type SistemaPlano } from '../services/planos'
+import { obtenerPlano } from '../services/planos'
+import type { ComponentePlano, SistemaPlano } from '../interfaces/planos.interface'
 const systems=ref<SistemaPlano[]>([]),systemId=ref(''),selectedSystem=ref<SistemaPlano>(),components=ref<ComponentePlano[]>([]),selected=ref<ComponentePlano|null>(null),loading=ref(false),error=ref('')
 const allPoints=computed(()=>components.value.flatMap(x=>x.puntos)),bounds=computed(()=>{const p=allPoints.value;if(!p.length)return{minLat:-18,maxLat:0,minLng:-82,maxLng:-68};const lats=p.map(x=>x.latitud),lngs=p.map(x=>x.longitud);let minLat=Math.min(...lats),maxLat=Math.max(...lats),minLng=Math.min(...lngs),maxLng=Math.max(...lngs);const latPad=Math.max((maxLat-minLat)*.12,.002),lngPad=Math.max((maxLng-minLng)*.12,.002);return{minLat:minLat-latPad,maxLat:maxLat+latPad,minLng:minLng-lngPad,maxLng:maxLng+lngPad}})
 function x(longitude:number){const b=bounds.value;return((longitude-b.minLng)/(b.maxLng-b.minLng))*1000}function y(latitude:number){const b=bounds.value;return 600-((latitude-b.minLat)/(b.maxLat-b.minLat))*600}function polyline(item:ComponentePlano){return item.puntos.map(p=>`${x(p.longitud)},${y(p.latitud)}`).join(' ')}

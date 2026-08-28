@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,reactive,ref } from 'vue'
-import { crearAccion,listarAcciones,type Accion,type Option } from '../services/acciones'
+import { crearAccion, listarAcciones } from '../services/acciones'
+import type { Accion, Option } from '../interfaces/acciones.interface'
 const rows=ref<Accion[]>([]),secciones=ref<Option[]>([]),detail=ref<Accion|null>(null),modal=ref(false),criterio=ref(''),seccion=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref('')
 const form=reactive({seccion_id:'',nombre:'',descripcion:'',duracion:'',proceso:'',se_informa:'',movimiento_genera:''})
 async function load(p=1){page.value=p;loading.value=true;error.value='';try{const r=await listarAcciones(criterio.value,seccion.value,p);rows.value=r.data;secciones.value=r.secciones;total.value=r.total;lastPage.value=r.last_page}catch(e){error.value=msg(e)}finally{loading.value=false}}

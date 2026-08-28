@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,onMounted,reactive,ref } from 'vue'
-import { detalleConvenio,listarConvenios,registrarConvenio,type Convenio,type Options } from '../services/convenios'
+import { detalleConvenio, listarConvenios, registrarConvenio } from '../services/convenios'
+import type { Convenio, Options } from '../interfaces/convenios.interface'
 const rows=ref<Convenio[]>([]),options=ref<Options>({tipos:[],estados:[],personas:[]}),total=ref(0),lastPage=ref(1),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),detail=ref<Convenio|null>(null),file=ref<File|null>(null),personSearch=ref('')
 const filters=reactive({criterio:'',tipo:'',estado:'',persona:'',page:1}),form=reactive({codigo_convenio:'',tipo_convenio_id:'',personas:[] as number[],objeto:'',fecha_suscripcion:'',fecha_inicio:'',fecha_fin:'',monto:'',dias_alerta:30,documento_referencia_externo:'',observaciones:''})
 const people=computed(()=>options.value.personas.filter(x=>!personSearch.value||x.nombre.toLowerCase().includes(personSearch.value.toLowerCase())||x.documento?.includes(personSearch.value)).slice(0,40))

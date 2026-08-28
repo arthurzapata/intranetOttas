@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed,onMounted,reactive,ref } from 'vue'
-import { obtenerConfiguracion,type ConfiguracionCalculadora,type Estructura,type Tramo } from '../services/calculadoraConsumo'
+import { obtenerConfiguracion } from '../services/calculadoraConsumo'
+import type { ConfiguracionCalculadora, Estructura, Tramo } from '../interfaces/calculadoraConsumo.interface'
 interface Resultado{nombre:string;agua:number;alcantarillado:number;cargoFijo:number;subtotal:number;igv:number;redondeo:number;total:number;vigente:boolean}
 const config=ref<ConfiguracionCalculadora>({distritos:[],categorias:[],estructuras:[],igv:.18}),loading=ref(false),error=ref(''),calculated=ref(false)
 const form=reactive({distrito_id:'',categoria_id:'',volumen:0,beneficio:false,agua:true,alcantarillado:true})

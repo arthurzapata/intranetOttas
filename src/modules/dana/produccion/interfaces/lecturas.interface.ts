@@ -1,0 +1,2 @@
+export interface LecturaProduccion { id:number; componente_id:number; macromedidor:string; tipo:'fisico'|'virtual'; sistema:string; distrito:string; lectura:number; unidad:string; fecha:string; hora:string; fecha_hora:string; usuario:string; imagen_url:string|null; valor_ingresado:number|null }
+export interface LecturasProduccionResponse { data:LecturaProduccion[]; current_page:number;last_page:number;total:number;resumen:{registros:number;fisicas:number;virtuales:number;volumen_total:number};macromedidores:{id:number;nombre:string}[] }

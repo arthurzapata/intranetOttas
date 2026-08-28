@@ -1,0 +1,6 @@
+export interface ProcesoOption { id:number;nombre:string;proveedores_count:number }
+export interface ProveedorEvaluacion { id:number;razon_social:string;ruc:string;condiciones_guardadas:boolean;fecha_oferta?:string;moneda_id?:number;validez_oferta?:string;forma_pago?:string;forma_entrega?:string;garantia_calidad?:string;plazo_entrega?:string;detalle_servicio?:string;total_ofertado?:number }
+export interface ItemEvaluacion { detalle_id:number;item_id:number;nombre:string;unidad:string;pedido_id:number;cantidad:number;precios:Record<number,number|null> }
+export interface EvaluacionEconomica { id:number;nombre:string;proceso_id:number;proceso:string;observacion?:string;estado:number;estado_nombre:string;usuario_evalua:string;proveedores_count:number;propuestas_count:number;fecha:string;proveedores?:ProveedorEvaluacion[];items?:ItemEvaluacion[];ganador_id?:number }
+export interface EvaluacionesResponse { data:EvaluacionEconomica[];total:number;page:number;last_page:number;estados:Record<string,string>;procesos:ProcesoOption[] }
+export interface CondicionesPayload { fecha_oferta:string;moneda_id:number;validez_oferta:string;forma_pago:string;forma_entrega:string;garantia_calidad:string;plazo_entrega:string;detalle_servicio:string }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted,ref } from 'vue'
-import { detalleDistrito,listarCritica,preFacturarCiclo,preFacturarDistrito,urlExportar,type Ciclo,type Distrito } from '../services/critica'
+import { detalleDistrito, listarCritica, preFacturarCiclo, preFacturarDistrito, urlExportar } from '../services/critica'
+import type { Ciclo, Distrito } from '../interfaces/critica.interface'
 const districts=ref<Distrito[]>([]),detail=ref<Distrito|null>(null),cycle=ref<Ciclo|null>(null),loading=ref(false),processing=ref(false),error=ref(''),success=ref('')
 const money=(n:number)=>Number(n||0).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})
 async function load(){loading.value=true;try{districts.value=(await listarCritica()).distritos}catch(e){error.value=msg(e)}finally{loading.value=false}}async function showDistrict(id:number){try{detail.value=await detalleDistrito(id)}catch(e){error.value=msg(e)}}

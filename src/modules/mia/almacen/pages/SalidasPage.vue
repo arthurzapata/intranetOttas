@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { anularSalida, buscarPedidos, guardarSalida, listarSalidas, obtenerSalida, urlNotaSalida, type PedidoSalida, type SalidaAlmacen } from '../services/salidas'
-import type { PeriodoAlmacen, TipoIngreso } from '../services/ingresos'
+import { anularSalida, buscarPedidos, guardarSalida, listarSalidas, obtenerSalida, urlNotaSalida } from '../services/salidas'
+import type { PedidoSalida, SalidaAlmacen } from '../interfaces/salidas.interface'
+import type { PeriodoAlmacen, TipoIngreso } from '../interfaces/ingresos.interface'
 const rows=ref<SalidaAlmacen[]>([]),tipos=ref<TipoIngreso[]>([]),periodo=ref<PeriodoAlmacen|null>(null),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),detail=ref<SalidaAlmacen|null>(null),modal=ref(false),pedidoSearch=ref(''),pedidos=ref<PedidoSalida[]>([]),selected=ref<PedidoSalida|null>(null)
 const filters=reactive({criterio:'',tipo_id:'',desde:'',hasta:''}),form=reactive({tipo_id:0,pedido_id:0,entregado_a_id:0,notas:'',items:[] as Array<{item_id:number;item:string;unidad:string;cantidad:number;disponible:number;precio_medio:number}>})
 const formTotal=computed(()=>form.items.reduce((sum,x)=>sum+x.cantidad*x.precio_medio,0))

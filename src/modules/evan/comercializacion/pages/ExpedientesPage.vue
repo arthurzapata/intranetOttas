@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { actualizarExpediente, crearExpediente, eliminarExpediente, listarExpedientes, type Expediente, type ExpedientePayload, type Option } from '../services/expedientes'
+import { actualizarExpediente, crearExpediente, eliminarExpediente, listarExpedientes } from '../services/expedientes'
+import type { Expediente, ExpedientePayload, Option } from '../interfaces/expedientes.interface'
 
 const filters = reactive({ criterio: '', estado: '', tipoexpediente_id: 0, page: 1 })
 const catalogs = reactive({ tipos: [] as Option[], flujos: [] as Option[], motivos: [] as Option[] })

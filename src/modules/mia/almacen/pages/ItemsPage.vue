@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { guardarItem, listarItems, type CatalogoItem, type GrupoOption, type ItemLogistico } from '../services/items'
+import { guardarItem, listarItems } from '../services/items'
+import type { CatalogoItem, GrupoOption, ItemLogistico } from '../interfaces/items.interface'
 const rows=ref<ItemLogistico[]>([]),groups=ref<GrupoOption[]>([]),units=ref<CatalogoItem[]>([]),summary=reactive({materiales:0,activos:0,servicios:0,sin_stock:0}),criterio=ref(''),page=ref(1),lastPage=ref(1),total=ref(0),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),tab=ref<'general'|'technical'>('general'),photo=ref<File|null>(null),preview=ref('')
 const form=reactive({nombre:'',grupo_id:0,subgrupo_id:0,unidad_id:0,uso_comun:false,stock_minimo:undefined as number|undefined,stock_maximo:undefined as number|undefined,lote_economico:undefined as number|undefined,punto_reposicion:undefined as number|undefined,consumo_promedio:undefined as number|undefined,remove_image:false})
 const subgroups=computed(()=>groups.value.find(x=>x.id===form.grupo_id)?.subgrupos||[]),selectedGroup=computed(()=>groups.value.find(x=>x.id===form.grupo_id))

@@ -1,7 +1,8 @@
 import { apiRequest } from '@/services/auth'
 import type { CatalogOption, SeguimientoDetalle, SeguimientoResponse } from '../../interfaces/documento'
+import type { SeguimientoFilters } from '../interfaces/flujo.interface'
 
-export interface SeguimientoFilters { filtro_documento:string; filtro_remitente:string; tipo_documento_id:number; page:number }
+
 export function buscarSeguimiento(filters:SeguimientoFilters){
   const query=new URLSearchParams({page:String(filters.page)})
   Object.entries(filters).forEach(([key,value])=>{if(key!=='page'&&value!==''&&value!==0)query.set(key,String(value))})

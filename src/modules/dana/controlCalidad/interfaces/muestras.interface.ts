@@ -1,0 +1,4 @@
+export interface OpcionMuestra { id:number; nombre:string }
+export interface MuestraAgua { id:number; componente_id:number; componente:string; localidad:string; periodicidad:string; fecha:string; hora:string; direccion:string; latitud:number|null; longitud:number|null; observacion:string; responsable_id:number|null; responsable:string; resultados_count:number; anio:number; mes:number }
+export interface MuestraPayload { componente_id:number|null; fecha:string; hora:string; direccion:string; latitud:number|null; longitud:number|null; observacion:string; responsable_id:number|null }
+export interface MuestrasResponse { data:MuestraAgua[]; componentes:OpcionMuestra[]; responsables:OpcionMuestra[]; current_page:number; last_page:number; total:number; totales:{mes:number;con_resultados:number;pendientes:number} }
