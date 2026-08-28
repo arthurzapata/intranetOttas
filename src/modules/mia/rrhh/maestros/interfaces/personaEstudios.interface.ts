@@ -1,0 +1,7 @@
+export interface EstudioPersona { id:number; nombre_completo:string; dni:string|null }
+export interface EstudioCatalogo { id:number; codigo?:string; nombre?:string; descripcion?:string; pais_id?:number; departamento_id?:number; provincia_id?:number }
+export interface PersonaEstudio { id:number; persona_id:number; gradoinstruccion_id:number; centroensenanza_id:number; provincia_id:number|null; distrito_id:number|null; fechadesde:string|null; fechahasta:string|null; califica:string|null; nota:string|null; sustento:string|null; estado:boolean; persona?:EstudioPersona|null; grado_instruccion?:EstudioCatalogo|null; gradoInstruccion?:EstudioCatalogo|null; centro_ensenanza?:EstudioCatalogo|null; centroEnsenanza?:EstudioCatalogo|null; pais?:EstudioCatalogo|null; departamento?:EstudioCatalogo|null; provincia?:EstudioCatalogo|null; distrito?:EstudioCatalogo|null }
+export interface PersonaEstudiosResponse { data:PersonaEstudio[]; total:number; current_page:number; last_page:number }
+export interface PersonaEstudiosOptions { personas:EstudioPersona[]; grados_instruccion:EstudioCatalogo[]; centros_ensenanza:EstudioCatalogo[]; paises:EstudioCatalogo[]; maximo_archivo_mb:number }
+export interface PersonaEstudioPayload { persona_id:number; gradoinstruccion_id:number; centroensenanza_id:number; provincia_id:number|null; distrito_id:number|null; fechadesde:string|null; fechahasta:string|null; califica:string|null; nota:string|null; sustento:File|null }
+

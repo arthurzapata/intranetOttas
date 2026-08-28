@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { controlAvance, descargarAvance, opcionesAvance, type EmpresaAvance } from '../services/bgc'
+import { controlAvance, descargarAvance, opcionesAvance } from '../services/bgc'
+import type { EmpresaAvance } from '../interfaces/bgc.interface'
 const periods=ref<string[]>([]),companies=ref<Array<{id:number;nombre:string}>>([]),period=ref(''),selected=ref<number[]>([]),results=ref<EmpresaAvance[]>([]),loading=ref(false),error=ref('')
 const average=computed(()=>results.value.length?Math.round(results.value.reduce((sum,item)=>sum+percentage(item),0)/results.value.length):0)
 function percentage(item:EmpresaAvance){return item.total?Math.round(item.aprobados*100/item.total):0}

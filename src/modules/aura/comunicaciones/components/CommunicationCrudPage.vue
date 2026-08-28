@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue'
-import { eliminar, exportar, guardar, listar, type CommunicationItem, type CommunicationResource } from '../services/comunicaciones'
+import { eliminar, exportar, guardar, listar } from '../services/comunicaciones'
+import type { CommunicationItem, CommunicationResource } from '../interfaces/comunicaciones.interface'
 type Group='noticias'|'publicaciones'|'relaciones'|'configuracion'
 const props=defineProps<{group:Group}>()
 const groupData={noticias:{title:'Noticias',description:'Registra noticias, temáticas, medios relacionados y documentos.',tabs:[['noticias','Noticias']]},publicaciones:{title:'Publicaciones',description:'Gestiona las publicaciones institucionales y sus archivos.',tabs:[['publicaciones','Publicaciones']]},relaciones:{title:'Relaciones y reuniones',description:'Centraliza stakeholders, reuniones, agendas y acuerdos.',tabs:[['stakeholders','Stakeholders'],['reuniones','Reuniones'],['agendas','Agendas'],['acuerdos','Acuerdos']]},configuracion:{title:'Configuración de comunicaciones',description:'Administra los catálogos utilizados por el módulo.',tabs:[['tematicas','Temáticas'],['medios','Medios'],['tipos-noticia','Tipos de noticia'],['tipos-publicacion','Tipos de publicación'],['tipos-stakeholder','Tipos de stakeholder'],['tipos-medio','Tipos de medio'],['estados-medio','Estados de medio']]}} as const

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { eliminarNodo, guardarNodo, obtenerEstructura, type ComponenteBgc, type CriterioBgc, type EstandarBgc, type PilarBgc } from '../services/bgc'
+import { eliminarNodo, guardarNodo, obtenerEstructura } from '../services/bgc'
+import type { ComponenteBgc, CriterioBgc, EstandarBgc, PilarBgc } from '../interfaces/bgc.interface'
 type NodeType='pilar'|'estandar'|'componente'|'criterio'
 const pilares=ref<PilarBgc[]>([]),tipos=ref<Array<{id:number;nombre:string}>>([]),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),nodeType=ref<NodeType>('pilar'),editing=ref<number|null>(null),expanded=ref<number[]>([])
 const form=reactive({nombre:'',descripcion:'',estado:true,pilar_id:0,estandar_id:0,componente_id:0,tipo_criterio_id:0})

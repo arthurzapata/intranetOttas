@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { estructuraProceso, guardarProceso, listarEvidencias, listarProcesos, revisarEvidencia, subirEvidencia, type EvidenciaBgc, type CriterioBgc, type PilarBgc, type ProcesoBgc } from '../services/bgc'
+import { estructuraProceso, guardarProceso, listarEvidencias, listarProcesos, revisarEvidencia, subirEvidencia } from '../services/bgc'
+import type { CriterioBgc, EvidenciaBgc, PilarBgc, ProcesoBgc } from '../interfaces/bgc.interface'
 
 const procesos=ref<ProcesoBgc[]>([]),selected=ref<ProcesoBgc|null>(null),pilares=ref<PilarBgc[]>([]),evidencias=ref<EvidenciaBgc[]>([])
 const loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),processModal=ref(false),evidenceModal=ref(false),criterion=ref<CriterioBgc|null>(null),file=ref<File|null>(null),description=ref(''),editingProcessId=ref<number|null>(null)

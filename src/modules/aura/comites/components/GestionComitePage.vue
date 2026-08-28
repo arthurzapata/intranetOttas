@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { cambiarEstado, descargar, eliminar, guardar, listar, opciones, type ComiteItem, type ComiteMode, type ComiteOptions } from '../services/comites'
+import { cambiarEstado, descargar, eliminar, guardar, listar, opciones } from '../services/comites'
+import type { ComiteItem, ComiteMode, ComiteOptions } from '../interfaces/comites.interface'
 const props=defineProps<{mode:ComiteMode}>()
 const labels={comites:{title:'Comités',one:'comité',description:'Administra comités, integrantes y documentos de creación.'},reuniones:{title:'Reuniones',one:'reunión',description:'Programa reuniones y controla su atención y archivos.'},acuerdos:{title:'Acuerdos',one:'acuerdo',description:'Consulta, atiende y cierra los acuerdos generados en reuniones.'},tipos:{title:'Tipos de comité',one:'tipo de comité',description:'Mantén el catálogo de clasificación de comités.'}}
 const copy=computed(()=>labels[props.mode]),items=ref<ComiteItem[]>([]),options=ref<ComiteOptions>({tipos:[],personas:[],comites:[]}),search=ref(''),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),file=ref<File|null>(null)

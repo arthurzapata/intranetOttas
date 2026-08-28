@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { dashboard, exportar, type DashboardData } from '../services/comunicaciones'
+import { dashboard, exportar } from '../services/comunicaciones'
+import type { DashboardData } from '../interfaces/comunicaciones.interface'
 const now=new Date(),filters=reactive({desde:`${now.getFullYear()}-01-01`,hasta:now.toISOString().slice(0,10)}),data=ref<DashboardData|null>(null),loading=ref(false),error=ref('')
 async function load(){loading.value=true;error.value='';try{data.value=await dashboard(filters.desde,filters.hasta)}catch(cause){error.value=cause instanceof Error?cause.message:'No se pudo cargar el dashboard.'}finally{loading.value=false}}
 function max(items:Array<{total:number}>){return Math.max(...items.map(x=>x.total),1)}onMounted(load)

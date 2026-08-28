@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { listarIncidencias, type Incidencia } from '../services/incidencias'
+import { listarIncidencias } from '../services/incidencias'
+import type { Incidencia } from '../interfaces/incidencias.interface'
 const items=ref<Incidencia[]>([]),total=ref(0),lastPage=ref(1),loading=ref(false),error=ref(''),detail=ref<Incidencia|null>(null)
 const filters=reactive({criterio:'',anonima:'',desde:'',hasta:'',page:1})
 const anonymousCount=computed(()=>items.value.filter(item=>['si','sí','1','true'].includes(String(item.anonima).toLowerCase())).length)

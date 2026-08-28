@@ -1,9 +1,5 @@
 import { apiDownload, apiRequest } from '@/services/auth'
-export type AccionTipo='acuerdo'|'disposicion'|'pedido'
-export interface AccionArchivo{id:number;archivo:string;created_at?:string;usuario?:string}
-export interface AccionVoto{id:number;usuario_id:number;usuario:string;aprobado:boolean;comentario?:string|null;created_at:string;vigente:boolean}
-export interface AccionDirectorio{id:number;tipo:AccionTipo;descripcion:string;fecha?:string|null;fecha_atencion?:string|null;atencion?:string|null;requiere_archivo?:boolean;sesion:{id:number;numeracion:string;fecha_sesion:string};agenda?:{id:number;punto_agenda:string};responsable?:string|null;director?:string|null;archivos:AccionArchivo[];votos?:AccionVoto[];votos_aprobados?:number;total_directores?:number;puede_votar?:boolean;ya_voto?:boolean;puede_atender?:boolean}
-export interface AccionPage{data:AccionDirectorio[];current_page:number;last_page:number;total:number}
+import type { AccionArchivo, AccionDirectorio, AccionPage, AccionTipo } from '../interfaces/acciones.interface'
 export function listarAcciones(tipo:AccionTipo,filters:{criterio:string;estado:string;page:number}){const q=new URLSearchParams({page:String(filters.page)});if(filters.criterio)q.set('criterio',filters.criterio);if(filters.estado)q.set('estado',filters.estado);return apiRequest<AccionPage>(`/lecturita/aura/directorio/${tipo}s?${q}`)}
 export function detallarAccion(tipo:AccionTipo,id:number){return apiRequest<AccionDirectorio>(`/lecturita/aura/directorio/${tipo}s/${id}`)}
 export function votarAccion(tipo:AccionTipo,id:number,data:{aprobado:boolean;comentario:string}){return apiRequest<void>(`/lecturita/aura/directorio/${tipo}s/${id}/visto-bueno`,{method:'POST',body:JSON.stringify(data)})}

@@ -1,5 +1,7 @@
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '/api').replace(/\/$/, '')
 const TOKEN_KEY = 'intranet_auth_token'
+const DEMO_USER_KEY = 'intranet_demo_username'
+const DEMO_AUTH = import.meta.env.VITE_DEMO_AUTH === 'true'
 
 export interface AuthUser {
   id: number
@@ -14,6 +16,18 @@ export interface AuthUser {
 
 function getToken() {
   return localStorage.getItem(TOKEN_KEY)
+}
+
+function demoUser(): AuthUser {
+  const username = localStorage.getItem(DEMO_USER_KEY) || 'Usuario Demo'
+  return {
+    id: 1,
+    username,
+    name: username,
+    empresa_id: 1,
+    empresa: { id: 1, nombre: 'EPS Demo', nombre_formal: 'EPS Demo', nombre_comercial: 'Agua Cañete', imagen: 'logo-intranet-canete.png' },
+    empresas: [{ id: 1, nombre: 'EPS Demo', nombre_formal: 'EPS Demo', nombre_comercial: 'Agua Cañete', imagen: 'logo-intranet-canete.png' }],
+  }
 }
 
 export async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -36,6 +50,10 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
     }
 
     throw new Error(extractErrorMessage(payload) ?? 'No se pudo conectar con el servidor.')
+  }
+
+  if (!contentType.includes('application/json') && typeof payload === 'string' && /<html|<!doctype/i.test(payload)) {
+    throw new Error('La API no está disponible en esta presentación. La interfaz puede seguir utilizándose en modo demostración.')
   }
 
   return payload as T
@@ -76,6 +94,11 @@ export const authService = {
   clearToken: () => localStorage.removeItem(TOKEN_KEY),
 
   async login(username: string, password: string) {
+    if (DEMO_AUTH) {
+      localStorage.setItem(TOKEN_KEY, 'demo-session')
+      localStorage.setItem(DEMO_USER_KEY, username)
+      return
+    }
     const token = await apiRequest<string>('/lecturita/auth/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
@@ -84,10 +107,15 @@ export const authService = {
     localStorage.setItem(TOKEN_KEY, token)
   },
 
-  me: () => apiRequest<AuthUser>('/lecturita/auth/me'),
-  cambiarEmpresa: (empresa_id: number) => apiRequest<AuthUser>('/lecturita/auth/cambiar-empresa', { method:'POST', body:JSON.stringify({ empresa_id }) }),
+  me: () => DEMO_AUTH ? Promise.resolve(demoUser()) : apiRequest<AuthUser>('/lecturita/auth/me'),
+  cambiarEmpresa: (empresa_id: number) => DEMO_AUTH ? Promise.resolve(demoUser()) : apiRequest<AuthUser>('/lecturita/auth/cambiar-empresa', { method:'POST', body:JSON.stringify({ empresa_id }) }),
 
   async logout() {
+    if (DEMO_AUTH) {
+      localStorage.removeItem(TOKEN_KEY)
+      localStorage.removeItem(DEMO_USER_KEY)
+      return
+    }
     try {
       if (getToken()) await apiRequest('/lecturita/auth/logout', { method: 'POST' })
     } finally {

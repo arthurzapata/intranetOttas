@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { detallarSesion, eliminarSesion, finalizarSesion, guardarSesion, listarSesiones, type Sesion, type SesionPayload } from '../services/sesiones'
+import { detallarSesion, eliminarSesion, finalizarSesion, guardarSesion, listarSesiones } from '../services/sesiones'
+import type { Sesion, SesionPayload } from '../interfaces/sesiones.interface'
 const filters=reactive({criterio:'',desde:'',hasta:'',page:1}),items=ref<Sesion[]>([]),pagination=reactive({current:1,last:1,total:0}),loading=ref(false),saving=ref(false),error=ref(''),success=ref(''),modal=ref(false),editing=ref<number|null>(null),detail=ref<Sesion|null>(null),agendaText=ref('')
 const form=reactive<SesionPayload>({numeracion:'',tipo:'o',modalidad:'presencial',url_enlace:'',primera_convocatoria:'',segunda_convocatoria:'',fecha_sesion:'',fecha_limite_carga_archivos:'',puntos_agenda:[]})
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=await listarSesiones(filters);items.value=r.data;Object.assign(pagination,{current:r.current_page,last:r.last_page,total:r.total})}catch(cause){error.value=cause instanceof Error?cause.message:'No se pudieron cargar las sesiones.'}finally{loading.value=false}}

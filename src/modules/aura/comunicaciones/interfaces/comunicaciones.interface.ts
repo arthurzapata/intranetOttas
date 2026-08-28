@@ -1,0 +1,3 @@
+export type CommunicationResource='noticias'|'publicaciones'|'stakeholders'|'reuniones'|'agendas'|'acuerdos'|'tematicas'|'tipos-noticia'|'tipos-publicacion'|'tipos-stakeholder'|'tipos-medio'|'estados-medio'|'medios'
+export interface CommunicationItem{id:number;codigo?:string;titulo?:string;nombre?:string;descripcion?:string;fecha?:string;estado?:string;tipo?:string;medio?:string;stakeholder?:string;archivos?:number}
+export interface DashboardData{totales:{noticias:number;publicaciones:number;stakeholders:number;reuniones:number;acuerdos:number};tematicas:Array<{nombre:string;total:number}>;medios:Array<{nombre:string;total:number}>;estados:Array<{nombre:string;total:number}>}

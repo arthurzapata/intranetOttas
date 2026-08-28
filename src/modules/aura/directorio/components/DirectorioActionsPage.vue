@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-import { descargarArchivoAccion, detallarAccion, eliminarArchivoAccion, finalizarAccion, listarAcciones, subirArchivoAccion, votarAccion, type AccionDirectorio, type AccionTipo } from '../services/acciones'
+import { descargarArchivoAccion, detallarAccion, eliminarArchivoAccion, finalizarAccion, listarAcciones, subirArchivoAccion, votarAccion } from '../services/acciones'
+import type { AccionDirectorio, AccionTipo } from '../interfaces/acciones.interface'
 const props=defineProps<{tipo:AccionTipo;title:string;description:string;color?:string}>(),filters=reactive({criterio:'',estado:'',page:1}),items=ref<AccionDirectorio[]>([]),pagination=reactive({current:1,last:1,total:0}),loading=ref(false),processing=ref(false),error=ref(''),success=ref(''),detail=ref<AccionDirectorio|null>(null),voteOpen=ref(false),finishOpen=ref(false),approved=ref(true),comment=ref(''),answer=ref(''),file=ref<File|null>(null)
 const plural=computed(()=>props.tipo==='disposicion'?'disposiciones':`${props.tipo}s`)
 async function load(page=1){filters.page=page;loading.value=true;error.value='';try{const r=await listarAcciones(props.tipo,filters);items.value=r.data;Object.assign(pagination,{current:r.current_page,last:r.last_page,total:r.total})}catch(cause){error.value=cause instanceof Error?cause.message:`No se pudieron cargar ${plural.value}.`}finally{loading.value=false}}
