@@ -4,7 +4,7 @@ import type { Ciclo, Distrito } from '../interfaces/critica.interface'
 
 
 
-const base='/lecturita/evan/facturacion/critica'
+const base='/evan/facturacion/critica'
 export const listarCritica=()=>apiRequest<{distritos:Distrito[]}>(base)
 export const detalleDistrito=(id:number)=>apiRequest<Distrito>(`${base}/distritos/${id}`)
 export const preFacturarCiclo=(id:number)=>apiRequest<Ciclo>(`${base}/ciclos/${id}/pre-facturar`,{method:'POST'})

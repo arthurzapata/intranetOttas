@@ -7,7 +7,7 @@ import type { Conductor, ConductorPayload, ConductoresResponse } from '../interf
 
 
 
-const base = '/lecturita/dana/gestion-cisternas/conductores'
+const base = '/dana/gestion-cisternas/conductores'
 
 export function listarConductores(criterio = '', page = 1) {
   const query = new URLSearchParams({ criterio, page: String(page) })

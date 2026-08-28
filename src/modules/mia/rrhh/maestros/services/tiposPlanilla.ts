@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { PeriodicidadPlanilla, RegimenOption, TipoPlanilla, TipoPlanillaPayload, TiposPlanillaResponse } from '../interfaces/tiposPlanilla.interface'
-const base = '/lecturita/mia/rrhh/maestros/tipos-planilla'
+const base = '/mia/rrhh/maestros/tipos-planilla'
 
 export const periodicidades: PeriodicidadPlanilla[] = ['Mensual', 'Quincenal', 'Semanal', 'Eventual', 'Anual']
 
@@ -11,7 +11,7 @@ export function listarTiposPlanilla(criterio: string, regimenId: number | null, 
 }
 
 export function listarRegimenesActivos() {
-  return apiRequest<RegimenOption[]>('/lecturita/mia/rrhh/maestros/regimenes/opciones')
+  return apiRequest<RegimenOption[]>('/mia/rrhh/maestros/regimenes/opciones')
 }
 
 export function guardarTipoPlanilla(id: number | null, payload: TipoPlanillaPayload) {

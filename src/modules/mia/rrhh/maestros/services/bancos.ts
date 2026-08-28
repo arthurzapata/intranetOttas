@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { TipoEntidad, Banco, BancoPayload } from '../interfaces/bancos.interface'
-const base = '/lecturita/mia/rrhh/maestros/bancos'
+const base = '/mia/rrhh/maestros/bancos'
 
 export const tiposEntidad: TipoEntidad[] = ['BANCO', 'CAJA', 'FINANCIERA', 'OTRO']
 

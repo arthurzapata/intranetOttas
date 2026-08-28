@@ -7,7 +7,7 @@ import type { Titular, ConexionSici, ConexionPage, ConexionPayload } from '../in
 
 
 
-const base = '/lecturita/evan/sici/conexiones'
+const base = '/evan/sici/conexiones'
 const query = (values: Record<string, string | number>) => {
   const params = new URLSearchParams()
   Object.entries(values).forEach(([key, value]) => value !== '' && params.set(key, String(value)))

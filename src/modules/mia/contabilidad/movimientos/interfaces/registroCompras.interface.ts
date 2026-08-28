@@ -1,0 +1,6 @@
+export interface CompraOption { id:number; nombre:string; codigo?:string; abreviatura?:string }
+export interface ProveedorCompra { id:number; texto:string }
+export interface RegistroCompra { id:number; documento_id:number; documento?:CompraOption|null; serie:string; numerom:string; proveedor_id:number|null; proveedor:string|null; fecha:string; tipoorden_id:number|null; numeroorden:string|null; moneda_id:number; moneda?:CompraOption|null; compcontable:string|null; compdetraccion:string|null; fechadetraccion:string|null; fechavcto:string|null; impuesto:'IGV'|'ISC'|null; estadoreg:'GR'|'NG'; inccreditofiscal:boolean; glosa:string|null; importegravado:number; importenogravado:number; importeimpuesto:number; importeir:number; importetotal:number; estado:boolean }
+export interface RegistroComprasResponse { data:RegistroCompra[]; total:number; current_page:number; last_page:number; options:{documentos:CompraOption[];monedas:CompraOption[];tipos_orden:CompraOption[];porcentaje_igv:number;porcentaje_isc:number} }
+export interface FiltrosCompra { criterio:string; documento_id:string; moneda_id:string; estadoreg:string; fecha_desde:string; fecha_hasta:string }
+export type RegistroCompraPayload=Omit<RegistroCompra,'id'|'documento'|'proveedor'|'moneda'|'estado'>

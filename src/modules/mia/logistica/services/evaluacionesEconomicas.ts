@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { EvaluacionEconomica, EvaluacionesResponse, CondicionesPayload } from '../interfaces/evaluacionesEconomicas.interface'
-const base='/lecturita/mia/logistica/evaluaciones-economicas'
+const base='/mia/logistica/evaluaciones-economicas'
 export function listarEvaluaciones(criterio:string,estado:string,page:number){const q=new URLSearchParams({criterio,estado,page:String(page)});return apiRequest<EvaluacionesResponse>(`${base}?${q}`)}
 export function crearEvaluacion(data:{nombre:string;proceso_id:number;observacion:string}){return apiRequest<void>(base,{method:'POST',body:JSON.stringify(data)})}
 export function obtenerEvaluacion(id:number){return apiRequest<EvaluacionEconomica>(`${base}/${id}`)}

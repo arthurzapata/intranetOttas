@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { CatalogoAfectacion, AfectacionPlanilla, AfectacionPlanillaPayload, OpcionesAfectacion } from '../interfaces/afectacionesPlanilla.interface'
-const base = '/lecturita/mia/rrhh/maestros/afectaciones-planilla'
+const base = '/mia/rrhh/maestros/afectaciones-planilla'
 
 export function listarAfectacionesPlanilla() {
   return apiRequest<AfectacionPlanilla[]>(base)

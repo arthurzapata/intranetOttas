@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { AgrupadoraBoleta, TipoConceptoPlanilla, TipoConceptoPlanillaPayload } from '../interfaces/tiposConceptosPlanilla.interface'
-const base = '/lecturita/mia/rrhh/maestros/tipos-conceptos-planilla'
+const base = '/mia/rrhh/maestros/tipos-conceptos-planilla'
 
 export const agrupadoras: AgrupadoraBoleta[] = ['REMUNERACIONES', 'DESCUENTOS', 'APORTACIONES DEL EMPLEADOR']
 

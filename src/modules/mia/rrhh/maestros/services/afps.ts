@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { Afp, AfpPayload, AfpsResponse } from '../interfaces/afps.interface'
-const base = '/lecturita/mia/rrhh/maestros/afps'
+const base = '/mia/rrhh/maestros/afps'
 
 export function listarAfps(criterio: string, page: number) {
   const query = new URLSearchParams({ criterio, page: String(page) })

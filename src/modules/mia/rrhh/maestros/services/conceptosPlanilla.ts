@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { NaturalezaConcepto, TipoCalculoConcepto, ConceptoOption, ConceptoPlanilla, ConceptoPlanillaPayload, ConceptosPlanillaOpciones } from '../interfaces/conceptosPlanilla.interface'
-const base='/lecturita/mia/rrhh/maestros/conceptos-planilla'
+const base='/mia/rrhh/maestros/conceptos-planilla'
 export const naturalezas:NaturalezaConcepto[]=['REMUNERATIVO','NO_REMUNERATIVO','INFORMATIVO']
 export const tiposCalculo:TipoCalculoConcepto[]=['MANUAL','FIJO','PORCENTAJE','FORMULA','DINAMICO']
 export const naturalezaLabels:Record<NaturalezaConcepto,string>={REMUNERATIVO:'Remunerativo',NO_REMUNERATIVO:'No remunerativo',INFORMATIVO:'Informativo'}

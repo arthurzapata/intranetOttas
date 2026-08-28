@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { TipoAfectacion, TipoAfectacionPayload } from '../interfaces/tiposAfectacion.interface'
-const base = '/lecturita/mia/rrhh/maestros/tipos-afectacion'
+const base = '/mia/rrhh/maestros/tipos-afectacion'
 
 export function listarTiposAfectacion() {
   return apiRequest<TipoAfectacion[]>(base)

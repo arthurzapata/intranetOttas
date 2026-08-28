@@ -1,6 +1,6 @@
 import { apiDownload,apiRequest } from '@/services/auth'
 import type { EstudioPersona, EstudioCatalogo, PersonaEstudio, PersonaEstudiosResponse, PersonaEstudiosOptions, PersonaEstudioPayload } from '../interfaces/personaEstudios.interface'
-const base='/lecturita/mia/rrhh/maestros/persona-estudios'
+const base='/mia/rrhh/maestros/persona-estudios'
 export function listarPersonaEstudios(criterio:string,page:number,personaId:number|null=null){const q=new URLSearchParams({criterio,page:String(page)});if(personaId)q.set('persona_id',String(personaId));return apiRequest<PersonaEstudiosResponse>(`${base}?${q}`)}
 export const listarOpcionesPersonaEstudios=()=>apiRequest<PersonaEstudiosOptions>(`${base}/opciones`)
 export const listarDepartamentosEstudios=(paisId:number)=>apiRequest<EstudioCatalogo[]>(`${base}/ubicacion/paises/${paisId}/departamentos`)

@@ -4,7 +4,7 @@ import type { Ciclo, Distrito } from '../interfaces/ciclos.interface'
 
 
 
-const base='/lecturita/evan/facturacion/ciclos'
+const base='/evan/facturacion/ciclos'
 export const listarCiclos=()=>apiRequest<{distritos:Distrito[]}>(base)
 export const detalleCiclo=(id:number)=>apiRequest<Ciclo>(`${base}/${id}`)
 export const abrirCiclo=(sector:number,data:Record<string,string>)=>apiRequest<Ciclo>(`${base}/sectores/${sector}/aperturar`,{method:'POST',body:JSON.stringify(data)})

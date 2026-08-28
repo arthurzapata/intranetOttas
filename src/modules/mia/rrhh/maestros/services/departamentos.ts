@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { PaisOption, Departamento, DepartamentosResponse, DepartamentoPayload } from '../interfaces/departamentos.interface'
-const base = '/lecturita/mia/rrhh/maestros/departamentos'
+const base = '/mia/rrhh/maestros/departamentos'
 
 export function listarDepartamentos(criterio: string, page: number) {
   const query = new URLSearchParams({ criterio, page: String(page) })
@@ -8,7 +8,7 @@ export function listarDepartamentos(criterio: string, page: number) {
 }
 
 export function listarPaisesActivos() {
-  return apiRequest<PaisOption[]>('/lecturita/mia/rrhh/maestros/paises/opciones')
+  return apiRequest<PaisOption[]>('/mia/rrhh/maestros/paises/opciones')
 }
 
 export function guardarDepartamento(id: number | null, payload: DepartamentoPayload) {

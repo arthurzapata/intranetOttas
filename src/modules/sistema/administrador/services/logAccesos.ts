@@ -5,7 +5,7 @@ import{apiRequest}from'@/services/auth'
 
 
 
-const base='/lecturita/sistema/administrador/log-accesos'
+const base='/sistema/administrador/log-accesos'
 
 export function listarAccesos(filters:AccesosFilters){
   const params=new URLSearchParams()

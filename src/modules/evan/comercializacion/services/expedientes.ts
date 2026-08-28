@@ -6,7 +6,7 @@ import type { Expediente, ExpedientePayload, ExpedientesResponse } from '../inte
 
 
 
-const basePath = '/lecturita/evan/atencion/expedientes'
+const basePath = '/evan/atencion/expedientes'
 export function listarExpedientes(params: { criterio: string; estado: string; tipoexpediente_id: number; page: number }) {
   const query = new URLSearchParams({ page: String(params.page) })
   Object.entries(params).forEach(([key, value]) => { if (key !== 'page' && value !== '' && value !== 0) query.set(key, String(value)) })

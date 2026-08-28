@@ -6,6 +6,6 @@ import{apiRequest}from'@/services/auth'
 
 
 
-const base='/lecturita/evan/catastro/recategorizaciones'
+const base='/evan/catastro/recategorizaciones'
 export const listarRecategorizaciones=()=>apiRequest<Recategorizacion[]>(base)
 export const cambiarCategorias=(id:number,data:CambioPayload)=>apiRequest<void>(`${base}/${id}/cambiar`,{method:'POST',body:JSON.stringify(data)})

@@ -5,7 +5,7 @@ import{apiRequest}from'@/services/auth'
 
 
 
-const base='/lecturita/evan/catastro/notificaciones'
+const base='/evan/catastro/notificaciones'
 export const listarNotificaciones=()=>apiRequest<Notificacion[]>(base)
 export const cerrarNotificacion=(id:number,data:CierrePayload)=>apiRequest<Notificacion>(`${base}/${id}/cerrar`,{method:'POST',body:JSON.stringify(data)})
 export const agregarFotografia=(id:number,fotografia:File)=>{const body=new FormData();body.append('fotografia',fotografia);return apiRequest<Fotografia>(`${base}/${id}/fotografias`,{method:'POST',body})}

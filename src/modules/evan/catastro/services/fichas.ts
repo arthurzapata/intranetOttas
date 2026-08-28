@@ -7,7 +7,7 @@ import{apiRequest}from'@/services/auth'
 
 
 
-const base='/lecturita/evan/catastro/campanas'
+const base='/evan/catastro/campanas'
 export const listarCampanas=(criterio='',page=1)=>apiRequest<Listado>(`${base}?criterio=${encodeURIComponent(criterio)}&page=${page}`)
 export const crearCampana=(data:{nombre:string;sector_id:number})=>apiRequest<Campana>(base,{method:'POST',body:JSON.stringify(data)})
 export const eliminarCampana=(id:number)=>apiRequest<void>(`${base}/${id}`,{method:'DELETE'})

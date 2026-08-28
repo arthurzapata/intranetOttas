@@ -1,7 +1,7 @@
 import{apiDownload,apiRequest}from'@/services/auth'
 import type { AsistenciaFase, DocumentoFase, HitoRegularizable, Option, ProcesoIntegracion, ProcesoPayload, RegularizacionPage, SeguimientoProceso, TerritorialFilters, TerritorialPage } from '../interfaces/territorial.interface'
 
-const base='/lecturita/enki/territorial'
+const base='/enki/territorial'
 export function listarProcesos(filters:TerritorialFilters){const params=new URLSearchParams({page:String(filters.page)});Object.entries(filters).forEach(([key,value])=>{if(key!=='page'&&value)params.set(key,String(value))});return apiRequest<TerritorialPage>(`${base}?${params}`)}
 export const opcionesGeograficas=(nivel:'provincias'|'distritos'|'centros-poblados',parentId:number)=>apiRequest<Option[]>(`${base}/opciones/${nivel}?parent_id=${parentId}`)
 export const crearProceso=(data:ProcesoPayload)=>apiRequest<ProcesoIntegracion>(base,{method:'POST',body:JSON.stringify(data)})

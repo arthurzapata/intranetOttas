@@ -2,7 +2,7 @@ import { apiRequest } from '@/services/auth'
 import type { DetalleIngreso, PeriodoAlmacen, TipoIngreso } from '../interfaces/ingresos.interface'
 import type { PedidoSalida, SalidaAlmacen, SalidasResponse, SalidaPayload } from '../interfaces/salidas.interface'
 
-const base='/lecturita/mia/logistica/almacen/salidas'
+const base='/mia/logistica/almacen/salidas'
 export function listarSalidas(filters:{criterio:string;tipo_id:string;desde:string;hasta:string;page:number}){const q=new URLSearchParams({criterio:filters.criterio,tipo_documento:filters.tipo_id,desde:filters.desde,hasta:filters.hasta,page:String(filters.page)});return apiRequest<SalidasResponse>(`${base}?${q}`)}
 export function obtenerSalida(id:number){return apiRequest<SalidaAlmacen>(`${base}/${id}`)}
 export function buscarPedidos(search:string){return apiRequest<PedidoSalida[]>(`${base}/pedidos?search=${encodeURIComponent(search)}`)}

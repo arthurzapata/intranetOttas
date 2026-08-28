@@ -1,6 +1,6 @@
 import{apiDownload,apiRequest}from'@/services/auth'
 import type { Contrato, ContratoPayload, ContratosPage, Option } from '../interfaces/contratos.interface'
-const base='/lecturita/enki/contratos-explotacion'
+const base='/enki/contratos-explotacion'
 export const listarContratos=(criterio:string,empresaId:number,page:number)=>apiRequest<ContratosPage>(`${base}?criterio=${encodeURIComponent(criterio)}&empresa_id=${empresaId||''}&page=${page}`)
 export const listarProvincias=(departamentoId:number)=>apiRequest<Option[]>(`${base}/opciones/provincias?departamento_id=${departamentoId}`)
 export const listarCentros=(provinciaId:number)=>apiRequest<Option[]>(`${base}/opciones/centros-poblados?provincia_id=${provinciaId}`)

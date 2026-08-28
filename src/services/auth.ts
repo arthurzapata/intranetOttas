@@ -99,16 +99,16 @@ export const authService = {
       localStorage.setItem(DEMO_USER_KEY, username)
       return
     }
-    const token = await apiRequest<string>('/lecturita/auth/login', {
+    const response = await apiRequest<{ data: { access_token: string } }>('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
     })
 
-    localStorage.setItem(TOKEN_KEY, token)
+    localStorage.setItem(TOKEN_KEY, response.data.access_token)
   },
 
-  me: () => DEMO_AUTH ? Promise.resolve(demoUser()) : apiRequest<AuthUser>('/lecturita/auth/me'),
-  cambiarEmpresa: (empresa_id: number) => DEMO_AUTH ? Promise.resolve(demoUser()) : apiRequest<AuthUser>('/lecturita/auth/cambiar-empresa', { method:'POST', body:JSON.stringify({ empresa_id }) }),
+  me: () => DEMO_AUTH ? Promise.resolve(demoUser()) : apiRequest<AuthUser>('/auth/me'),
+  cambiarEmpresa: (empresa_id: number) => DEMO_AUTH ? Promise.resolve(demoUser()) : apiRequest<AuthUser>('/auth/cambiar-empresa', { method:'POST', body:JSON.stringify({ empresa_id }) }),
 
   async logout() {
     if (DEMO_AUTH) {
@@ -117,7 +117,7 @@ export const authService = {
       return
     }
     try {
-      if (getToken()) await apiRequest('/lecturita/auth/logout', { method: 'POST' })
+      if (getToken()) await apiRequest('/auth/logout', { method: 'POST' })
     } finally {
       localStorage.removeItem(TOKEN_KEY)
     }

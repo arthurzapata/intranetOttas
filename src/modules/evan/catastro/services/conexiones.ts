@@ -15,5 +15,5 @@ export async function listarConexiones(filters: ConexionFilters) {
     if (value !== '' && value !== 0) query.set(key, String(value))
   })
   query.set('page', String(filters.page))
-  return apiRequest<ConexionesResponse>(`/lecturita/evan/catastro/conexiones?${query}`)
+  return apiRequest<ConexionesResponse>(`/evan/catastro/conexiones?${query}`)
 }

@@ -9,7 +9,7 @@ import type { Sector, SectoresResponse, SectorPayload } from '../interfaces/sect
 
 
 
-const basePath = '/lecturita/evan/catastro/sectores'
+const basePath = '/evan/catastro/sectores'
 
 export function listarSectores(params: { criterio: string; distrito_id: number; page: number }) {
   const query = new URLSearchParams({ page: String(params.page) })

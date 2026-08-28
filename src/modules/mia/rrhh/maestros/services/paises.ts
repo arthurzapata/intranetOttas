@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { Pais, PaisesResponse, PaisPayload } from '../interfaces/paises.interface'
-const base = '/lecturita/mia/rrhh/maestros/paises'
+const base = '/mia/rrhh/maestros/paises'
 
 export function listarPaises(criterio: string, page: number) {
   const query = new URLSearchParams({ criterio, page: String(page) })

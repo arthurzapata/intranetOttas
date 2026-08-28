@@ -2,7 +2,7 @@ import { apiRequest } from '@/services/auth'
 import type { BandejaResponse, BandejaTipo } from '../../interfaces/documento'
 import type { BandejaFilters } from '../interfaces/bandejas.interface'
 
-const basePath = '/lecturita/etrami/v2/bandejas'
+const basePath = '/etrami/v2/bandejas'
 
 export function listarBandeja(tipo: BandejaTipo, filters: BandejaFilters) {
   const query = new URLSearchParams({ page: String(filters.page) })
@@ -10,5 +10,5 @@ export function listarBandeja(tipo: BandejaTipo, filters: BandejaFilters) {
   return apiRequest<BandejaResponse>(`${basePath}/${tipo}?${query}`)
 }
 export function ejecutarAccion(accion: string, historialIds: number[], payload: Record<string, unknown> = {}) {
-  return apiRequest<void>(`/lecturita/etrami/v2/documentos/${accion}`, { method: 'POST', body: JSON.stringify({ historial_ids: historialIds, ...payload }) })
+  return apiRequest<void>(`/etrami/v2/documentos/${accion}`, { method: 'POST', body: JSON.stringify({ historial_ids: historialIds, ...payload }) })
 }

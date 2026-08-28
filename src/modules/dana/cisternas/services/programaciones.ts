@@ -7,7 +7,7 @@ import type { Programacion, ProgramacionPayload, ProgramacionesResponse, Inciden
 
 
 
-const base='/lecturita/dana/gestion-cisternas/programaciones'
+const base='/dana/gestion-cisternas/programaciones'
 export function listarProgramaciones(filters:{criterio:string;fecha_desde:string;fecha_hasta:string;motivo:string;incidencias:string},page=1){const q=new URLSearchParams({...filters,page:String(page)});return apiRequest<ProgramacionesResponse>(`${base}?${q}`)}
 export function guardarProgramacion(data:ProgramacionPayload,id?:number){return apiRequest<Programacion>(id?`${base}/${id}`:base,{method:id?'PUT':'POST',body:JSON.stringify(data)})}
 export function eliminarProgramacion(id:number){return apiRequest<void>(`${base}/${id}`,{method:'DELETE'})}

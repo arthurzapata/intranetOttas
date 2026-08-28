@@ -4,7 +4,7 @@ import type { CentroPoblado } from '../interfaces/centrosPoblados.interface'
 
 
 
-const basePath = '/lecturita/evan/catastro/centros-poblados'
+const basePath = '/evan/catastro/centros-poblados'
 
 export function listarCentrosPoblados(params: CatalogFilters) {
   const query = new URLSearchParams({ page: String(params.page) })

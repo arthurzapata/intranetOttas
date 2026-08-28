@@ -6,7 +6,7 @@ import type { Urbanizacion, UrbanizacionesResponse, UrbanizacionPayload } from '
 
 
 
-const basePath = '/lecturita/evan/catastro/urbanizaciones'
+const basePath = '/evan/catastro/urbanizaciones'
 
 export function listarUrbanizaciones(params: { criterio: string; distrito_id: number; page: number }) {
   const query = new URLSearchParams({ page: String(params.page) })

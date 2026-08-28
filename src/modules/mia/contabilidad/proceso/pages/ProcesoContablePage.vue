@@ -1,0 +1,22 @@
+<script setup lang="ts">
+const opciones=[
+  {sigla:'AC',nombre:'Análisis de cuentas',descripcion:'Movimiento detallado de cuentas, saldos y periodos.',color:'#2f91a0',to:'/modulos/administracion/contabilidad/analisis-cuentas'},
+  {sigla:'CO',nombre:'Consistencias',descripcion:'Validación de cuadratura, periodos y cuentas sin movimiento.',color:'#d08b32'},
+  {sigla:'CP',nombre:'Comprobantes',descripcion:'Consulta y exportación de comprobantes contables registrados.',color:'#426f9f'},
+  {sigla:'CG',nombre:'Cuadro general de cuentas',descripcion:'Reporte consolidado del plan de cuentas con saldos por periodo.',color:'#32936f'},
+  {sigla:'LD',nombre:'Libro diario general',descripcion:'Operaciones contables ordenadas cronológicamente.',color:'#c65a62'},
+  {sigla:'LM',nombre:'Libro mayor general',descripcion:'Movimientos agrupados por cuenta con saldos acumulados.',color:'#655b9c'},
+  {sigla:'CS',nombre:'Consulta de saldos',descripcion:'Saldos por periodo con acumulación jerárquica de cuentas.',color:'#238e9c'},
+  {sigla:'LI',nombre:'Libro de inventarios y balances',descripcion:'Balance de saldos de activo, pasivo y patrimonio.',color:'#3d72a9'},
+  {sigla:'BC',nombre:'Balance de comprobación',descripcion:'Apertura, movimientos, saldos, inventarios y resultados.',color:'#268c86'},
+  {sigla:'PB',nombre:'Plantilla del balance general',descripcion:'Configuración de cuentas por grupos financieros.',color:'#bf832d'},
+  {sigla:'BG',nombre:'Balance general',descripcion:'Situación financiera según la plantilla configurada.',color:'#bd547e'},
+  {sigla:'PF',nombre:'Plantilla E.G.P. por función',descripcion:'Estructura de ventas, costos, gastos y resultados.',color:'#566978'},
+  {sigla:'PN',nombre:'Plantilla E.G.P. por naturaleza',descripcion:'Estructura de ingresos, compras, gastos y resultado.',color:'#607b91'},
+  {sigla:'EG',nombre:'Estado de ganancias y pérdidas',descripcion:'Reporte por función o naturaleza con exportaciones.',color:'#b94c4f'},
+]
+</script>
+<template><div class="page"><nav><RouterLink to="/inicio">Inicio</RouterLink> / <RouterLink to="/modulos/administracion/contabilidad">Contabilidad</RouterLink> / Proceso contable</nav><header class="hero"><div class="mark">PC</div><div><small>MIA · CONTABILIDAD</small><h1>Proceso contable</h1><p>Herramientas de análisis, consistencia, estados financieros y reportería contable.</p></div></header><main class="cards"><component :is="opcion.to?'RouterLink':'article'" v-for="opcion in opciones" :key="opcion.nombre" class="card" :style="{'--color':opcion.color}" :to="opcion.to"><div class="icon">{{opcion.sigla}}</div><div><h2>{{opcion.nombre}}</h2><p>{{opcion.descripcion}}</p><span>{{opcion.to?'Abrir herramienta':'Próxima migración'}}</span></div></component></main></div></template>
+<style scoped>
+.page{color:#35464e}nav{margin-bottom:16px;color:#929fa5;font-size:.68rem}nav a{color:#4d6084;text-decoration:none}.hero{padding:20px;display:flex;align-items:center;gap:14px;border-left:5px solid #4d6084;border-radius:12px;background:#fff}.mark{width:50px;height:50px;display:grid;place-items:center;border-radius:11px;color:#fff;background:#4d6084;font-weight:800}.hero small{color:#4d6084;font-size:.5rem;font-weight:800}.hero h1{margin:3px 0;font-size:1.3rem}.hero p{margin:0;color:#7e8a90;font-size:.68rem}.cards{margin-top:16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.card{display:grid;grid-template-columns:70px 1fr;min-height:115px;overflow:hidden;border:1px solid color-mix(in srgb,var(--color),white 65%);border-radius:10px;background:#fff}.icon{display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,var(--color),color-mix(in srgb,var(--color),white 20%));font-weight:800}.card>div:last-child{padding:14px}.card h2{margin:0 0 7px;color:#2d3e46;font-size:.68rem;text-transform:uppercase}.card p{min-height:34px;margin:0;color:#718087;font-size:.55rem;line-height:1.45}.card span{display:block;margin-top:8px;color:var(--color);font-size:.46rem;font-weight:700}@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:570px){.cards{grid-template-columns:1fr}}
+</style>

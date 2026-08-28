@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { Periodo, PeriodosResponse } from '../interfaces/periodos.interface'
-const base='/lecturita/mia/logistica/almacen/periodos'
+const base='/mia/logistica/almacen/periodos'
 export function listarPeriodos(criterio:string,page:number){return apiRequest<PeriodosResponse>(`${base}?criterio=${encodeURIComponent(criterio)}&page=${page}`)}
 export function obtenerPeriodo(id:number){return apiRequest<Periodo>(`${base}/${id}`)}
 export function inicializarPeriodos(){return apiRequest<void>(base,{method:'POST'})}

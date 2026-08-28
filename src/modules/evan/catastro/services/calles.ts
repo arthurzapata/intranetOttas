@@ -6,7 +6,7 @@ import type { Calle, CallesResponse, CallePayload } from '../interfaces/calles.i
 
 
 
-const basePath = '/lecturita/evan/catastro/calles'
+const basePath = '/evan/catastro/calles'
 
 export function listarCalles(params: { criterio: string; distrito_id: number; page: number }) {
   const query = new URLSearchParams({ page: String(params.page) })

@@ -1,6 +1,6 @@
 import { apiRequest } from '@/services/auth'
 import type { TipoOperacion, TipoRelacion, TipoRelacionPayload } from '../interfaces/tiposRelacion.interface'
-const base='/lecturita/mia/rrhh/maestros/tipos-relacion'
+const base='/mia/rrhh/maestros/tipos-relacion'
 export const operaciones:TipoOperacion[]=['SUMA','RESTA','MULTIPLICA','DIVIDE','LIMITE','CONDICIONAL']
 export const operacionLabels:Record<TipoOperacion,string>={SUMA:'Suma',RESTA:'Resta',MULTIPLICA:'Multiplica',DIVIDE:'Divide',LIMITE:'Límite',CONDICIONAL:'Condicional'}
 export const listarTiposRelacion=()=>apiRequest<TipoRelacion[]>(base)

@@ -4,4 +4,4 @@ import type { ConfiguracionCalculadora } from '../interfaces/calculadoraConsumo.
 
 
 
-export const obtenerConfiguracion=()=>apiRequest<ConfiguracionCalculadora>('/lecturita/evan/comercializacion/calculadora-consumo/configuracion')
+export const obtenerConfiguracion=()=>apiRequest<ConfiguracionCalculadora>('/evan/comercializacion/calculadora-consumo/configuracion')

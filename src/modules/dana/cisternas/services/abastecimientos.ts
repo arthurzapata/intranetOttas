@@ -4,6 +4,6 @@ import type { AbastecimientoProgramado, AbastecimientosResponse, AccionAbastecim
 
 
 
-const base='/lecturita/dana/gestion-cisternas/abastecimientos'
+const base='/dana/gestion-cisternas/abastecimientos'
 export function listarAbastecimientos(criterio=''){const q=new URLSearchParams({criterio});return apiRequest<AbastecimientosResponse>(`${base}?${q}`)}
 export function registrarAccion(data:AccionAbastecimiento){return apiRequest<AbastecimientoProgramado>(`${base}/acciones`,{method:'POST',body:JSON.stringify(data)})}
