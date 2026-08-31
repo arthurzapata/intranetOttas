@@ -6,6 +6,7 @@ import SectionView from '@/views/SectionView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import SeguimientoProcesoPage from '@/modules/enki/territorial/pages/SeguimientoProcesoPage.vue'
 import { appModules } from '@/config/modules'
+import { finishNavigationLoading, startNavigationLoading } from '@/composables/useNavigationLoading'
 
 const optionPages = {
   'helpdesk-requerimientos-gestion': () => import('@/modules/helpdesk/requerimientos/pages/RequerimientosPage.vue'),
@@ -35,6 +36,44 @@ const optionPages = {
   'mia-almacen-items': () => import('@/modules/mia/almacen/pages/ItemsPage.vue'),
   'mia-logistica-documentos-compra': () => import('@/modules/mia/almacen/pages/DocumentosCompraPage.vue'),
   'mia-presupuesto-formulaciones': () => import('@/modules/mia/presupuesto/pages/FormulacionesPage.vue'),
+  'mia-presupuesto-inversiones': () => import('@/modules/mia/presupuesto/pages/InversionesPage.vue'),
+  'mia-finanzas-bitacora': () => import('@/modules/mia/finanzas/pages/BitacoraPage.vue'),
+  'mia-finanzas-cartas-fianza': () => import('@/modules/mia/finanzas/pages/CartasFianzaPage.vue'),
+  'mia-finanzas-tipos-carta-fianza': () => import('@/modules/mia/finanzas/pages/TiposCartaFianzaPage.vue'),
+  'mia-finanzas-catalogo-detracciones': () => import('@/modules/mia/finanzas/pages/CatalogoDetraccionesPage.vue'),
+  'mia-finanzas-configuraciones-retencion': () => import('@/modules/mia/finanzas/pages/ConfiguracionesRetencionPage.vue'),
+  'mia-finanzas-tipos-cambio': () => import('@/modules/mia/finanzas/pages/TiposCambioPage.vue'),
+  'mia-finanzas-analitico-comprobantes': () => import('@/modules/mia/finanzas/pages/AnaliticoComprobantesPage.vue'),
+  'mia-finanzas-cuentas-bancarias-proveedores': () => import('@/modules/mia/finanzas/pages/CuentasBancariasProveedoresPage.vue'),
+  'mia-finanzas-documentos-proveedores': () => import('@/modules/mia/finanzas/pages/DocumentosProveedoresPage.vue'),
+  'mia-finanzas-detracciones-proveedores': () => import('@/modules/mia/finanzas/pages/DetraccionesProveedoresPage.vue'),
+  'mia-finanzas-movimientos-financieros': () => import('@/modules/mia/finanzas/pages/MovimientosFinancierosPage.vue'),
+  'mia-finanzas-movimientos-flujo-caja': () => import('@/modules/mia/finanzas/pages/MovimientosFlujoCajaPage.vue'),
+  'mia-finanzas-consistencias-proveedores': () => import('@/modules/mia/finanzas/pages/ConsistenciasProveedoresPage.vue'),
+  'mia-finanzas-conceptos-cuenta': () => import('@/modules/mia/finanzas/pages/ConceptosCuentaPage.vue'),
+  'mia-finanzas-conceptos-flujo-caja': () => import('@/modules/mia/finanzas/pages/ConceptosFlujoCajaPage.vue'),
+  'mia-finanzas-cuentas-flujo-caja': () => import('@/modules/mia/finanzas/pages/CuentasFlujoCajaPage.vue'),
+  'mia-finanzas-cuentas-tesoreria': () => import('@/modules/mia/finanzas/pages/CuentasTesoreriaPage.vue'),
+  'mia-finanzas-clasificacion-flujo-caja': () => import('@/modules/mia/finanzas/pages/ClasificacionFlujoCajaPage.vue'),
+  'mia-finanzas-destinos-movilidad': () => import('@/modules/mia/finanzas/pages/DestinosMovilidadPage.vue'),
+  'mia-finanzas-periodos-financieros': () => import('@/modules/mia/finanzas/pages/PeriodosFinancierosPage.vue'),
+  'mia-finanzas-documentos-caja-chica': () => import('@/modules/mia/finanzas/pages/DocumentosCajaChicaPage.vue'),
+  'mia-finanzas-equivalencias-flujo-caja': () => import('@/modules/mia/finanzas/pages/EquivalenciasFlujoCajaPage.vue'),
+  'mia-finanzas-quiebres-flujo-caja': () => import('@/modules/mia/finanzas/pages/QuiebresFlujoCajaPage.vue'),
+  'mia-finanzas-fuentes-financiamiento': () => import('@/modules/mia/finanzas/pages/FuentesFinanciamientoPage.vue'),
+  'mia-finanzas-modalidades-pago': () => import('@/modules/mia/finanzas/pages/ModalidadesPagoPage.vue'),
+  'mia-finanzas-numeraciones-comprobante': () => import('@/modules/mia/finanzas/pages/NumeracionesTipoComprobantePage.vue'),
+  'mia-finanzas-configuracion-tipos-documento': () => import('@/modules/mia/finanzas/pages/ConfiguracionTiposDocumentoPage.vue'),
+  'mia-finanzas-rendiciones-caja-chica': () => import('@/modules/mia/finanzas/pages/RendicionesCajaChicaPage.vue'),
+  'mia-finanzas-tipos-fondo-caja-chica': () => import('@/modules/mia/finanzas/pages/TiposFondoCajaChicaPage.vue'),
+  'mia-finanzas-rubros-caja-chica': () => import('@/modules/mia/finanzas/pages/RubrosCajaChicaPage.vue'),
+  'mia-finanzas-reporte-caja-chica': () => import('@/modules/mia/finanzas/pages/ReporteCajaChicaPage.vue'),
+  'mia-finanzas-comprobantes-tesoreria': () => import('@/modules/mia/finanzas/pages/ReporteFinancieroPage.vue'),
+  'mia-finanzas-estado-cuentas-bancarias': () => import('@/modules/mia/finanzas/pages/ReporteFinancieroPage.vue'),
+  'mia-finanzas-libro-caja-banco': () => import('@/modules/mia/finanzas/pages/ReporteFinancieroPage.vue'),
+  'mia-finanzas-resumen-cuentas': () => import('@/modules/mia/finanzas/pages/ReporteFinancieroPage.vue'),
+  'mia-finanzas-estado-flujo-caja': () => import('@/modules/mia/finanzas/pages/ReporteFinancieroPage.vue'),
+  'mia-finanzas-libro-mayor-auxiliar': () => import('@/modules/mia/finanzas/pages/ReporteFinancieroPage.vue'),
   'mia-contabilidad-periodos-contables': () => import('@/modules/mia/contabilidad/maestros/pages/PeriodosContablesPage.vue'),
   'mia-contabilidad-monedas': () => import('@/modules/mia/contabilidad/maestros/pages/MonedasPage.vue'),
   'mia-contabilidad-entidades': () => import('@/modules/mia/contabilidad/maestros/pages/EntidadesPage.vue'),
@@ -64,6 +103,19 @@ const optionPages = {
   'mia-contabilidad-centros-costos': () => import('@/modules/mia/contabilidad/costos/pages/CentrosCostosPage.vue'),
   'mia-contabilidad-proceso': () => import('@/modules/mia/contabilidad/proceso/pages/ProcesoContablePage.vue'),
   'mia-contabilidad-analisis-cuentas': () => import('@/modules/mia/contabilidad/proceso/pages/AnalisisCuentasPage.vue'),
+  'mia-contabilidad-consistencias': () => import('@/modules/mia/contabilidad/proceso/pages/ConsistenciasPage.vue'),
+  'mia-contabilidad-comprobantes-proceso': () => import('@/modules/mia/contabilidad/proceso/pages/ComprobantesProcesoPage.vue'),
+  'mia-contabilidad-cuadro-general-cuentas': () => import('@/modules/mia/contabilidad/proceso/pages/CuadroGeneralCuentasPage.vue'),
+  'mia-contabilidad-libro-diario': () => import('@/modules/mia/contabilidad/proceso/pages/LibroDiarioPage.vue'),
+  'mia-contabilidad-libro-mayor': () => import('@/modules/mia/contabilidad/proceso/pages/LibroMayorPage.vue'),
+  'mia-contabilidad-consulta-saldos': () => import('@/modules/mia/contabilidad/proceso/pages/ConsultaSaldosPage.vue'),
+  'mia-contabilidad-libro-inventarios': () => import('@/modules/mia/contabilidad/proceso/pages/LibroInventariosPage.vue'),
+  'mia-contabilidad-balance-comprobacion': () => import('@/modules/mia/contabilidad/proceso/pages/BalanceComprobacionPage.vue'),
+  'mia-contabilidad-plantilla-balance-general': () => import('@/modules/mia/contabilidad/proceso/pages/PlantillaBalanceGeneralPage.vue'),
+  'mia-contabilidad-balance-general': () => import('@/modules/mia/contabilidad/proceso/pages/BalanceGeneralPage.vue'),
+  'mia-contabilidad-plantilla-egp-funcion': () => import('@/modules/mia/contabilidad/proceso/pages/PlantillaEgpFuncionPage.vue'),
+  'mia-contabilidad-plantilla-egp-naturaleza': () => import('@/modules/mia/contabilidad/proceso/pages/PlantillaEgpNaturalezaPage.vue'),
+  'mia-contabilidad-estado-ganancias-perdidas': () => import('@/modules/mia/contabilidad/proceso/pages/EstadoGananciasPerdidasPage.vue'),
   'mia-recursos-productividad': () => import('@/modules/mia/recursos/pages/ProductividadPage.vue'),
   'mia-rrhh-maestros-trabajadores': () => import('@/modules/mia/rrhh/maestros/pages/TrabajadoresPage.vue'),
   'mia-rrhh-maestros-datos-laborales': () => import('@/modules/mia/rrhh/maestros/pages/DatosLaboralesPage.vue'),
@@ -92,6 +144,21 @@ const optionPages = {
   'mia-rrhh-maestros-dependencias-conceptos-eps': () => import('@/modules/mia/rrhh/maestros/pages/DependenciasConceptosEpsPage.vue'),
   'mia-rrhh-maestros-tipos-relacion': () => import('@/modules/mia/rrhh/maestros/pages/TiposRelacionPage.vue'),
   'mia-rrhh-maestros-trabajador-conceptos': () => import('@/modules/mia/rrhh/maestros/pages/TrabajadorConceptosPage.vue'),
+  'mia-rrhh-planilla-procesos': () => import('@/modules/mia/rrhh/planilla/pages/ProcesosPlanillaPage.vue'),
+  'mia-rrhh-planilla-procesos-crear': () => import('@/modules/mia/rrhh/planilla/pages/CrearProcesoPlanillaPage.vue'),
+  'mia-rrhh-planilla-proceso-detalle': () => import('@/modules/mia/rrhh/planilla/pages/DetalleProcesoPlanillaPage.vue'),
+  'mia-rrhh-planilla-seleccionar-trabajadores': () => import('@/modules/mia/rrhh/planilla/pages/SeleccionarTrabajadoresPage.vue'),
+  'mia-rrhh-planilla-resumen': () => import('@/modules/mia/rrhh/planilla/pages/ResumenProcesoPlanillaPage.vue'),
+  'mia-rrhh-planilla-trabajadores': () => import('@/modules/mia/rrhh/planilla/pages/TrabajadoresProcesoPlanillaPage.vue'),
+  'mia-rrhh-planilla-trabajador-detalle': () => import('@/modules/mia/rrhh/planilla/pages/DetalleTrabajadorPlanillaPage.vue'),
+  'mia-rrhh-planilla-reporte-concepto': () => import('@/modules/mia/rrhh/planilla/pages/ReporteConceptoPlanillaPage.vue'),
+  'mia-rrhh-planilla-reporte-boletas': () => import('@/modules/mia/rrhh/planilla/pages/ReporteBoletasPlanillaPage.vue'),
+  'mia-rrhh-control-tiempos-horarios': () => import('@/modules/mia/rrhh/controlTiempos/pages/HorariosPage.vue'),
+  'mia-rrhh-control-tiempos-turnos-extra': () => import('@/modules/mia/rrhh/controlTiempos/pages/TurnosExtraPage.vue'),
+  'mia-rrhh-control-tiempos-programaciones': () => import('@/modules/mia/rrhh/controlTiempos/pages/ProgramacionesHorarioPage.vue'),
+  'mia-rrhh-control-tiempos-programacion-detalle': () => import('@/modules/mia/rrhh/controlTiempos/pages/DetalleProgramacionHorarioPage.vue'),
+  'mia-rrhh-control-tiempos-asistencias': () => import('@/modules/mia/rrhh/controlTiempos/pages/AsistenciasPage.vue'),
+  'mia-rrhh-control-tiempos-reporte-diario': () => import('@/modules/mia/rrhh/controlTiempos/pages/ReporteAsistenciaDiariaPage.vue'),
   'mia-utilitarios-reporte-almacen': () => import('@/modules/mia/utilitarios/pages/ReporteAlmacenPage.vue'),
   'dana-infraestructura-sistemas': () => import('@/modules/dana/infraestructura/pages/SistemasPage.vue'),
   'dana-infraestructura-componentes': () => import('@/modules/dana/infraestructura/pages/ComponentesPage.vue'),
@@ -216,11 +283,12 @@ const modules = appModules.map((module) => ({
       path: option.slug,
       name: `${module.slug}-${section.slug}-${option.slug}`,
       component: optionPages[option.page as keyof typeof optionPages],
+      meta: option.page==='mia-finanzas-comprobantes-tesoreria'?{reportKey:'comprobantes-tesoreria'}:option.page==='mia-finanzas-estado-cuentas-bancarias'?{reportKey:'estado-cuentas-bancarias'}:option.page==='mia-finanzas-libro-caja-banco'?{reportKey:'libro-caja-banco'}:option.page==='mia-finanzas-resumen-cuentas'?{reportKey:'resumen-cuentas'}:option.page==='mia-finanzas-estado-flujo-caja'?{reportKey:'estado-flujo-caja'}:option.page==='mia-finanzas-libro-mayor-auxiliar'?{reportKey:'libro-mayor-auxiliar'}:{},
     })),
   })),
 }))
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior: () => ({ top: 0 }),
   routes: [
@@ -230,9 +298,25 @@ export default createRouter({
       { path:'modulos/mia/logistica/requerimientos-almacen', redirect:to=>({path:'/modulos/administracion/logistica/requerimientos-almacen',query:to.query}) },
       { path:'modulos/mia/logistica/pedidos', redirect:to=>({path:'/modulos/administracion/logistica/pedidos',query:to.query}) },
       { path:'modulos/comercial/comercial/tareas', redirect:{path:'/modulos/comercial/comercializacion/tareas',query:{bandeja:'mis-pendientes'}} },
+      { path:'modulos/administracion/finanzas/rendiciones-caja-chica/nueva', name:'mia-finanzas-rendiciones-caja-chica-nueva', component:()=>import('@/modules/mia/finanzas/pages/NuevaRendicionCajaChicaPage.vue') },
+      { path:'modulos/administracion/finanzas/rendiciones-caja-chica/:id/editar', name:'mia-finanzas-rendiciones-caja-chica-editar', component:()=>import('@/modules/mia/finanzas/pages/NuevaRendicionCajaChicaPage.vue') },
       { path:'modulos/integracion/territorial/procesos/:id', name:'enki-territorial-seguimiento', component:SeguimientoProcesoPage, props:true },
       { path:'modulos', children:modules },
     ]},
     { path:'/:pathMatch(.*)*', component:NotFoundView },
   ],
 })
+
+router.beforeEach(() => {
+  startNavigationLoading()
+})
+
+router.afterEach(() => {
+  finishNavigationLoading()
+})
+
+router.onError(() => {
+  finishNavigationLoading()
+})
+
+export default router

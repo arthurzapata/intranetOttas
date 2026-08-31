@@ -1,0 +1,3 @@
+export interface ConfiguracionRetencion{id:number;descripcion:string;porcentaje:number;monto_minimo?:number|null;serie:string;correlativo_actual:number;longitud_correlativo:number;vigente_desde:string;vigente_hasta?:string|null;activo:boolean;siguiente_correlativo_texto?:string}
+export interface ConfiguracionRetencionPayload{descripcion:string;porcentaje:number;monto_minimo:number|null;serie:string;correlativo_actual:number;longitud_correlativo:number;vigente_desde:string;vigente_hasta:string}
+export interface ConfiguracionRetencionResponse{data:ConfiguracionRetencion[];current_page:number;last_page:number;total:number}

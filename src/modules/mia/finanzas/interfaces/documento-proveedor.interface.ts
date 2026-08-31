@@ -1,0 +1,10 @@
+import type { ProveedorFinanzas } from './cuenta-bancaria-proveedor.interface'
+export interface CatalogoSimple{id:number;nombre?:string;descripcion?:string;codigo?:string;porcentaje?:number;monto_minimo?:number|null;text?:string}
+export interface ArchivoDocumentoProveedor{id:number;tipo_archivo:string;archivo_original:string;archivo_tamanio?:number;principal:boolean;created_at?:string}
+export interface DetraccionDocumento{catalogo_detraccion_id:number;porcentaje:number;base_calculo:number;importe_detraccion:number;catalogo_detraccion?:CatalogoSimple}
+export interface DocumentoProveedor{id:number;proveedor_id:number;proveedor_numero_documento:string;proveedor_razon_social:string;tipo_documento_id:number;tipo_documento?:CatalogoSimple;serie:string;numero:string;numero_documento_completo?:string;fecha_emision:string;fecha_vencimiento?:string|null;moneda_id:number;moneda?:CatalogoSimple;tipo_cambio:number;base_imponible:number;impuesto:number;importe_inafecto:number;otros_importes:number;importe_total:number;aplica_retencion:boolean;aplica_detraccion:boolean;estado:'PENDIENTE'|'PAGADO'|'ANULADO';glosa?:string|null;activo:boolean;detraccion?:DetraccionDocumento;archivos?:ArchivoDocumentoProveedor[]}
+export interface DocumentoProveedorPayload{proveedor_id:number;tipo_documento_id:number;serie:string;numero:string;fecha_emision:string;fecha_vencimiento:string;moneda_id:number;tipo_cambio:number;base_imponible:number;impuesto:number;importe_inafecto:number;otros_importes:number;importe_total:number;aplica_retencion:boolean;aplica_detraccion:boolean;catalogo_detraccion_id:number|null;glosa:string}
+export interface DocumentoProveedorFiltros{proveedor:string;tipo_documento_id:string;estado:string;numero_documento:string;fecha_desde:string;fecha_hasta:string}
+export interface DocumentoProveedorResponse{data:DocumentoProveedor[];current_page:number;last_page:number;total:number;tipos_documento:CatalogoSimple[];monedas:CatalogoSimple[]}
+export interface DocumentoProveedorOpciones{tipos_documento:CatalogoSimple[];monedas:CatalogoSimple[];catalogo_detracciones:CatalogoSimple[]}
+export type { ProveedorFinanzas }

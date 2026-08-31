@@ -1,0 +1,3 @@
+export interface ConfiguracionTipoDocumento{id:number;nombre:string;diminutivo?:string;origen_suministro:boolean;origen_personal:boolean;origen_bancos:boolean;doc_viaticos:boolean;doc_anticipos:boolean;doc_detraccion:boolean;doc_descuento:boolean;doc_cts:boolean;doc_ctacte:boolean}
+export type ConfiguracionTipoDocumentoPayload=Omit<ConfiguracionTipoDocumento,'id'|'nombre'|'diminutivo'>
+export interface ConfiguracionesTipoDocumentoResponse{data:ConfiguracionTipoDocumento[];current_page:number;last_page:number;total:number}

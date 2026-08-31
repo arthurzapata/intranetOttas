@@ -1,19 +1,19 @@
 <script setup lang="ts">
 const opciones=[
   {sigla:'AC',nombre:'Análisis de cuentas',descripcion:'Movimiento detallado de cuentas, saldos y periodos.',color:'#2f91a0',to:'/modulos/administracion/contabilidad/analisis-cuentas'},
-  {sigla:'CO',nombre:'Consistencias',descripcion:'Validación de cuadratura, periodos y cuentas sin movimiento.',color:'#d08b32'},
-  {sigla:'CP',nombre:'Comprobantes',descripcion:'Consulta y exportación de comprobantes contables registrados.',color:'#426f9f'},
-  {sigla:'CG',nombre:'Cuadro general de cuentas',descripcion:'Reporte consolidado del plan de cuentas con saldos por periodo.',color:'#32936f'},
-  {sigla:'LD',nombre:'Libro diario general',descripcion:'Operaciones contables ordenadas cronológicamente.',color:'#c65a62'},
-  {sigla:'LM',nombre:'Libro mayor general',descripcion:'Movimientos agrupados por cuenta con saldos acumulados.',color:'#655b9c'},
-  {sigla:'CS',nombre:'Consulta de saldos',descripcion:'Saldos por periodo con acumulación jerárquica de cuentas.',color:'#238e9c'},
-  {sigla:'LI',nombre:'Libro de inventarios y balances',descripcion:'Balance de saldos de activo, pasivo y patrimonio.',color:'#3d72a9'},
-  {sigla:'BC',nombre:'Balance de comprobación',descripcion:'Apertura, movimientos, saldos, inventarios y resultados.',color:'#268c86'},
-  {sigla:'PB',nombre:'Plantilla del balance general',descripcion:'Configuración de cuentas por grupos financieros.',color:'#bf832d'},
-  {sigla:'BG',nombre:'Balance general',descripcion:'Situación financiera según la plantilla configurada.',color:'#bd547e'},
-  {sigla:'PF',nombre:'Plantilla E.G.P. por función',descripcion:'Estructura de ventas, costos, gastos y resultados.',color:'#566978'},
-  {sigla:'PN',nombre:'Plantilla E.G.P. por naturaleza',descripcion:'Estructura de ingresos, compras, gastos y resultado.',color:'#607b91'},
-  {sigla:'EG',nombre:'Estado de ganancias y pérdidas',descripcion:'Reporte por función o naturaleza con exportaciones.',color:'#b94c4f'},
+  {sigla:'CO',nombre:'Consistencias',descripcion:'Validación de cuadratura, periodos y cuentas sin movimiento.',color:'#d08b32',to:'/modulos/administracion/contabilidad/consistencias-contables'},
+  {sigla:'CP',nombre:'Comprobantes',descripcion:'Consulta y exportación de comprobantes contables registrados.',color:'#426f9f',to:'/modulos/administracion/contabilidad/comprobantes-proceso'},
+  {sigla:'CG',nombre:'Cuadro general de cuentas',descripcion:'Reporte consolidado del plan de cuentas con saldos por periodo.',color:'#32936f',to:'/modulos/administracion/contabilidad/cuadro-general-cuentas'},
+  {sigla:'LD',nombre:'Libro diario general',descripcion:'Operaciones contables ordenadas cronológicamente.',color:'#c65a62',to:'/modulos/administracion/contabilidad/libro-diario'},
+  {sigla:'LM',nombre:'Libro mayor general',descripcion:'Movimientos agrupados por cuenta con saldos acumulados.',color:'#655b9c',to:'/modulos/administracion/contabilidad/libro-mayor'},
+  {sigla:'CS',nombre:'Consulta de saldos',descripcion:'Saldos por periodo con acumulación jerárquica de cuentas.',color:'#238e9c',to:'/modulos/administracion/contabilidad/consulta-saldos'},
+  {sigla:'LI',nombre:'Libro de inventarios y balances',descripcion:'Balance de saldos de activo, pasivo y patrimonio.',color:'#3d72a9',to:'/modulos/administracion/contabilidad/libro-inventarios'},
+  {sigla:'BC',nombre:'Balance de comprobación',descripcion:'Apertura, movimientos, saldos, inventarios y resultados.',color:'#268c86',to:'/modulos/administracion/contabilidad/balance-comprobacion'},
+  {sigla:'PB',nombre:'Plantilla del balance general',descripcion:'Configuración de cuentas por grupos financieros.',color:'#bf832d',to:'/modulos/administracion/contabilidad/plantilla-balance-general'},
+  {sigla:'BG',nombre:'Balance general',descripcion:'Situación financiera según la plantilla configurada.',color:'#bd547e',to:'/modulos/administracion/contabilidad/balance-general'},
+  {sigla:'PF',nombre:'Plantilla E.G.P. por función',descripcion:'Estructura de ventas, costos, gastos y resultados.',color:'#566978',to:'/modulos/administracion/contabilidad/plantilla-egp-funcion'},
+  {sigla:'PN',nombre:'Plantilla E.G.P. por naturaleza',descripcion:'Estructura de ingresos, compras, gastos y resultado.',color:'#607b91',to:'/modulos/administracion/contabilidad/plantilla-egp-naturaleza'},
+  {sigla:'EG',nombre:'Estado de ganancias y pérdidas',descripcion:'Reporte por función o naturaleza con exportaciones.',color:'#b94c4f',to:'/modulos/administracion/contabilidad/estado-ganancias-perdidas'},
 ]
 </script>
 <template><div class="page"><nav><RouterLink to="/inicio">Inicio</RouterLink> / <RouterLink to="/modulos/administracion/contabilidad">Contabilidad</RouterLink> / Proceso contable</nav><header class="hero"><div class="mark">PC</div><div><small>MIA · CONTABILIDAD</small><h1>Proceso contable</h1><p>Herramientas de análisis, consistencia, estados financieros y reportería contable.</p></div></header><main class="cards"><component :is="opcion.to?'RouterLink':'article'" v-for="opcion in opciones" :key="opcion.nombre" class="card" :style="{'--color':opcion.color}" :to="opcion.to"><div class="icon">{{opcion.sigla}}</div><div><h2>{{opcion.nombre}}</h2><p>{{opcion.descripcion}}</p><span>{{opcion.to?'Abrir herramienta':'Próxima migración'}}</span></div></component></main></div></template>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { authService, type AuthUser } from '@/services/auth'
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
+import { navigationLoading } from '@/composables/useNavigationLoading'
 
 const username = ref('')
 const password = ref('')
@@ -62,10 +64,9 @@ async function refreshUser() { user.value = await authService.me() }
 </script>
 
 <template>
-  <main v-if="isRestoringSession" class="loading-screen" aria-live="polite">
-    <span class="spinner" aria-hidden="true"></span>
-    <span>Verificando sesión...</span>
-  </main>
+  <LoadingIndicator :active="navigationLoading" mode="bar" label="Cargando página" />
+
+  <LoadingIndicator v-if="isRestoringSession" mode="overlay" label="Verificando sesión…" />
 
   <RouterView v-else-if="user" :user="user" @logout="logout" @refresh-user="refreshUser" />
 

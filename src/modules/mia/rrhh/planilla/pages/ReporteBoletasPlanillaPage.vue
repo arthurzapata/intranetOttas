@@ -1,0 +1,31 @@
+<script setup lang="ts">
+import { onMounted, reactive, ref } from 'vue'
+import { listarReporteBoletas } from '../services/reportesPlanilla'
+import type { RegimenPlanillaOption } from '../interfaces/procesoPlanilla.interface'
+import type { BoletaReporteItem, FiltrosReporteBoletas } from '../interfaces/reporteBoletas.interface'
+
+const now=new Date(),defaultPeriod=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`
+const filtros=reactive<FiltrosReporteBoletas>({periodo:defaultPeriod,regimen_id:null})
+const rows=ref<BoletaReporteItem[]>([]),regimenes=ref<RegimenPlanillaOption[]>([]),page=ref(1),lastPage=ref(1),total=ref(0),from=ref<number|null>(null),to=ref<number|null>(null),pdfUrl=ref<string|null>(null),loading=ref(false),error=ref('')
+const money=(v:number)=>`S/ ${new Intl.NumberFormat('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(v||0))}`
+const message=(v:unknown)=>v instanceof Error?v.message:'No se pudo cargar el reporte de boletas.'
+async function load(next=1){loading.value=true;error.value='';try{const r=await listarReporteBoletas(filtros,next);rows.value=r.data;regimenes.value=r.regimenes;page.value=r.current_page;lastPage.value=r.last_page;total.value=r.total;from.value=r.from;to.value=r.to;pdfUrl.value=r.pdf_url||null}catch(v){error.value=message(v)}finally{loading.value=false}}
+function clear(){filtros.periodo=defaultPeriod;filtros.regimen_id=null;load(1)}
+onMounted(()=>load())
+</script>
+
+<template>
+  <div class="page">
+    <nav><RouterLink to="/inicio">Inicio</RouterLink> / <RouterLink to="/modulos/administracion/recursos">Recursos Humanos</RouterLink> / Reporte de boletas</nav>
+    <header class="hero"><div class="mark">RB</div><div><small>MIA · RR. HH. · PLANILLAS</small><h1>Reporte de boletas</h1><p>Vista previa de boletas para impresión. Se muestran hasta 15 por página.</p></div><strong>{{total}} boletas</strong></header>
+    <p v-if="error" class="flash">{{error}}</p>
+    <form class="filters" @submit.prevent="load(1)"><label>Periodo<input v-model="filtros.periodo" type="month"></label><label>Régimen<select v-model="filtros.regimen_id"><option :value="null">Todos los regímenes</option><option v-for="r in regimenes" :key="r.id" :value="r.id">{{r.codigo?`${r.codigo} - `:''}}{{r.descripcion}}</option></select></label><div><button>Filtrar</button><button type="button" class="soft" @click="clear">Limpiar</button><a v-if="pdfUrl" :href="pdfUrl" target="_blank" class="pdf">Exportar PDF</a></div></form>
+    <div v-if="loading" class="empty">Consultando boletas…</div><div v-else-if="!rows.length" class="empty">No se encontraron boletas para los filtros seleccionados.</div>
+    <main v-else><article v-for="item in rows" :key="item.planilla_trabajador_id"><header><div><b>{{item.codigo_trabajador||'N/D'}}</b><span> - {{item.persona_nombre||'N/D'}}</span></div><small>DNI: {{item.persona_dni||'N/D'}}</small></header><iframe v-if="item.preview_url" :src="item.preview_url" loading="lazy" title="Vista previa de boleta"></iframe><div v-else class="preview-empty">Vista previa pendiente de la URL del API.</div><footer><span><b>Neto:</b> {{money(item.neto_pagar)}}</span><a v-if="item.preview_url" :href="item.preview_url" target="_blank">Abrir boleta</a><RouterLink v-else :to="`/modulos/administracion/recursos/detalle-trabajador-planilla?id=${item.planilla_proceso_id}&trabajadorId=${item.planilla_trabajador_id}`">Ver detalle</RouterLink></footer></article></main>
+    <footer v-if="total" class="pager"><small>Mostrando {{from||0}} a {{to||0}} de {{total}} boletas</small><div><button :disabled="page<=1" @click="load(page-1)">Anterior</button><span>{{page}} / {{lastPage}}</span><button :disabled="page>=lastPage" @click="load(page+1)">Siguiente</button></div></footer>
+  </div>
+</template>
+
+<style scoped>
+.page{--a:#2f91a0;color:#35464e}nav{margin-bottom:16px;color:#929fa5;font-size:.68rem}nav a{color:var(--a);text-decoration:none}.hero{padding:20px;display:flex;align-items:center;gap:14px;border-left:5px solid var(--a);border-radius:12px;background:#fff}.mark{width:48px;height:48px;display:grid;place-items:center;border-radius:10px;color:#fff;background:var(--a);font-weight:800}.hero>div:nth-child(2){flex:1}.hero small{color:var(--a);font-size:.48rem;font-weight:800}.hero h1{margin:2px 0;font-size:1.2rem}.hero p{margin:0;color:#7e8a90;font-size:.58rem}.hero>strong{font-size:.55rem}.flash{padding:10px;color:#a64046;background:#fff0f0}.filters{margin-top:12px;padding:14px;display:grid;grid-template-columns:220px 1fr auto;gap:10px;align-items:end;background:#fff}.filters label{display:grid;gap:5px;font-size:.52rem;font-weight:700}.filters input,.filters select{padding:9px;border:1px solid #d7dfe2;border-radius:6px;background:#fff;font:inherit;font-size:.5rem}.filters>div{display:flex;gap:6px}button,.filters a,article footer a{padding:9px 12px;border:0;border-radius:6px;color:#fff;background:var(--a);font-size:.5rem;text-decoration:none;cursor:pointer}.soft{color:#64727a;background:#edf1f3}.filters .pdf{background:#bd4650}.empty{margin-top:12px;padding:50px;text-align:center;background:#fff}main{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}article{overflow:hidden;border:1px solid #96cbd2;border-radius:9px;background:#fff}article>header{padding:10px;display:flex;justify-content:space-between;gap:8px;background:#edf7f8;font-size:.52rem}article>header small{color:#68777d}iframe,.preview-empty{width:100%;height:360px;border:0;border-top:1px solid #d8e0e3;border-bottom:1px solid #d8e0e3}.preview-empty{display:grid;place-items:center;color:#919da2;font-size:.52rem;background:#fafbfb}article>footer{padding:10px;display:flex;align-items:center;justify-content:space-between;font-size:.52rem}.pager{margin-top:12px;padding:12px;display:flex;align-items:center;justify-content:space-between;background:#fff}.pager div{display:flex;align-items:center;gap:8px;font-size:.5rem}@media(max-width:850px){main{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters>div{grid-column:1/-1}}@media(max-width:520px){.filters{grid-template-columns:1fr}.filters>div{flex-wrap:wrap}.hero>strong{display:none}.pager{align-items:flex-start;gap:10px;flex-direction:column}}
+</style>

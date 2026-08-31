@@ -1,0 +1,5 @@
+export interface FondoReporteCajaChica{id:number;codigo:string;detalle:string}
+export interface RendicionReporteCajaChica{id:number;numero_rendicion:string;fecha:string;referencia?:string;total_general:number}
+export interface FiltrosReporteCajaChica{anio:number;mes:number;tipo_fondo_caja_chica_id:number;rendicion_caja_chica_id:number;tipo_reporte:string}
+export interface DetalleReporteCajaChica{item:number;tipo_documento?:string;fecha_documento?:string;serie?:string;numero?:string;nombre_persona?:string;codigo_persona?:string;rubro?:string;cuenta_contable?:string;subtotal:number;impuesto:number;otros:number;total:number}
+export interface ResultadoReporteCajaChica{cabecera?:{numero_rendicion?:string;fecha?:string;fondo?:string|{codigo?:string;detalle?:string}};detalle?:DetalleReporteCajaChica[];totales?:{subtotal?:number;impuesto?:number;otros?:number;total?:number;total_general?:number}}

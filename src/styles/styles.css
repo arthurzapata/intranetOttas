@@ -34,6 +34,31 @@ button { cursor: pointer; }
 .submit-button:disabled, .secondary-button:disabled { cursor: wait; opacity: .7; }
 .error-alert { margin-bottom: 22px; padding: 13px 14px; display: flex; align-items: flex-start; gap: 10px; border: 1px solid #f5c6c6; border-radius: 9px; color: #a52c2c; background: #fff4f4; font-size: .85rem; line-height: 1.5; }
 .error-alert svg { flex: 0 0 19px; width: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Keep page feedback visible when a dialog creates a higher stacking layer. */
+:is(.page, .catalog, .catalog-page):has(> :is(.backdrop, .modal-backdrop)) > .flash {
+  position: fixed !important;
+  z-index: 10000 !important;
+  top: 82px;
+  right: 24px;
+  width: min(420px, calc(100vw - 32px));
+  box-sizing: border-box;
+  margin: 0 !important;
+  box-shadow: 0 14px 38px #17293c38;
+  animation: floating-message-in .18s ease-out;
+}
+
+@keyframes floating-message-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 760px) {
+  :is(.page, .catalog, .catalog-page):has(> :is(.backdrop, .modal-backdrop)) > .flash {
+    top: 72px;
+    right: 16px;
+  }
+}
 .button-spinner, .spinner { display: inline-block; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
 .button-spinner { width: 17px; height: 17px; margin-right: 9px; vertical-align: -3px; }
 .loading-screen, .welcome-screen { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #f3f8fa; }

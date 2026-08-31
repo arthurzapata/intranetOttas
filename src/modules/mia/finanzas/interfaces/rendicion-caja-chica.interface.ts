@@ -1,0 +1,15 @@
+export type TipoRendicionCajaChica = 'FONDO_FIJO' | 'GASTO_DIRECTO' | 'ANTICIPO_VIATICO'
+export interface FondoCajaChicaResumen { id: number; codigo: string; detalle: string }
+export interface CatalogoRendicionCajaChica { id: number; codigo: string; detalle: string }
+export interface DestinoRendicionCajaChica { id: number; codigo: string; denominacion: string }
+export interface PersonaRendicionCajaChica { id: number; codigo: string; nombre: string }
+export type TipoPersonaRendicion = 'PROVEEDOR' | 'TRABAJADOR'
+export interface DocumentoRendicionCajaChicaPayload { documento_caja_chica_id: number; tipo_documento_texto?: string; serie: string; numero: string; fecha_documento: string; tipo_persona: TipoPersonaRendicion; proveedor_id: number | null; trabajador_id: number | null; codigo_persona: string; nombre_persona: string; subtotal: number; impuesto: number; otros: number; total: number; rubro_caja_chica_id: number | null; rubro_texto?: string; destino_movilidad_id: number | null; destino_texto?: string; glosa: string }
+export interface RendicionCajaChicaPayload { tipo_rendicion: TipoRendicionCajaChica; tipo_fondo_caja_chica_id: number; fecha: string; referencia: string; documentos: DocumentoRendicionCajaChicaPayload[] }
+export interface OpcionesRendicionCajaChica { documentos_caja_chica: CatalogoRendicionCajaChica[]; rubros_caja_chica: CatalogoRendicionCajaChica[]; destinos_movilidad: DestinoRendicionCajaChica[] }
+export interface FondosRendicionResponse { data: FondoCajaChicaResumen[] }
+export interface SiguienteNumeroRendicionResponse { numero: number; numero_formateado: string }
+export interface DocumentoRendicionCajaChica { id: number; documento_caja_chica_id: number; tipo_documento_codigo?: string; tipo_documento_detalle?: string; serie?: string; numero?: string; fecha_documento?: string; tipo_persona?: TipoPersonaRendicion; proveedor_id?: number | null; trabajador_id?: number | null; codigo_persona?: string; nombre_persona?: string; subtotal: number; impuesto: number; otros: number; total: number; rubro_caja_chica_id?: number | null; rubro_codigo?: string; rubro_detalle?: string; destino_movilidad_id?: number | null; destino_codigo?: string; destino_denominacion?: string; glosa?: string; activo: boolean }
+export interface RendicionCajaChica { id: number; tipo_rendicion: TipoRendicionCajaChica; tipo_fondo_caja_chica_id: number; tipo_fondo?: FondoCajaChicaResumen; numero_rendicion: number; fecha: string; referencia?: string; total_subtotal: number; total_impuesto: number; total_otros: number; total_general: number; estado_contabilizacion?: 'PENDIENTE' | 'PARCIAL' | 'COMPLETA'; documentos_contabilizados?: number; documentos_totales?: number; porcentaje_contabilizacion?: number; activo: boolean; documentos?: DocumentoRendicionCajaChica[] }
+export interface RendicionCajaChicaFiltros { tipo_rendicion: string; tipo_fondo_caja_chica_id: string; fecha_desde: string; fecha_hasta: string; numero_rendicion: string }
+export interface RendicionCajaChicaResponse { data: RendicionCajaChica[]; current_page: number; last_page: number; total: number; tipos_fondo: FondoCajaChicaResumen[] }

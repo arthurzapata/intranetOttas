@@ -1,0 +1,3 @@
+export interface TipoFondoCajaChica{id:number;codigo:string;detalle:string;cuenta_contable_id:number|null;fuente_financiamiento_id:number|null;rendicion_fondo_fijo:boolean;rendicion_gasto_directo:boolean;rendicion_anticipos_viaticos:boolean;activo:boolean;cuenta_contable?:{id:number;cta_contable:string;descripcion:string};fuente_financiamiento?:{id:number;nombre:string;descripcion?:string}}
+export type TipoFondoPayload=Omit<TipoFondoCajaChica,'id'|'cuenta_contable'|'fuente_financiamiento'>
+export interface TiposFondoResponse{data:TipoFondoCajaChica[];current_page:number;last_page:number;total:number;fuentes?:{id:number;nombre:string;descripcion?:string}[]}
